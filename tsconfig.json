@@ -1,0 +1,60 @@
+{
+  "compilerOptions": {
+    "useDefineForClassFields": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "lib": ["ESNext", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "noEmit": true,
+    "paths": {
+      "~~": [
+        "./resources/ts"
+      ],
+      "~~/*": [
+        "./resources/ts/*"
+      ],
+      "@@": [
+        "./resources/ts"
+      ],
+      "@@/*": [
+        "./resources/ts/*"
+      ],
+      "~": [
+        "./resources/ts"
+      ],
+      "~/*": [
+        "./resources/ts/*"
+      ],
+      "@": [
+        "./resources/ts"
+      ],
+      "@/*": [
+        "./resources/ts/*"
+      ],
+      "public": [
+        "public"
+      ]
+    },
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "ESNext"
+  },
+  "include": [
+    "postcss.config.js",
+    "tailwind.config.ts",
+    "resources/ts/**/*",
+    "resources/ts/**/*.ts",
+    "resources/ts/**/*.vue"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
