@@ -1,4 +1,5 @@
-<script setup>
+<script setup lang="ts">
+import axios from 'axios';
 import { ref, reactive, nextTick } from 'vue';
 import DialogModal from './DialogModal.vue';
 import InputError from './InputError.vue';
@@ -31,7 +32,7 @@ const form = reactive({
   processing: false,
 });
 
-const passwordInput = ref(null);
+const passwordInput = ref<HTMLInputElement | null>(null);
 
 const startConfirmingPassword = () => {
   axios.get(route('password.confirmation')).then(response => {
@@ -40,7 +41,7 @@ const startConfirmingPassword = () => {
     } else {
       confirmingPassword.value = true;
 
-      setTimeout(() => passwordInput.value.focus(), 250);
+      setTimeout(() => passwordInput.value?.focus(), 250);
     }
   });
 };
@@ -59,7 +60,7 @@ const confirmPassword = () => {
   }).catch(error => {
     form.processing = false;
     form.error = error.response.data.errors.password[0];
-    passwordInput.value.focus();
+    passwordInput.value?.focus();
   });
 };
 

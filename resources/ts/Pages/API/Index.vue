@@ -1,11 +1,20 @@
-<script setup>
+<script setup lang="ts">
 import ApiTokenManager from '@/Pages/API/Partials/ApiTokenManager.vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
+import { PropType } from 'vue';
 
 defineProps({
-  tokens: Array,
-  availablePermissions: Array,
-  defaultPermissions: Array,
+  tokens: {
+    type: Array as PropType<App.ApiToken[]>
+  },
+  availablePermissions: {
+    type: Array as PropType<App.Models.CRUDPermissions[]>,
+    default: () => ([]),
+  },
+  defaultPermissions: {
+    type: Array as PropType<App.Models.CRUDPermissions[]>,
+    default: () => (["read"]),
+  },
 });
 </script>
 

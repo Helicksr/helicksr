@@ -1,15 +1,19 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue';
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 import AuthenticationCard from '@/Components/AuthenticationCard.vue';
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import route from 'ziggy-js';
 
 const props = defineProps({
-  status: String,
+  status: {
+    type: String,
+    required: true,
+  },
 });
 
-const form = useForm();
+const form = useForm({});
 
 const submit = () => {
   form.post(route('verification.send'));

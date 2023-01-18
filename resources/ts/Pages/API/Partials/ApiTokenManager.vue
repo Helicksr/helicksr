@@ -1,5 +1,5 @@
-<script setup>
-import { ref } from 'vue';
+<script setup lang="ts">
+import { PropType, ref } from 'vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import ActionMessage from '@/Components/ActionMessage.vue';
 import ActionSection from '@/Components/ActionSection.vue';
@@ -16,9 +16,18 @@ import SectionBorder from '@/Components/SectionBorder.vue';
 import TextInput from '@/Components/TextInput.vue';
 
 const props = defineProps({
-  tokens: Array,
-  availablePermissions: Array,
-  defaultPermissions: Array,
+  tokens: {
+    type: Array as PropType<App.ApiToken[]>,
+    default: () => ([]),
+  },
+  availablePermissions: {
+    type: Array as PropType<App.Models.CRUDPermissions[]>,
+    default: () => ([]),
+  },
+  defaultPermissions: {
+    type: Array as PropType<App.Models.CRUDPermissions[]>,
+    default: () => (["read"]),
+  },
 });
 
 const createApiTokenForm = useForm({
@@ -26,15 +35,15 @@ const createApiTokenForm = useForm({
   permissions: props.defaultPermissions,
 });
 
-const updateApiTokenForm = useForm({
+const updateApiTokenForm = useForm<{ permissions: App.Models.CRUDPermissions[] }>({
   permissions: [],
 });
 
-const deleteApiTokenForm = useForm();
+const deleteApiTokenForm = useForm({});
 
 const displayingToken = ref(false);
-const managingPermissionsFor = ref(null);
-const apiTokenBeingDeleted = ref(null);
+const managingPermissionsFor = ref<App.ApiToken | null>(null);
+const apiTokenBeingDeleted = ref<App.ApiToken | null>(null);
 
 const createApiToken = () => {
   createApiTokenForm.post(route('api-tokens.store'), {
@@ -46,7 +55,7 @@ const createApiToken = () => {
   });
 };
 
-const manageApiTokenPermissions = (token) => {
+const manageApiTokenPermissions = (token: App.ApiToken) => {
   updateApiTokenForm.permissions = token.abilities;
   managingPermissionsFor.value = token;
 };
@@ -59,7 +68,7 @@ const updateApiToken = () => {
   });
 };
 
-const confirmApiTokenDeletion = (token) => {
+const confirmApiTokenDeletion = (token: App.ApiToken) => {
   apiTokenBeingDeleted.value = token;
 };
 
@@ -103,9 +112,9 @@ const deleteApiToken = () => {
           <InputLabel for="permissions" value="Permissions" />
 
           <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div v-for="permission in availablePermissions" :key="permission">
+            <div v-for="permission in availablePermissions" :key="(permission as unknown as string)">
               <label class="flex items-center">
-                <Checkbox v-model:checked="createApiTokenForm.permissions" :value="permission" />
+                <Checkbox v-model:checked="createApiTokenForm.permissions" :value="(permission as unknown as string)" />
                 <span class="ml-2 text-sm text-gray-600">{{ permission }}</span>
               </label>
             </div>
@@ -201,9 +210,9 @@ const deleteApiToken = () => {
 
       <template #content>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div v-for="permission in availablePermissions" :key="permission">
+          <div v-for="permission in availablePermissions" :key="(permission as unknown as string)">
             <label class="flex items-center">
-              <Checkbox v-model:checked="updateApiTokenForm.permissions" :value="permission" />
+              <Checkbox v-model:checked="updateApiTokenForm.permissions" :value="(permission as unknown as string)" />
               <span class="ml-2 text-sm text-gray-600">{{ permission }}</span>
             </label>
           </div>

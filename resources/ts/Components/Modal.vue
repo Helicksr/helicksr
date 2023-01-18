@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { computed, onMounted, onUnmounted, watch } from 'vue';
 
 const props = defineProps({
@@ -22,7 +22,7 @@ watch(() => props.show, () => {
   if (props.show) {
     document.body.style.overflow = 'hidden';
   } else {
-    document.body.style.overflow = null;
+    document.body.style.overflow = 'unset';
   }
 });
 
@@ -32,7 +32,7 @@ const close = () => {
   }
 };
 
-const closeOnEscape = (e) => {
+const closeOnEscape = (e: KeyboardEvent) => {
   if (e.key === 'Escape' && props.show) {
     close();
   }
@@ -42,7 +42,7 @@ onMounted(() => document.addEventListener('keydown', closeOnEscape));
 
 onUnmounted(() => {
   document.removeEventListener('keydown', closeOnEscape);
-  document.body.style.overflow = null;
+  document.body.style.overflow = 'unset';
 });
 
 const maxWidthClass = computed(() => {

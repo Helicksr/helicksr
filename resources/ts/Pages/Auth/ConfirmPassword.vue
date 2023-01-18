@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 import { Head, useForm } from '@inertiajs/inertia-vue3';
 import AuthenticationCard from '@/Components/AuthenticationCard.vue';
@@ -12,14 +12,14 @@ const form = useForm({
   password: '',
 });
 
-const passwordInput = ref(null);
+const passwordInput = ref<{ focus: () => void } | null>(null);
 
 const submit = () => {
   form.post(route('password.confirm'), {
     onFinish: () => {
       form.reset();
 
-      passwordInput.value.focus();
+      passwordInput.value?.focus();
     },
   });
 };

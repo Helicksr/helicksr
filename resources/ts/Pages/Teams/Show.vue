@@ -1,14 +1,24 @@
-<script setup>
+<script setup lang="ts">
 import AppLayout from '@/Layouts/AppLayout.vue';
 import DeleteTeamForm from '@/Pages/Teams/Partials/DeleteTeamForm.vue';
 import SectionBorder from '@/Components/SectionBorder.vue';
 import TeamMemberManager from '@/Pages/Teams/Partials/TeamMemberManager.vue';
 import UpdateTeamNameForm from '@/Pages/Teams/Partials/UpdateTeamNameForm.vue';
+import { PropType } from 'vue';
 
 defineProps({
-  team: Object,
-  availableRoles: Array,
-  permissions: Object,
+  team: {
+    type: Object as PropType<App.Models.Team>,
+    required: true,
+  },
+  availableRoles: {
+    type: Array as PropType<App.Models.Role[]>,
+    default: () => ([]),
+  },
+  permissions: {
+    type: Object as PropType<App.Models.UserPermissions>,
+    required: true,
+  },
 });
 </script>
 

@@ -1,6 +1,8 @@
-<script setup>
+<script setup lang="ts">
 defineProps({
-  on: Boolean,
+  on: {
+    type: Boolean,
+  },
 });
 </script>
 

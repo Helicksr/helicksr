@@ -1,6 +1,8 @@
-<script setup>
+<script setup lang="ts">
 defineProps({
-  value: String,
+  value: {
+    type: String,
+  },
 });
 </script>
 

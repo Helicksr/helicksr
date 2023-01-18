@@ -1,5 +1,5 @@
-<script setup>
-import { ref } from 'vue';
+<script setup lang="ts">
+import { PropType, ref } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import { Link, useForm } from '@inertiajs/inertia-vue3';
 import ActionMessage from '@/Components/ActionMessage.vue';
@@ -9,21 +9,25 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import route from 'ziggy-js';
 
 const props = defineProps({
-  user: Object,
+  user: {
+    type: Object as PropType<App.Models.User>,
+    required: true,
+  },
 });
 
 const form = useForm({
   _method: 'PUT',
   name: props.user.name,
   email: props.user.email,
-  photo: null,
+  photo: null, // TODO: find correct typing here
 });
 
-const verificationLinkSent = ref(null);
-const photoPreview = ref(null);
-const photoInput = ref(null);
+const verificationLinkSent = ref<boolean | null>(null);
+const photoPreview = ref<string | ArrayBuffer | null | undefined>(null);
+const photoInput = ref<any>(null); // TODO: find correct typings for this variable
 
 const updateProfileInformation = () => {
   if (photoInput.value) {
@@ -42,18 +46,18 @@ const sendEmailVerification = () => {
 };
 
 const selectNewPhoto = () => {
-  photoInput.value.click();
+  photoInput.value?.click();
 };
 
 const updatePhotoPreview = () => {
-  const photo = photoInput.value.files[0];
+  const photo = photoInput.value?.files[0];
 
   if (! photo) return;
 
   const reader = new FileReader();
 
-  reader.onload = (e) => {
-    photoPreview.value = e.target.result;
+  reader.onload = (e: ProgressEvent<FileReader>) => {
+    photoPreview.value = e.target?.result;
   };
 
   reader.readAsDataURL(photo);

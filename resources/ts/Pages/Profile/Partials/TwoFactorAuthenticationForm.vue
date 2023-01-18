@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed, watch } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import { useForm, usePage } from '@inertiajs/inertia-vue3';
@@ -10,17 +10,21 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import axios from 'axios';
 
 const props = defineProps({
-  requiresConfirmation: Boolean,
+  requiresConfirmation: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 const enabling = ref(false);
 const confirming = ref(false);
 const disabling = ref(false);
-const qrCode = ref(null);
-const setupKey = ref(null);
-const recoveryCodes = ref([]);
+const qrCode = ref<string | null>(null);
+const setupKey = ref<string | null>(null);
+const recoveryCodes = ref([]); // TODO: find correct typing here
 
 const confirmationForm = useForm({
   code: '',
@@ -55,13 +59,13 @@ const enableTwoFactorAuthentication = () => {
 };
 
 const showQrCode = () => {
-  return axios.get('/user/two-factor-qr-code').then(response => {
+  return axios.get<{ svg: string }>('/user/two-factor-qr-code').then(response => {
     qrCode.value = response.data.svg;
   });
 };
 
 const showSetupKey = () => {
-  return axios.get('/user/two-factor-secret-key').then(response => {
+  return axios.get<{ secretKey: string }>('/user/two-factor-secret-key').then(response => {
     setupKey.value = response.data.secretKey;
   });
 }

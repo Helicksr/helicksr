@@ -1,5 +1,5 @@
-<script setup>
-import { ref } from 'vue';
+<script setup lang="ts">
+import { PropType, ref } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import { useForm, usePage } from '@inertiajs/inertia-vue3';
 import ActionMessage from '@/Components/ActionMessage.vue';
@@ -16,27 +16,39 @@ import SectionBorder from '@/Components/SectionBorder.vue';
 import TextInput from '@/Components/TextInput.vue';
 
 const props = defineProps({
-  team: Object,
-  availableRoles: Array,
-  userPermissions: Object,
+  team: {
+    type: Object as PropType<App.Models.Team>,
+    required: true,
+  },
+  availableRoles: {
+    type: Array as PropType<App.Models.Role[]>,
+    default: () => ([]),
+  },
+  userPermissions: {
+    type: Object as PropType<App.Models.UserPermissions>,
+    required: true,
+  },
 });
 
-const addTeamMemberForm = useForm({
+const addTeamMemberForm = useForm<{
+  email: string,
+  role: string | null,
+}>({
   email: '',
   role: null,
 });
 
-const updateRoleForm = useForm({
+const updateRoleForm = useForm<{ role: string | null }>({
   role: null,
 });
 
-const leaveTeamForm = useForm();
-const removeTeamMemberForm = useForm();
+const leaveTeamForm = useForm({});
+const removeTeamMemberForm = useForm({});
 
 const currentlyManagingRole = ref(false);
-const managingRoleFor = ref(null);
+const managingRoleFor = ref<App.Models.User | null>(null);
 const confirmingLeavingTeam = ref(false);
-const teamMemberBeingRemoved = ref(null);
+const teamMemberBeingRemoved = ref<App.Models.User | null>(null);
 
 const addTeamMember = () => {
   addTeamMemberForm.post(route('team-members.store', props.team), {
@@ -46,13 +58,13 @@ const addTeamMember = () => {
   });
 };
 
-const cancelTeamInvitation = (invitation) => {
+const cancelTeamInvitation = (invitation: App.Models.TeamInvitation) => {
   Inertia.delete(route('team-invitations.destroy', invitation), {
     preserveScroll: true,
   });
 };
 
-const manageRole = (teamMember) => {
+const manageRole = (teamMember: App.Models.User) => {
   managingRoleFor.value = teamMember;
   updateRoleForm.role = teamMember.membership.role;
   currentlyManagingRole.value = true;
@@ -73,7 +85,7 @@ const leaveTeam = () => {
   leaveTeamForm.delete(route('team-members.destroy', [props.team, usePage().props.value.user]));
 };
 
-const confirmTeamMemberRemoval = (teamMember) => {
+const confirmTeamMemberRemoval = (teamMember: App.Models.User) => {
   teamMemberBeingRemoved.value = teamMember;
 };
 
@@ -86,8 +98,8 @@ const removeTeamMember = () => {
   });
 };
 
-const displayableRole = (role) => {
-  return props.availableRoles.find(r => r.key === role).name;
+const displayableRole = (role: string) => {
+  return props.availableRoles.find(r => r.key === role)?.name;
 };
 </script>
 
@@ -354,7 +366,7 @@ const displayableRole = (role) => {
     </ConfirmationModal>
 
     <!-- Remove Team Member Confirmation Modal -->
-    <ConfirmationModal :show="teamMemberBeingRemoved" @close="teamMemberBeingRemoved = null">
+    <ConfirmationModal :show="!!teamMemberBeingRemoved" @close="teamMemberBeingRemoved = null">
       <template #title>
         Remove Team Member
       </template>

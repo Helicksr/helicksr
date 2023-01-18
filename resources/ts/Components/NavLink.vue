@@ -1,10 +1,14 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue';
 import { Link } from '@inertiajs/inertia-vue3';
 
 const props = defineProps({
-  href: String,
-  active: Boolean,
+  href: {
+    type: String,
+  },
+  active: {
+    type: Boolean,
+  },
 });
 
 const classes = computed(() => {
@@ -15,7 +19,7 @@ const classes = computed(() => {
 </script>
 
 <template>
-  <Link :href="href" :class="classes">
+  <Link :href="href ?? ''" :class="classes">
     <slot />
   </Link>
 </template>
