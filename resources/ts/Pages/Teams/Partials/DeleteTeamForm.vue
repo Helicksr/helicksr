@@ -5,6 +5,7 @@ import ActionSection from '@/Components/ActionSection.vue';
 import ConfirmationModal from '@/Components/ConfirmationModal.vue';
 import DangerButton from '@/Components/DangerButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
+import route from 'ziggy-js';
 
 const props = defineProps({
   team: Object as PropType<App.Models.Team>,

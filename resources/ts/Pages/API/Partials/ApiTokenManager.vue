@@ -14,6 +14,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import SectionBorder from '@/Components/SectionBorder.vue';
 import TextInput from '@/Components/TextInput.vue';
+import route from 'ziggy-js';
 
 const props = defineProps({
   tokens: {
@@ -61,7 +62,7 @@ const manageApiTokenPermissions = (token: App.ApiToken) => {
 };
 
 const updateApiToken = () => {
-  updateApiTokenForm.put(route('api-tokens.update', managingPermissionsFor.value), {
+  updateApiTokenForm.put(route('api-tokens.update', managingPermissionsFor.value?.id), {
     preserveScroll: true,
     preserveState: true,
     onSuccess: () => (managingPermissionsFor.value = null),
@@ -73,7 +74,7 @@ const confirmApiTokenDeletion = (token: App.ApiToken) => {
 };
 
 const deleteApiToken = () => {
-  deleteApiTokenForm.delete(route('api-tokens.destroy', apiTokenBeingDeleted.value), {
+  deleteApiTokenForm.delete(route('api-tokens.destroy', apiTokenBeingDeleted.value?.id), {
     preserveScroll: true,
     preserveState: true,
     onSuccess: () => (apiTokenBeingDeleted.value = null),

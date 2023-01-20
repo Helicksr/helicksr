@@ -7,6 +7,7 @@ import DialogModal from '@/Components/DialogModal.vue';
 import InputError from '@/Components/InputError.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import route from 'ziggy-js';
 
 const confirmingUserDeletion = ref(false);
 const passwordInput = ref<{ focus: () => void } | null>(null);
@@ -48,7 +49,7 @@ const closeModal = () => {
     </template>
 
     <template #content>
-      <div class="max-w-xl text-sm text-gray-600">
+      <div class="max-w-xl text-sm text-gray-600 dark:text-gray-300">
         Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.
       </div>
 

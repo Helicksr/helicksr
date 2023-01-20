@@ -7,6 +7,8 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { PropType } from 'vue';
+import route from 'ziggy-js';
+import Card from '~~/Components/Card.vue';
 
 const props = defineProps({
   team: {
@@ -49,9 +51,9 @@ const updateTeamName = () => {
         <div class="flex items-center mt-2">
           <img class="w-12 h-12 rounded-full object-cover" :src="team.owner.profile_photo_url" :alt="team.owner.name">
 
-          <div class="ml-4 leading-tight">
+          <div class="ml-4 leading-tight dark:text-gray-300">
             <div>{{ team.owner.name }}</div>
-            <div class="text-gray-700 text-sm">
+            <div class="text-gray-700 dark:text-gray-400 text-sm">
               {{ team.owner.email }}
             </div>
           </div>

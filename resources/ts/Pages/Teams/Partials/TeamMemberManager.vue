@@ -14,6 +14,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import SectionBorder from '@/Components/SectionBorder.vue';
 import TextInput from '@/Components/TextInput.vue';
+import route from 'ziggy-js';
 
 const props = defineProps({
   team: {
@@ -71,7 +72,7 @@ const manageRole = (teamMember: App.Models.User) => {
 };
 
 const updateRole = () => {
-  updateRoleForm.put(route('team-members.update', [props.team, managingRoleFor.value]), {
+  updateRoleForm.put(route('team-members.update', [props.team.id, managingRoleFor.value?.id ?? '']), {
     preserveScroll: true,
     onSuccess: () => currentlyManagingRole.value = false,
   });
@@ -82,7 +83,7 @@ const confirmLeavingTeam = () => {
 };
 
 const leaveTeam = () => {
-  leaveTeamForm.delete(route('team-members.destroy', [props.team, usePage().props.value.user]));
+  leaveTeamForm.delete(route('team-members.destroy', [props.team.id, usePage().props.value.user.id]));
 };
 
 const confirmTeamMemberRemoval = (teamMember: App.Models.User) => {
@@ -90,7 +91,7 @@ const confirmTeamMemberRemoval = (teamMember: App.Models.User) => {
 };
 
 const removeTeamMember = () => {
-  removeTeamMemberForm.delete(route('team-members.destroy', [props.team, teamMemberBeingRemoved.value]), {
+  removeTeamMemberForm.delete(route('team-members.destroy', [props.team.id, teamMemberBeingRemoved.value?.id ?? '']), {
     errorBag: 'removeTeamMember',
     preserveScroll: true,
     preserveState: true,
@@ -120,7 +121,7 @@ const displayableRole = (role: string) => {
 
         <template #form>
           <div class="col-span-6">
-            <div class="max-w-xl text-sm text-gray-600">
+            <div class="max-w-xl text-sm text-gray-600 dark:text-gray-300">
               Please provide the email address of the person you would like to add to this team.
             </div>
           </div>
@@ -142,19 +143,19 @@ const displayableRole = (role: string) => {
             <InputLabel for="roles" value="Role" />
             <InputError :message="addTeamMemberForm.errors.role" class="mt-2" />
 
-            <div class="relative z-0 mt-1 border border-gray-200 rounded-lg cursor-pointer">
+            <div class="relative z-0 mt-1 border border-gray-200 dark:border-gray-400 rounded-lg cursor-pointer">
               <button
                 v-for="(role, i) in availableRoles"
                 :key="role.key"
                 type="button"
                 class="relative px-4 py-3 inline-flex w-full rounded-lg focus:z-10 focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200"
-                :class="{'border-t border-gray-200 rounded-t-none': i > 0, 'rounded-b-none': i != Object.keys(availableRoles).length - 1}"
+                :class="{'border-t border-gray-200 dark:border-gray-400 rounded-t-none': i > 0, 'rounded-b-none': i != Object.keys(availableRoles).length - 1}"
                 @click="addTeamMemberForm.role = role.key"
               >
                 <div :class="{'opacity-50': addTeamMemberForm.role && addTeamMemberForm.role != role.key}">
                   <!-- Role Name -->
                   <div class="flex items-center">
-                    <div class="text-sm text-gray-600" :class="{'font-semibold': addTeamMemberForm.role == role.key}">
+                    <div class="text-sm text-gray-600 dark:text-gray-300" :class="{'font-semibold': addTeamMemberForm.role == role.key}">
                       {{ role.name }}
                     </div>
 
@@ -164,7 +165,7 @@ const displayableRole = (role: string) => {
                   </div>
 
                   <!-- Role Description -->
-                  <div class="mt-2 text-xs text-gray-600 text-left">
+                  <div class="mt-2 text-xs text-gray-600 dark:text-gray-300 text-left">
                     {{ role.description }}
                   </div>
                 </div>
@@ -210,7 +211,7 @@ const displayableRole = (role: string) => {
                 <!-- Cancel Team Invitation -->
                 <button
                   v-if="userPermissions.canRemoveTeamMembers"
-                  class="cursor-pointer ml-6 text-sm text-red-500 focus:outline-none"
+                  class="cursor-pointer ml-6 text-sm text-red-500 dark:text-red-800 focus:outline-none"
                   @click="cancelTeamInvitation(invitation)"
                 >
                   Cancel
@@ -241,7 +242,7 @@ const displayableRole = (role: string) => {
             <div v-for="user in team.users" :key="user.id" class="flex items-center justify-between">
               <div class="flex items-center">
                 <img class="w-8 h-8 rounded-full" :src="user.profile_photo_url" :alt="user.name">
-                <div class="ml-4">
+                <div class="ml-4 dark:text-gray-300">
                   {{ user.name }}
                 </div>
               </div>
@@ -263,7 +264,7 @@ const displayableRole = (role: string) => {
                 <!-- Leave Team -->
                 <button
                   v-if="$page.props.user.id === user.id"
-                  class="cursor-pointer ml-6 text-sm text-red-500"
+                  class="cursor-pointer ml-6 text-sm text-red-500 dark:text-red-800"
                   @click="confirmLeavingTeam"
                 >
                   Leave
@@ -272,7 +273,7 @@ const displayableRole = (role: string) => {
                 <!-- Remove Team Member -->
                 <button
                   v-else-if="userPermissions.canRemoveTeamMembers"
-                  class="cursor-pointer ml-6 text-sm text-red-500"
+                  class="cursor-pointer ml-6 text-sm text-red-500 dark:text-red-800"
                   @click="confirmTeamMemberRemoval(user)"
                 >
                   Remove
@@ -292,7 +293,7 @@ const displayableRole = (role: string) => {
 
       <template #content>
         <div v-if="managingRoleFor">
-          <div class="relative z-0 mt-1 border border-gray-200 rounded-lg cursor-pointer">
+          <div class="relative z-0 mt-1 border border-gray-200 dark:border-gray-400 rounded-lg cursor-pointer">
             <button
               v-for="(role, i) in availableRoles"
               :key="role.key"

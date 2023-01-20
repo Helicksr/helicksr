@@ -5,6 +5,7 @@ import SectionBorder from '@/Components/SectionBorder.vue';
 import TeamMemberManager from '@/Pages/Teams/Partials/TeamMemberManager.vue';
 import UpdateTeamNameForm from '@/Pages/Teams/Partials/UpdateTeamNameForm.vue';
 import { PropType } from 'vue';
+import PageTitle from '~~/Components/PageTitle.vue';
 
 defineProps({
   team: {
@@ -25,9 +26,7 @@ defineProps({
 <template>
   <AppLayout title="Team Settings">
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Team Settings
-      </h2>
+      <PageTitle>Team Settings</PageTitle>
     </template>
 
     <div>

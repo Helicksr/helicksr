@@ -1,22 +1,22 @@
 <script setup lang="ts">
 import AppLayout from '@/Layouts/AppLayout.vue';
-import Welcome from '@/Components/Welcome.vue';
+import Card from '~~/Components/Card.vue';
+import PageTitle from '~~/Components/PageTitle.vue';
+import PageSubtitle from '~~/Components/PageSubtitle.vue';
 </script>
 
 <template>
   <AppLayout title="Dashboard">
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Dashboard
-      </h2>
+      <PageTitle>Dashboard</PageTitle>
     </template>
 
-    <div class="py-12">
-      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-          <Welcome />
-        </div>
-      </div>
+    <div class="sm:py-12">
+      <Card class="max-w-7xl mx-auto">
+        <PageSubtitle>Library</PageSubtitle>
+
+        <PageSubtitle>Shared with me</PageSubtitle>
+      </Card>
     </div>
   </AppLayout>
 </template>

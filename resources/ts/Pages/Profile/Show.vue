@@ -7,6 +7,7 @@ import TwoFactorAuthenticationForm from '@/Pages/Profile/Partials/TwoFactorAuthe
 import UpdatePasswordForm from '@/Pages/Profile/Partials/UpdatePasswordForm.vue';
 import UpdateProfileInformationForm from '@/Pages/Profile/Partials/UpdateProfileInformationForm.vue';
 import { PropType } from 'vue';
+import PageTitle from '~~/Components/PageTitle.vue';
 
 defineProps({
   confirmsTwoFactorAuthentication: {
@@ -23,9 +24,7 @@ defineProps({
 <template>
   <AppLayout title="Profile">
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Profile
-      </h2>
+      <PageTitle>Profile</PageTitle>
     </template>
 
     <div>
