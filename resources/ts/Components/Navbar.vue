@@ -42,6 +42,9 @@ const logout = () => {
             <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
               Dashboard
             </NavLink>
+            <NavLink :href="route('library.index')" :active="route().current('.indexlibrary')">
+              Library
+            </NavLink>
           </div>
         </div>
 
@@ -58,7 +61,6 @@ const logout = () => {
                     py-2
                     border
                     border-transparent
-                    text-sm
                     leading-4
                     font-medium
                     rounded-md
@@ -90,7 +92,7 @@ const logout = () => {
                 <div class="w-60">
                   <!-- Team Management -->
                   <template v-if="$page.props.jetstream.hasTeamFeatures">
-                    <div class="block px-4 py-2 text-xs text-gray-400">
+                    <div class="block px-4 py-2 text-sm text-gray-400">
                       Manage Team
                     </div>
 
@@ -106,7 +108,7 @@ const logout = () => {
                     <div class="border-t border-gray-100 dark:border-gray-400" />
 
                     <!-- Team Switcher -->
-                    <div class="block px-4 py-2 text-xs text-gray-400">
+                    <div class="block px-4 py-2 text-sm text-gray-400">
                       Switch Teams
                     </div>
 
@@ -133,7 +135,7 @@ const logout = () => {
           <div class="ml-3 relative">
             <Dropdown align="right" width="48" :content-classes="['py-1', 'bg-white', 'dark:bg-gray-500']">
               <template #trigger>
-                <button v-if="$page.props.jetstream.managesProfilePhotos" class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
+                <button v-if="$page.props.jetstream.managesProfilePhotos" class="flex border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
                   <img class="h-8 w-8 rounded-full object-cover" :src="$page.props.user.profile_photo_url" :alt="$page.props.user.name">
                 </button>
 
@@ -145,7 +147,6 @@ const logout = () => {
                     py-2
                     border
                     border-transparent
-                    text-sm
                     leading-4
                     font-medium
                     rounded-md
@@ -175,7 +176,7 @@ const logout = () => {
 
               <template #content>
                 <!-- Account Management -->
-                <div class="block px-4 py-2 text-xs text-gray-400">
+                <div class="block px-4 py-2 text-sm text-gray-400">
                   Manage Account
                 </div>
 
@@ -235,6 +236,9 @@ const logout = () => {
         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
           Dashboard
         </ResponsiveNavLink>
+        <ResponsiveNavLink :href="route('library.index')" :active="route().current('library.index')">
+          Library
+        </ResponsiveNavLink>
       </div>
 
       <!-- Responsive Settings Options -->
@@ -248,7 +252,7 @@ const logout = () => {
             <div class="font-medium text-base text-gray-800">
               {{ $page.props.user.name }}
             </div>
-            <div class="font-medium text-sm text-gray-500">
+            <div class="font-medium text-gray-500">
               {{ $page.props.user.email }}
             </div>
           </div>
@@ -274,7 +278,7 @@ const logout = () => {
           <template v-if="$page.props.jetstream.hasTeamFeatures">
             <div class="border-t border-gray-200" />
 
-            <div class="block px-4 py-2 text-xs text-gray-400">
+            <div class="block px-4 py-2 text-sm text-gray-400">
               Manage Team
             </div>
 
@@ -290,7 +294,7 @@ const logout = () => {
             <div class="border-t border-gray-200" />
 
             <!-- Team Switcher -->
-            <div class="block px-4 py-2 text-xs text-gray-400">
+            <div class="block px-4 py-2 text-sm text-gray-400">
               Switch Teams
             </div>
 

@@ -41,6 +41,7 @@ defineExpose({ focus: () => input.value?.focus() });
       rounded-md
       shadow-sm
       dark:bg-gray-300
+      dark:text-black
     "
     :value="modelValue"
     @input="onInput"

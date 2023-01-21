@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Lick;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,7 +17,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $users = User::factory()->count(8)->withPersonalTeam()->create();
+
+        for ($i = 0; $i < 500; $i++) {
+            Lick::factory()->for($users->random())->create();
+        }
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LickController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -32,4 +33,8 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+
+    Route::prefix('library')->name('library.')->group(function () {
+        Route::get('/', [LickController::class, 'index'])->name('index');
+    });
 });

@@ -10,7 +10,7 @@ module.exports = {
     './resources/ts/**/*.vue',
   ],
 
-  // darkMode: 'class',
+  darkMode: 'class',
 
   theme: {
     extend: {

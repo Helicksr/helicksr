@@ -203,7 +203,7 @@ const displayableRole = (role: string) => {
         <template #content>
           <div class="space-y-6">
             <div v-for="invitation in team.team_invitations" :key="invitation.id" class="flex items-center justify-between">
-              <div class="text-gray-600">
+              <div class="text-gray-600 dark:text-gray-300">
                 {{ invitation.email }}
               </div>
 
@@ -242,7 +242,7 @@ const displayableRole = (role: string) => {
             <div v-for="user in team.users" :key="user.id" class="flex items-center justify-between">
               <div class="flex items-center">
                 <img class="w-8 h-8 rounded-full" :src="user.profile_photo_url" :alt="user.name">
-                <div class="ml-4 dark:text-gray-300">
+                <div class="ml-4 dark:text-gray-400">
                   {{ user.name }}
                 </div>
               </div>
@@ -305,7 +305,7 @@ const displayableRole = (role: string) => {
               <div :class="{'opacity-50': updateRoleForm.role && updateRoleForm.role !== role.key}">
                 <!-- Role Name -->
                 <div class="flex items-center">
-                  <div class="text-sm text-gray-600" :class="{'font-semibold': updateRoleForm.role === role.key}">
+                  <div class="text-sm text-gray-600 dark:text-gray-300"  :class="{'font-semibold': updateRoleForm.role === role.key}">
                     {{ role.name }}
                   </div>
 
@@ -315,7 +315,7 @@ const displayableRole = (role: string) => {
                 </div>
 
                 <!-- Role Description -->
-                <div class="mt-2 text-xs text-gray-600">
+                <div class="mt-2 text-xs text-gray-600 dark:text-gray-300">
                   {{ role.description }}
                 </div>
               </div>

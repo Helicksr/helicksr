@@ -24,6 +24,17 @@ declare namespace App {
   };
 
   export namespace Models {
+    export interface Lick {
+      id: number,
+      transcription: string,
+      title: string,
+      length: number,
+      tags: string[],
+      user_id: number,
+      created_at: string,
+      updated_at: string,
+    };
+
     export interface Team {
       id: number
       user_id: number

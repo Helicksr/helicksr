@@ -14,8 +14,14 @@ import PageSubtitle from '~~/Components/PageSubtitle.vue';
     <div class="sm:py-12">
       <Card class="max-w-7xl mx-auto">
         <PageSubtitle>Library</PageSubtitle>
+        <div>
+          Most visited licks here
+        </div>
 
         <PageSubtitle>Shared with me</PageSubtitle>
+        <div>
+          Recently shared here
+        </div>
       </Card>
     </div>
   </AppLayout>
