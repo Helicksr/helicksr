@@ -20,6 +20,9 @@ class LickController extends Controller
         $paginatedResults = Lick::where('user_id', $request->user()->id)->paginate(10);
         return Inertia::render('Library', [
             'licks' => $paginatedResults->items(),
+            'total' => $paginatedResults->total(),
+            'perPage' => $paginatedResults->perPage(),
+            'currentPage' => $paginatedResults->currentPage(),
         ]);
     }
 
