@@ -2,6 +2,8 @@
 import { PropType } from 'vue';
 import LickTag from './LickTag.vue';
 import FormattedDateTime from './FormattedDateTime.vue';
+import { Link } from '@inertiajs/inertia-vue3';
+import route from 'ziggy-js';
 
 const props = defineProps({
   licks: {
@@ -44,7 +46,9 @@ const props = defineProps({
         ">
           <tr v-for="lick in licks" :key="lick.id">
             <td class="px-4 py-3">
-              {{ lick.title }}
+              <Link :href="route('library.show', lick.id)">
+                {{ lick.title }}
+              </Link>
             </td>
             <td class="px-4 py-3">
               {{ lick.length }}

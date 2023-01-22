@@ -18,7 +18,8 @@ class LickController extends Controller
     public function index(Request $request)
     {
         $paginatedResults = Lick::where('user_id', $request->user()->id)->paginate(10);
-        return Inertia::render('Library', [
+
+        return Inertia::render('Library/index', [
             'licks' => $paginatedResults->items(),
             'total' => $paginatedResults->total(),
             'perPage' => $paginatedResults->perPage(),
@@ -55,7 +56,9 @@ class LickController extends Controller
      */
     public function show(Lick $lick)
     {
-        //
+        return Inertia::render('Library/Show', [
+            'lick' => $lick,
+        ]);
     }
 
     /**
