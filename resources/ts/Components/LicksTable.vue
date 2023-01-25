@@ -58,7 +58,9 @@ const props = defineProps({
             </td>
             <td class="px-4 py-3">
               <span v-if="lick.tags.length <= 0">-</span>
-              <LickTag v-else class="text-xs mx-1" v-for="tag in lick.tags" :tag="tag" />
+              <template v-else v-for="tag in lick.tags">
+                <LickTag class="text-xs" :tag="tag" />{{ ' ' }}
+              </template>
             </td>
           </tr>
         </tbody>

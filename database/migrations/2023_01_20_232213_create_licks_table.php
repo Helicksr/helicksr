@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->text('transcription'); // musicxml format
             $table->text('title');
+            $table->integer('tempo'); // BPM
             $table->json('amp_settings')->nullable();
             $table->string('audio_file_path', 2048)->nullable();
             $table->integer('length')->comment('length in seconds');

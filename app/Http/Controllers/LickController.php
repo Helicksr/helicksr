@@ -58,6 +58,7 @@ class LickController extends Controller
     {
         return Inertia::render('Library/Show', [
             'lick' => $lick,
+            'author' => $lick->user->name,
         ]);
     }
 

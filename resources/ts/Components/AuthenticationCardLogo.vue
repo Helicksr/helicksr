@@ -5,7 +5,7 @@ import { Link } from '@inertiajs/inertia-vue3';
 <template>
   <Link :href="'/'">
     <svg
-      class="w-16 h-16 logo"
+      class="w-16 h-16 fill-gray-800 dark:fill-gray-300"
       viewBox="0 0 320 320"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -15,13 +15,3 @@ import { Link } from '@inertiajs/inertia-vue3';
     </svg>
   </Link>
 </template>
-
-<style scoped>
-.logo {
-  fill: black;
-}
-
-.dark .logo {
-  fill: white;
-}
-</style>
