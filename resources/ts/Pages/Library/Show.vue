@@ -24,7 +24,7 @@ defineProps({
     <template #header>
       <PageTitle>{{ lick.title }}</PageTitle>
     </template>
-    <div class="max-w-7xl mx-auto sm:my-12">
+    <div class="max-w-7xl mx-auto sm:my-4">
       <div class="flex flex-row" v-if="lick.audio_file_path">
         <div class="basis-full">
           <Card>

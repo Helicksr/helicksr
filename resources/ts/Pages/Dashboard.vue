@@ -11,7 +11,7 @@ import PageSubtitle from '~~/Components/PageSubtitle.vue';
       <PageTitle>Dashboard</PageTitle>
     </template>
 
-    <div class="sm:py-12">
+    <div class="sm:my-4">
       <Card class="max-w-7xl mx-auto">
         <PageSubtitle>Library</PageSubtitle>
         <div>

@@ -34,7 +34,7 @@ defineProps({
       <PageTitle>Library</PageTitle>
     </template>
 
-    <div class="sm:py-12">
+    <div class="sm:my-4">
       <div class="max-w-7xl mx-auto">
         <span v-if="licks.length == 0">No results</span>
         <LicksTable v-else :licks="licks" />
