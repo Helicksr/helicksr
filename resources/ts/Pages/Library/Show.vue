@@ -6,6 +6,7 @@ import Card from '~~/Components/Card.vue';
 import FormattedDateTime from '~~/Components/FormattedDateTime.vue';
 import LickTag from '~~/Components/LickTag.vue';
 import PageTitle from '~~/Components/PageTitle.vue';
+import TabViewer from '~~/Components/TabViewer.vue';
 
 defineProps({
   lick: {
@@ -42,14 +43,14 @@ defineProps({
               <li>Presence: {{ lick.amp_settings.presence }}</li>
             </ul>
           </Card>
-          <Card class="mt-4">
-            <ul class="list-disc ml-4">
+          <Card :class="{ 'sm:mt-4': lick.amp_settings }">
+            <ul class="list-disc sm:ml-4">
               <li v-if="author">Author: {{ author }}</li>
               <li>Original tempo: {{ lick.tempo }} BPM</li>
               <li>Submitted: <FormattedDateTime :date="lick.created_at" /></li>
             </ul>
           </Card>
-          <Card v-if="lick.tags.length > 0" class="mt-4">
+          <Card v-if="lick.tags.length > 0" class="sm:mt-4">
             <p>Tags:
               <template v-for="tag in lick.tags">
                 <LickTag class="text-xs" :tag="tag" />{{ ' ' }}
@@ -57,9 +58,9 @@ defineProps({
             </p>
           </Card>
         </div>
-        <div class="col-span-4 sm:col-span-3">
+        <div v-if="lick.transcription" class="col-span-4 sm:col-span-3">
           <Card>
-            tab/score goes here
+            <TabViewer :transcription="lick.transcription" />
           </Card>
         </div>
       </div>
