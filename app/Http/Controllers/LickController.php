@@ -34,7 +34,7 @@ class LickController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Library/Create');
     }
 
     /**

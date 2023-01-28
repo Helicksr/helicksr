@@ -11,6 +11,16 @@ const props = defineProps({
     type: String,
     required: true,
   },
+
+  enableRepeat: {
+    type: Boolean,
+    default: true,
+  },
+
+  autoload: { // if true the don't require user to manually click 'load' button
+    type: Boolean,
+    default: false,
+  },
 });
 
 const sleep = (seconds: number) =>
@@ -26,6 +36,10 @@ const state = ref({
   isLoaded: false,
   isRepeating: false,
   repeatDelay: 0,
+});
+
+onMounted(() => {
+  if (props.autoload) load();
 });
 
 const load = () => {
@@ -91,6 +105,7 @@ const toggleRepeat = () => {
       </div>
       <div class="flex justify-center">
         <RepeatButton
+          v-if="enableRepeat"
           class="w-8 h-8"
           :is-repeating="state.isRepeating"
           @toggle="toggleRepeat"

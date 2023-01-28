@@ -36,6 +36,8 @@ Route::middleware([
 
     Route::prefix('library')->name('library.')->group(function () {
         Route::get('/', [LickController::class, 'index'])->name('index');
+        Route::get('/create', [LickController::class, 'create'])->name('create');
+        Route::post('/create', [LickController::class, 'store'])->name('store');
         Route::get('/{lick}', [LickController::class, 'show'])->name('show');
     });
 });
