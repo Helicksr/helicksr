@@ -8,9 +8,8 @@
     bg-white
     dark:bg-gray-500
     shadow-md
-    overflow-hidden
     sm:rounded-lg
-    ">
+  ">
     <slot />
   </div>
 </template>

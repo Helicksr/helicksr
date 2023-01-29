@@ -12,6 +12,7 @@ import SecondaryButton from '~~/Components/SecondaryButton.vue';
 import Player from '~~/Components/AudioPlayer/Player.vue';
 import { ref } from 'vue';
 import TabViewer from '~~/Components/TabViewer.vue';
+import TagSelector from '~~/Components/TagSelector.vue';
 
 const form = useForm({
   _method: 'POST',
@@ -142,6 +143,11 @@ const updateAudioPreview = () => {
               autocomplete="tempo"
             />
             <InputError :message="form.errors.tempo" class="mt-2" />
+          </div>
+
+          <div class="mb-4">
+            <InputLabel for="tags" value="Tags" />
+            <TagSelector class="mt-1 block w-full" id="tags" v-model="form.tags" />
           </div>
 
           <div class="flex items-center justify-end mt-4 text-right">

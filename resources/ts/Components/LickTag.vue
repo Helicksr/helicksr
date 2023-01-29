@@ -24,5 +24,17 @@ const derivedColorStyle = computed(() => {
 </script>
 
 <template>
-  <span class="px-2 py-1 font-semibold leading-tight rounded-full inline" :style="derivedColorStyle">{{ tag }}</span>
+  <span
+    class="
+      px-2
+      py-1
+      font-semibold
+      leading-tight
+      rounded-full
+      inline
+    "
+    :style="derivedColorStyle"
+  >
+    {{ tag }}
+  </span>
 </template>
