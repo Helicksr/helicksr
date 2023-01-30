@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,7 +11,7 @@ class Lick extends Model
 
     protected $casts = [
         'tags' => 'array',
-        'amp_settings' => AsArrayObject::class,
+        'amp_settings' => 'array',
     ];
 
     public function user()

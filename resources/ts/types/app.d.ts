@@ -24,12 +24,14 @@ declare namespace App {
   };
 
   export namespace Models {
+    export interface AmpSetting { knob: string, value: string };
+
     export interface Lick {
       id: number,
       transcription: string,
       title: string,
       tempo: number,
-      amp_settings: { [key: string]: string } | null,
+      amp_settings: AmpSetting[],
       audio_file_path: string | null,
       length: number,
       tags: string[],

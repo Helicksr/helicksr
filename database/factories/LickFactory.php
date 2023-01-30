@@ -54,16 +54,21 @@ class LickFactory extends Factory
 </score-partwise>
 EOF;
 
+        $availableKnobs = ['model', 'bass', 'treble', 'presence'];
+
+        $settings = collect($this->faker->randomElements(
+          $availableKnobs,
+          $this->faker->numberBetween(0, sizeof($availableKnobs) - 1),
+        ))->map(fn ($knob) => [
+          'knob' => $knob,
+          'value' => $this->faker->numberBetween(0, 10) . '',
+        ]);
+
         return [
             'transcription' => $transcription,
             'title' => $this->faker->sentence(3),
             'tempo' => $this->faker->numberBetween(80, 120),
-            'amp_settings' => $this->faker->boolean() ? null : [
-                "model" => $this->faker->sentence(2),
-                "bass" => $this->faker->numberBetween(0, 10),
-                "treble" => $this->faker->numberBetween(0, 10),
-                "presence" => $this->faker->numberBetween(0, 10),
-            ],
+            'amp_settings' => $settings,
             'audio_file_path' => $this->faker->boolean() ? 'https://helicksr-dev.s3.amazonaws.com/Free_Test_Data_500KB_MP3.mp3' : null,
             'length' => $this->faker->numberBetween(3, 20),
             'tags' => $this->faker->words($this->faker->numberBetween(0, 10)),

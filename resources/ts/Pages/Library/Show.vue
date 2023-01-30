@@ -34,13 +34,10 @@ defineProps({
       </div>
       <div class="grid sm:grid-cols-4 gap-0 sm:gap-4 sm:mt-4">
         <div class="col-span-4 sm:col-span-1">
-          <Card v-if="lick.amp_settings">
+          <Card v-if="lick.amp_settings.length > 0">
             Amp Settings:
             <ul class="list-disc ml-4">
-              <li>Model: {{ lick.amp_settings.model }}</li>
-              <li>Bass: {{ lick.amp_settings.bass }}</li>
-              <li>Treble: {{ lick.amp_settings.treble }}</li>
-              <li>Presence: {{ lick.amp_settings.presence }}</li>
+              <li v-for="setting in lick.amp_settings">{{ setting.knob }}: {{ setting.value }}</li>
             </ul>
           </Card>
           <Card :class="{ 'sm:mt-4': lick.amp_settings }">

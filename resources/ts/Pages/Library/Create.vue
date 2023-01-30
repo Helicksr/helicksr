@@ -13,6 +13,7 @@ import Player from '~~/Components/AudioPlayer/Player.vue';
 import { ref } from 'vue';
 import TabViewer from '~~/Components/TabViewer.vue';
 import TagSelector from '~~/Components/TagSelector.vue';
+import AmpSettings from '~~/Components/AmpSettings.vue';
 
 const form = useForm({
   _method: 'POST',
@@ -21,7 +22,12 @@ const form = useForm({
   audio: null,
   tempo: '', // <- detected from audio? let's put a button to autodetect next to the field
   tags: [],
-  amp_settings: [],
+  amp_settings: [
+    { knob: 'model', value: ''},
+    { knob: 'treble', value: ''},
+    { knob: 'bass', value: ''},
+    { knob: 'presence', value: ''},
+  ],
 });
 
 const submit = () => {
@@ -148,6 +154,11 @@ const updateAudioPreview = () => {
           <div class="mb-4">
             <InputLabel for="tags" value="Tags" />
             <TagSelector class="mt-1 block w-full" id="tags" v-model="form.tags" />
+          </div>
+
+          <div class="mb-4">
+            <InputLabel for="amp_settings" value="Amp Settings" />
+            <AmpSettings class="mt-1" id="amp_settings" v-model="form.amp_settings" />
           </div>
 
           <div class="flex items-center justify-end mt-4 text-right">
