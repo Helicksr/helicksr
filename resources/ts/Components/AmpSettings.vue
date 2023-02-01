@@ -70,7 +70,7 @@ const updateSettingValue = (newSettingsValue: string, settingsKey: number) => {
       <div class="mb-2 mr-2 flex-initial w-3/4">
         <TextInput
           id="name"
-          :model-value="setting.value"
+          :model-value="setting.value ?? ''"
           @input="updateSettingValue($event.target.value, settingKey)"
           type="text"
           class="w-full"
@@ -78,7 +78,7 @@ const updateSettingValue = (newSettingsValue: string, settingsKey: number) => {
         />
       </div>
       <div class="flex-none">
-        <SecondaryButton type="button" class="py-3" @click="removeSetting(settingKey)">
+        <SecondaryButton type="button" class="py-2 px-2 mt-1 rounded-full" @click="removeSetting(settingKey)">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"

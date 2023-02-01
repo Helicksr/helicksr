@@ -45,7 +45,30 @@ class LickController extends Controller
      */
     public function store(StoreLickRequest $request)
     {
-        //
+        $newLick = new Lick();
+        $newLick->title = $request->input('title');
+        $newLick->tempo = $request->input('tempo');
+        $newLick->length = 10; // TODO: calculate length from audio file
+
+        // upload audio file
+        if ($request->has('audio')) {
+            $newLick->audio_file_path = $request->file('audio')->storePublicly(
+                'audio-licks',
+            );
+        }
+
+        // upload score/tab
+        $newLick->transcription = $request->input('transcription');
+        $newLick->tags = $request->input('tags', []);
+        $newLick->amp_settings = $request->input('amp_settings', []);
+
+        $newLick->user_id = $request->user()->id;
+
+        $newLick->save();
+
+        session()->flash('flash.banner', 'Lick created successfully!');
+        session()->flash('flash.bannerStyle', 'success');
+        return to_route('library.show', ['lick' => $newLick]);
     }
 
     /**

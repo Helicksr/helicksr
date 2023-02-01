@@ -15,7 +15,15 @@ import TabViewer from '~~/Components/TabViewer.vue';
 import TagSelector from '~~/Components/TagSelector.vue';
 import AmpSettings from '~~/Components/AmpSettings.vue';
 
-const form = useForm({
+const form = useForm<{
+  _method: string,
+  title: string,
+  transcription: string | null, // <- export musicxml from tab or score in other program for now
+  audio: null,
+  tempo: string, // <- detected from audio? let's put a button to autodetect next to the field
+  tags: string[],
+  amp_settings: App.Models.AmpSetting[],
+}>({
   _method: 'POST',
   title: '',
   transcription: null, // <- export musicxml from tab or score in other program for now
@@ -31,16 +39,12 @@ const form = useForm({
 });
 
 const submit = () => {
-  form.transcription = transcriptionInput.value.files[0];
+  form.transcription = transcriptionPreview.value;
   form.audio = audioInput.value.files[0];
 
   form.post(route('library.store'), {
     errorBag: 'submit',
     preserveScroll: true,
-    onSuccess: (result) => {
-      console.log({ result });
-      // redirect to recently created page
-    },
   });
 };
 
@@ -111,6 +115,7 @@ const updateAudioPreview = () => {
               ref="audioInput"
               type="file"
               class="hidden"
+              accept="audio/aac,audio/mpeg,audio/mp4,audio/ogg,audio/wav,audio/x-ms-wma"
               @change="updateAudioPreview"
             >
             <InputLabel for="audio" value="Audio File" />
@@ -120,6 +125,7 @@ const updateAudioPreview = () => {
             <div v-if="audioPreview" class="mt-2">
               <Player :src="audioPreview ?? ''" :enable-repeat="false" :autoload="true" />
             </div>
+            <InputError v-if="form.errors.audio?.length > 0" :message="form.errors.audio" class="mt-2" />
           </div>
 
           <div class="mb-4">
@@ -127,6 +133,7 @@ const updateAudioPreview = () => {
               ref="transcriptionInput"
               type="file"
               class="hidden"
+              accept="application/vnd.recordare.musicxml+xml,application/vnd.recordare.musicxml-portable+xml,application/vnd.recordare.musicxml,application/xml"
               @change="updateTranscriptionPreview"
             >
             <InputLabel for="transcription" value="Transcription File" />
@@ -137,6 +144,7 @@ const updateAudioPreview = () => {
             <div v-if="transcriptionPreview" class="mt-2">
               <TabViewer :transcription="transcriptionPreview ?? ''" />
             </div>
+            <InputError v-if="form.errors.transcription?.length > 0" :message="form.errors.transcription" class="mt-2" />
           </div>
 
           <div class="mb-4">

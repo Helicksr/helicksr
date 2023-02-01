@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Lick;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreLickRequest extends FormRequest
@@ -13,7 +14,7 @@ class StoreLickRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return $this->user()->can('create', Lick::class);
     }
 
     /**
@@ -24,7 +25,10 @@ class StoreLickRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => ['required'],
+            'tempo' => ['required'],
+            'audio' => ['required', 'nullable', 'mimes:mp3,m4a,aac,oga,wav,wma', 'max:10240'],
+            'transcription' => ['required'],
         ];
     }
 }

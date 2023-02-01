@@ -25,10 +25,10 @@ defineProps({
       <PageTitle>{{ lick.title }}</PageTitle>
     </template>
     <div class="max-w-7xl mx-auto sm:my-4">
-      <div class="flex flex-row" v-if="lick.audio_file_path">
+      <div class="flex flex-row" v-if="lick.audio_file_url">
         <div class="basis-full">
           <Card>
-            <Player :src="lick.audio_file_path ?? ''" />
+            <Player :src="lick.audio_file_url ?? ''" />
           </Card>
         </div>
       </div>
