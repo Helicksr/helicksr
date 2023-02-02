@@ -7,11 +7,17 @@ import FormattedDateTime from '~~/Components/FormattedDateTime.vue';
 import LickTag from '~~/Components/LickTag.vue';
 import PageTitle from '~~/Components/PageTitle.vue';
 import TabViewer from '~~/Components/TabViewer.vue';
+import route from 'ziggy-js';
+import { Link } from '@inertiajs/inertia-vue3';
 
 defineProps({
   lick: {
     type: Object as PropType<App.Models.Lick>,
     required: true,
+  },
+  canEdit: {
+    type: Boolean,
+    default: false,
   },
   author: {
     type: String,
@@ -20,8 +26,38 @@ defineProps({
 </script>
 
 <template>
-  <AppLayout title="Library">
+  <AppLayout :title="lick.title">
     <template #header>
+      <Link
+        v-if="canEdit"
+        :href="route('library.edit', { lick })"
+        class="
+          inline-flex
+          items-center
+          px-4
+          py-2
+          bg-gray-800
+          border
+          border-transparent
+          rounded-md
+          font-semibold
+          text-xs
+          text-white
+          uppercase
+          tracking-widest
+          hover:bg-gray-700
+          active:bg-gray-900
+          focus:outline-none
+          focus:border-gray-900
+          focus:ring
+          focus:ring-gray-300
+          disabled:opacity-25
+          transition
+          float-right
+        "
+      >
+        Edit
+      </Link>
       <PageTitle>{{ lick.title }}</PageTitle>
     </template>
     <div class="max-w-7xl mx-auto sm:my-4">

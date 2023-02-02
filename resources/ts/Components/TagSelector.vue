@@ -2,19 +2,21 @@
 import Multiselect from '@vueform/multiselect'
 import { PropType } from 'vue';
 
-defineProps({
+const props = defineProps({
   modelValue: {
     type: Array as PropType<string[]>,
     default: () => ([]),
   },
 });
 
+const modelValueAsObjectArray = props.modelValue.map(tag => ({ label: tag, value: tag }));
+
 const inputEmitName = 'update:modelValue';
 
 const emits = defineEmits<{(eventName: typeof inputEmitName, newValue: string[]): void }>();
 
-const onInput = (newValues: string[]) => {
-  emits(inputEmitName, newValues);
+const onInput = (newValues: { label: string, value: string }[]) => {
+  emits(inputEmitName, newValues.map(tagObject => tagObject.value));
 };
 
 // fetch tags for autocomplete
@@ -83,7 +85,7 @@ const classes = {
 <template>
   <Multiselect
     :classes="classes"
-    :value="modelValue"
+    :model-value="modelValueAsObjectArray"
     placeholder="Write and search"
     @input="onInput"
     mode="tags"
@@ -95,5 +97,6 @@ const classes = {
     :searchable="true"
     :create-option="true"
     :options="fetchTags"
+    :object="true"
   />
 </template>

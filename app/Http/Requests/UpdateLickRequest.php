@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Lick;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateLickRequest extends FormRequest
@@ -13,7 +14,7 @@ class UpdateLickRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return $this->user()->can('update', $this->route('lick'));
     }
 
     /**

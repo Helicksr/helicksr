@@ -42,5 +42,7 @@ Route::middleware([
         Route::get('/create', [LickController::class, 'create'])->name('create');
         Route::post('/create', [LickController::class, 'store'])->name('store');
         Route::get('/{lick}', [LickController::class, 'show'])->name('show');
+        Route::get('/{lick}/edit', [LickController::class, 'edit'])->name('edit');
+        Route::put('/{lick}', [LickController::class, 'update'])->name('update');
     });
 });

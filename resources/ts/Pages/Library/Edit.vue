@@ -1,20 +1,30 @@
 <script setup lang="ts">
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
-import Card from '~~/Components/Card.vue';
-import InputError from '@/Components/InputError.vue';
-import PageTitle from '~~/Components/PageTitle.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import TextInput from '@/Components/TextInput.vue';
+import { onMounted, PropType, ref } from 'vue';
+import route from 'ziggy-js';
 import ActionMessage from '~~/Components/ActionMessage.vue';
+import AmpSettings from '~~/Components/AmpSettings.vue';
+import Player from '~~/Components/AudioPlayer/Player.vue';
+import Card from '~~/Components/Card.vue';
+import InputError from '~~/Components/InputError.vue';
+import InputLabel from '~~/Components/InputLabel.vue';
+import PageTitle from '~~/Components/PageTitle.vue';
 import PrimaryButton from '~~/Components/PrimaryButton.vue';
 import SecondaryButton from '~~/Components/SecondaryButton.vue';
-import Player from '~~/Components/AudioPlayer/Player.vue';
-import { ref } from 'vue';
 import TabViewer from '~~/Components/TabViewer.vue';
 import TagSelector from '~~/Components/TagSelector.vue';
-import AmpSettings from '~~/Components/AmpSettings.vue';
-import route from 'ziggy-js';
+import TextInput from '~~/Components/TextInput.vue';
+
+const props = defineProps({
+  lick: {
+    type: Object as PropType<App.Models.Lick>,
+    required: true,
+  },
+  author: {
+    type: String,
+  },
+});
 
 const form = useForm<{
   _method: string,
@@ -25,26 +35,22 @@ const form = useForm<{
   tags: string[],
   amp_settings: App.Models.AmpSetting[],
 }>({
-  _method: 'POST',
-  title: '',
+  _method: 'PUT',
+  title: props.lick.title,
   transcription: null, // <- export musicxml from tab or score in other program for now
   audio: null,
-  tempo: '', // <- detected from audio? let's put a button to autodetect next to the field
-  tags: [],
-  amp_settings: [
-    { knob: 'model', value: ''},
-    { knob: 'treble', value: ''},
-    { knob: 'bass', value: ''},
-    { knob: 'presence', value: ''},
-  ],
+  tempo: props.lick.tempo.toString(),
+  tags: props.lick.tags,
+  amp_settings: props.lick.amp_settings,
 });
+
 
 const submit = () => {
   form.transform(data => ({
     ...data,
     transcription: transcriptionPreview.value,
     audio: audioInput.value.files[0],
-  })).post(route('library.store'), {
+  })).post(route('library.update', { lick: props.lick }), {
     errorBag: 'submit',
     preserveScroll: true,
   });
@@ -89,12 +95,17 @@ const updateAudioPreview = () => {
 
   reader.readAsDataURL(file);
 };
+
+onMounted(() => {
+  transcriptionPreview.value = props.lick.transcription;
+  audioPreview.value = props.lick.audio_file_url;
+});
 </script>
 
 <template>
-  <AppLayout title="Create a new Lick">
+  <AppLayout :title="lick.title">
     <template #header>
-      <PageTitle>Create a new Lick</PageTitle>
+      <PageTitle>{{ lick.title }}</PageTitle>
     </template>
 
     <div class="max-w-4xl mx-auto sm:my-4">
@@ -177,7 +188,7 @@ const updateAudioPreview = () => {
             </ActionMessage>
 
             <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-              Create
+              Update
             </PrimaryButton>
           </div>
         </Card>

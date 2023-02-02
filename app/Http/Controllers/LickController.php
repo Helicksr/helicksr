@@ -6,6 +6,7 @@ use App\Http\Requests\StoreLickRequest;
 use App\Http\Requests\UpdateLickRequest;
 use App\Models\Lick;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class LickController extends Controller
@@ -75,12 +76,14 @@ class LickController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Lick  $lick
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function show(Lick $lick)
+    public function show(Lick $lick, Request $request)
     {
         return Inertia::render('Library/Show', [
             'lick' => $lick,
+            'canEdit' => $request->user()->can('update', $lick),
             'author' => $lick->user->name,
         ]);
     }
@@ -93,7 +96,9 @@ class LickController extends Controller
      */
     public function edit(Lick $lick)
     {
-        //
+        return Inertia::render('Library/Edit', [
+            'lick' => $lick,
+        ]);
     }
 
     /**
@@ -105,7 +110,42 @@ class LickController extends Controller
      */
     public function update(UpdateLickRequest $request, Lick $lick)
     {
-        //
+        if ($request->has('title')) {
+            $lick->title = $request->input('title');
+        }
+
+        if ($request->has('tempo')) {
+            $lick->tempo = $request->input('tempo');
+        }
+
+        // upload audio file
+        if ($request->has('audio')) {
+            if ($lick->audio_file_path) {
+                Storage::delete($lick->audio_file_path);
+            }
+            $lick->audio_file_path = $request->file('audio')->storePublicly(
+                'audio-licks',
+            );
+        }
+
+        // upload score/tab
+        if ($request->has('transcription')) {
+            $lick->transcription = $request->input('transcription');
+        }
+
+        if ($request->has('tags')) {
+            $lick->tags = $request->input('tags');
+        }
+
+        if ($request->input('amp_settings')) {
+            $lick->amp_settings = $request->input('amp_settings');
+        }
+
+        $lick->save();
+
+        session()->flash('flash.banner', 'Lick updated successfully!');
+        session()->flash('flash.bannerStyle', 'success');
+        return to_route('library.show', ['lick' => $lick]);
     }
 
     /**

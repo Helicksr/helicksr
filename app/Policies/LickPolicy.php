@@ -53,7 +53,7 @@ class LickPolicy
      */
     public function update(User $user, Lick $lick)
     {
-        //
+        return $lick->user_id == $user->id;
     }
 
     /**
