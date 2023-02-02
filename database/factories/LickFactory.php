@@ -69,7 +69,7 @@ EOF;
             'title' => $this->faker->sentence(3),
             'tempo' => $this->faker->numberBetween(80, 120),
             'amp_settings' => $settings,
-            'audio_file_path' => $this->faker->boolean() ? 'https://helicksr-dev.s3.amazonaws.com/Free_Test_Data_500KB_MP3.mp3' : null,
+            'audio_file_path' => $this->faker->boolean() ? 'audio-licks/Free_Test_Data_500KB_MP3.mp3' : null,
             'length' => $this->faker->numberBetween(3, 20),
             'tags' => $this->faker->words($this->faker->numberBetween(0, 10)),
         ];

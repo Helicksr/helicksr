@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AppLayout from '@/Layouts/AppLayout.vue';
-import { PropType } from 'vue';
+import { PropType, ref } from 'vue';
 import Player from '~~/Components/AudioPlayer/Player.vue';
 import Card from '~~/Components/Card.vue';
 import FormattedDateTime from '~~/Components/FormattedDateTime.vue';
@@ -8,9 +8,12 @@ import LickTag from '~~/Components/LickTag.vue';
 import PageTitle from '~~/Components/PageTitle.vue';
 import TabViewer from '~~/Components/TabViewer.vue';
 import route from 'ziggy-js';
-import { Link } from '@inertiajs/inertia-vue3';
+import { Link, useForm } from '@inertiajs/inertia-vue3';
+import DialogModal from '~~/Components/DialogModal.vue';
+import SecondaryButton from '~~/Components/SecondaryButton.vue';
+import DangerButton from '~~/Components/DangerButton.vue';
 
-defineProps({
+const props = defineProps({
   lick: {
     type: Object as PropType<App.Models.Lick>,
     required: true,
@@ -19,10 +22,32 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  canDelete: {
+    type: Boolean,
+    default: false,
+  },
   author: {
     type: String,
   },
 });
+
+const confirmingDeletion = ref(false);
+
+const form = useForm({});
+
+const confirmDeletion = () => {
+  confirmingDeletion.value = true;
+};
+
+const deleteLick = () => {
+  form.delete(route('library.destroy', { lick: props.lick }),{
+    onSuccess: () => closeDeleteModal(),
+  });
+};
+
+const closeDeleteModal = () => {
+  confirmingDeletion.value = false;
+};
 </script>
 
 <template>
@@ -76,7 +101,7 @@ defineProps({
               <li v-for="setting in lick.amp_settings">{{ setting.knob }}: {{ setting.value }}</li>
             </ul>
           </Card>
-          <Card :class="{ 'sm:mt-4': lick.amp_settings }">
+          <Card :class="{ 'sm:mt-4': lick.amp_settings.length > 0 }">
             <ul class="list-disc sm:ml-4">
               <li v-if="author">Author: {{ author }}</li>
               <li>Original tempo: {{ lick.tempo }} BPM</li>
@@ -89,6 +114,36 @@ defineProps({
                 <LickTag class="text-xs" :tag="tag" />{{ ' ' }}
               </template>
             </p>
+          </Card>
+          <Card class="sm:mt-4" v-if="canDelete">
+            <DangerButton @click="confirmDeletion">
+              Delete Lick
+            </DangerButton>
+
+            <DialogModal :show="confirmingDeletion" @close="closeDeleteModal">
+              <template #title>
+                Delete Account
+              </template>
+
+              <template #content>
+                Are you sure you want to delete this Lick?
+              </template>
+
+              <template #footer>
+                <SecondaryButton @click="closeDeleteModal">
+                  Cancel
+                </SecondaryButton>
+
+                <DangerButton
+                  class="ml-3"
+                  :class="{ 'opacity-25': form.processing }"
+                  :disabled="form.processing"
+                  @click="deleteLick"
+                >
+                  Delete
+                </DangerButton>
+              </template>
+            </DialogModal>
           </Card>
         </div>
         <div v-if="lick.transcription" class="col-span-4 sm:col-span-3">

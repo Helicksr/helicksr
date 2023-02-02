@@ -44,5 +44,6 @@ Route::middleware([
         Route::get('/{lick}', [LickController::class, 'show'])->name('show');
         Route::get('/{lick}/edit', [LickController::class, 'edit'])->name('edit');
         Route::put('/{lick}', [LickController::class, 'update'])->name('update');
+        Route::delete('/{lick}', [LickController::class, 'destroy'])->name('destroy');
     });
 });

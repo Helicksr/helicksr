@@ -65,7 +65,7 @@ class LickPolicy
      */
     public function delete(User $user, Lick $lick)
     {
-        //
+        return $lick->user_id == $user->id;
     }
 
     /**

@@ -84,6 +84,7 @@ class LickController extends Controller
         return Inertia::render('Library/Show', [
             'lick' => $lick,
             'canEdit' => $request->user()->can('update', $lick),
+            'canDelete' => $request->user()->can('delete', $lick),
             'author' => $lick->user->name,
         ]);
     }
@@ -156,6 +157,10 @@ class LickController extends Controller
      */
     public function destroy(Lick $lick)
     {
-        //
+        $lick->delete();
+
+        session()->flash('flash.banner', 'Lick deleted successfully!');
+        session()->flash('flash.bannerStyle', 'success');
+        return to_route('library.index');
     }
 }
