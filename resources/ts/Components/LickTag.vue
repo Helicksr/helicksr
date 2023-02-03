@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, PropType } from 'vue';
+import { computed } from 'vue';
 import colors from 'tailwindcss/colors';
 
 const props = defineProps({

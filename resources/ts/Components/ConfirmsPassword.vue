@@ -2,11 +2,13 @@
 import axios from 'axios';
 import { ref, reactive, nextTick } from 'vue';
 import route from 'ziggy-js';
-import DialogModal from './DialogModal.vue';
-import InputError from './InputError.vue';
-import PrimaryButton from './PrimaryButton.vue';
-import SecondaryButton from './SecondaryButton.vue';
-import TextInput from './TextInput.vue';
+import {
+  DialogModal,
+  InputError,
+  PrimaryButton,
+  SecondaryButton,
+  TextInput,
+} from '~~/Components';
 
 const emit = defineEmits(['confirmed']);
 

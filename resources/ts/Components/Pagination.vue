@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { Link } from '@inertiajs/inertia-vue3';
 
 const props = defineProps({

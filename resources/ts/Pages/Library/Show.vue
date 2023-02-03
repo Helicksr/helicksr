@@ -1,17 +1,19 @@
 <script setup lang="ts">
-import AppLayout from '@/Layouts/AppLayout.vue';
-import { PropType, ref } from 'vue';
-import Player from '~~/Components/AudioPlayer/Player.vue';
-import Card from '~~/Components/Card.vue';
-import FormattedDateTime from '~~/Components/FormattedDateTime.vue';
-import LickTag from '~~/Components/LickTag.vue';
-import PageTitle from '~~/Components/PageTitle.vue';
-import TabViewer from '~~/Components/TabViewer.vue';
+import { AppLayout } from '~~/Layouts';
+import {
+  AudioPlayer,
+  Card,
+  DangerButton,
+  DialogModal,
+  FormattedDateTime,
+  LickTag,
+  PageTitle,
+  SecondaryButton,
+  TabViewer,
+} from '~~/Components';
 import route from 'ziggy-js';
 import { Link, useForm } from '@inertiajs/inertia-vue3';
-import DialogModal from '~~/Components/DialogModal.vue';
-import SecondaryButton from '~~/Components/SecondaryButton.vue';
-import DangerButton from '~~/Components/DangerButton.vue';
+import { PropType, ref } from 'vue';
 
 const props = defineProps({
   lick: {
@@ -89,7 +91,7 @@ const closeDeleteModal = () => {
       <div class="flex flex-row" v-if="lick.audio_file_url">
         <div class="basis-full">
           <Card>
-            <Player :src="lick.audio_file_url ?? ''" />
+            <AudioPlayer :src="lick.audio_file_url ?? ''" />
           </Card>
         </div>
       </div>

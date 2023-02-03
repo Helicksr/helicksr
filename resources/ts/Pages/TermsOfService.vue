@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/inertia-vue3';
-import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
+import { AuthenticationCardLogo } from '~~/Components';
 
 defineProps({
   terms: String,

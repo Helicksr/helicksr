@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import AppLayout from '@/Layouts/AppLayout.vue';
-import Card from '~~/Components/Card.vue';
-import PageTitle from '~~/Components/PageTitle.vue';
-import PageSubtitle from '~~/Components/PageSubtitle.vue';
+import { AppLayout } from '~~/Layouts';
+import { Card, PageTitle, PageSubtitle } from '~~/Components';
 </script>
 
 <template>

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { PropType } from 'vue';
-import LickTag from './LickTag.vue';
-import FormattedDateTime from './FormattedDateTime.vue';
+import { LickTag, FormattedDateTime } from '~~/Components';
 import { Link } from '@inertiajs/inertia-vue3';
 import route from 'ziggy-js';
 

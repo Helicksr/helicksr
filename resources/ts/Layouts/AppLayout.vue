@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/inertia-vue3';
-import Banner from '@/Components/Banner.vue';
-import Navbar from '~~/Components/Navbar.vue';
+import { Banner, Navbar } from '~~/Components';
 
 defineProps({
   title: String,

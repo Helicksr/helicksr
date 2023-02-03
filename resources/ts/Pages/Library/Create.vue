@@ -1,19 +1,21 @@
 <script setup lang="ts">
-import AppLayout from '@/Layouts/AppLayout.vue';
+import { AppLayout } from '~~/Layouts';
+import {
+  Card,
+  InputError,
+  PageTitle,
+  InputLabel,
+  TextInput,
+  ActionMessage,
+  PrimaryButton,
+  SecondaryButton,
+  AudioPlayer,
+  TabViewer,
+  TagSelector,
+  AmpSettings,
+} from '~~/Components';
 import { useForm } from '@inertiajs/inertia-vue3';
-import Card from '~~/Components/Card.vue';
-import InputError from '@/Components/InputError.vue';
-import PageTitle from '~~/Components/PageTitle.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import TextInput from '@/Components/TextInput.vue';
-import ActionMessage from '~~/Components/ActionMessage.vue';
-import PrimaryButton from '~~/Components/PrimaryButton.vue';
-import SecondaryButton from '~~/Components/SecondaryButton.vue';
-import Player from '~~/Components/AudioPlayer/Player.vue';
 import { ref } from 'vue';
-import TabViewer from '~~/Components/TabViewer.vue';
-import TagSelector from '~~/Components/TagSelector.vue';
-import AmpSettings from '~~/Components/AmpSettings.vue';
 import route from 'ziggy-js';
 
 const form = useForm<{
@@ -125,7 +127,7 @@ const updateAudioPreview = () => {
               Select an audio file
             </SecondaryButton>
             <div v-if="audioPreview" class="mt-2">
-              <Player :src="audioPreview ?? ''" :enable-repeat="false" :autoload="true" />
+              <AudioPlayer :src="audioPreview ?? ''" :enable-repeat="false" :autoload="true" />
             </div>
             <InputError v-if="form.errors.audio?.length > 0" :message="form.errors.audio" class="mt-2" />
           </div>

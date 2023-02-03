@@ -2,13 +2,14 @@
 import route from 'ziggy-js';
 import { Inertia } from '@inertiajs/inertia';
 import { ref } from 'vue';
-import { Link, } from '@inertiajs/inertia-vue3';
-import ApplicationMark from '@/Components/ApplicationMark.vue';
-import Dropdown from '@/Components/Dropdown.vue';
-import DropdownLink from '@/Components/DropdownLink.vue';
-import NavLink from '@/Components/NavLink.vue';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import PrimaryButton from './PrimaryButton.vue';
+import { Link } from '@inertiajs/inertia-vue3';
+import {
+  ApplicationMark,
+  Dropdown,
+  DropdownLink,
+  NavLink,
+  ResponsiveNavLink,
+} from '~~/Components';
 
 const showingNavigationDropdown = ref(false);
 

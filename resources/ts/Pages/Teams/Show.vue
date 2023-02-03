@@ -1,11 +1,8 @@
 <script setup lang="ts">
-import AppLayout from '@/Layouts/AppLayout.vue';
-import DeleteTeamForm from '@/Pages/Teams/Partials/DeleteTeamForm.vue';
-import SectionBorder from '@/Components/SectionBorder.vue';
-import TeamMemberManager from '@/Pages/Teams/Partials/TeamMemberManager.vue';
-import UpdateTeamNameForm from '@/Pages/Teams/Partials/UpdateTeamNameForm.vue';
+import { PageTitle, SectionBorder } from '~~/Components';
+import { AppLayout } from '~~/Layouts';
+import { DeleteTeamForm, TeamMemberManager, UpdateTeamNameForm } from './Partials';
 import { PropType } from 'vue';
-import PageTitle from '~~/Components/PageTitle.vue';
 
 defineProps({
   team: {

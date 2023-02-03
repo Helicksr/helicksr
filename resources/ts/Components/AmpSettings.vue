@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { PropType } from 'vue';
-import SecondaryButton from './SecondaryButton.vue';
-import TextInput from './TextInput.vue';
+import { TextInput, SecondaryButton } from '~~/Components';
 
 const props = defineProps({
   modelValue: {

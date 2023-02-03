@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { useForm } from '@inertiajs/inertia-vue3';
-import ActionMessage from '@/Components/ActionMessage.vue';
-import FormSection from '@/Components/FormSection.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import {
+  ActionMessage,
+  FormSection,
+  InputError,
+  InputLabel,
+  PrimaryButton,
+  TextInput,
+ } from '~~/Components';
 import { PropType } from 'vue';
 import route from 'ziggy-js';
-import Card from '~~/Components/Card.vue';
 
 const props = defineProps({
   team: {

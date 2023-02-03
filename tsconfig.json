@@ -19,24 +19,6 @@
       "~~/*": [
         "./resources/ts/*"
       ],
-      "@@": [
-        "./resources/ts"
-      ],
-      "@@/*": [
-        "./resources/ts/*"
-      ],
-      "~": [
-        "./resources/ts"
-      ],
-      "~/*": [
-        "./resources/ts/*"
-      ],
-      "@": [
-        "./resources/ts"
-      ],
-      "@/*": [
-        "./resources/ts/*"
-      ],
       "public": [
         "public"
       ]

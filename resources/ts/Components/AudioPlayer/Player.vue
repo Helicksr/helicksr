@@ -2,8 +2,7 @@
 import { computed, onMounted, ref } from 'vue';
 import WaveSurfer from 'wavesurfer.js';
 import CursorPlugin from "wavesurfer.js/src/plugin/cursor";
-import PlayButton from './PlayButton.vue';
-import RepeatButton from './RepeatButton.vue';
+import { PlayButton, RepeatButton } from '~~/Components/AudioPlayer';
 import colors from 'tailwindcss/colors';
 
 const props = defineProps({

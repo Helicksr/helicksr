@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { AuthenticationCard, AuthenticationCardLogo, PrimaryButton } from '~~/Components';
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
-import AuthenticationCard from '@/Components/AuthenticationCard.vue';
-import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
+import { computed } from 'vue';
 import route from 'ziggy-js';
 
 const props = defineProps({

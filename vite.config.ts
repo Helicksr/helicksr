@@ -8,12 +8,6 @@ export default defineConfig({
     alias: {
       "~~": path.resolve(__dirname, "./resources/ts"),
       "~~/*": path.resolve(__dirname, "./resources/ts/*"),
-      "@@": path.resolve(__dirname, "./resources/ts"),
-      "@@/*": path.resolve(__dirname, "./resources/ts/*"),
-      "~": path.resolve(__dirname, "./resources/ts"),
-      "~/*": path.resolve(__dirname, "./resources/ts/*"),
-      "@": path.resolve(__dirname, "./resources/ts"),
-      "@/*": path.resolve(__dirname, "./resources/ts/*"),
       "public": path.resolve(__dirname, "./public"),
     },
   },
