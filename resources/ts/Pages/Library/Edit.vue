@@ -29,13 +29,13 @@ const props = defineProps({
 });
 
 const form = useForm<{
-  _method: string,
-  title: string,
-  transcription: string | null, // <- export musicxml from tab or score in other program for now
-  audio: null,
-  tempo: string, // <- detected from audio? let's put a button to autodetect next to the field
-  tags: string[],
-  amp_settings: App.Models.AmpSetting[],
+  _method: string;
+  title: string;
+  transcription: string | null; // <- export musicxml from tab or score in other program for now
+  audio: null;
+  tempo: string; // <- detected from audio? let's put a button to autodetect next to the field
+  tags: string[];
+  amp_settings: App.Models.AmpSetting[];
 }>({
   _method: 'PUT',
   title: props.lick.title,
@@ -46,16 +46,17 @@ const form = useForm<{
   amp_settings: props.lick.amp_settings,
 });
 
-
 const submit = () => {
-  form.transform(data => ({
-    ...data,
-    transcription: transcriptionPreview.value,
-    audio: audioInput.value.files[0],
-  })).post(route('library.update', { lick: props.lick }), {
-    errorBag: 'submit',
-    preserveScroll: true,
-  });
+  form
+    .transform((data) => ({
+      ...data,
+      transcription: transcriptionPreview.value,
+      audio: audioInput.value.files[0],
+    }))
+    .post(route('library.update', { lick: props.lick }), {
+      errorBag: 'submit',
+      preserveScroll: true,
+    });
 };
 
 // score/tab field handling
@@ -65,7 +66,7 @@ const transcriptionInput = ref<any>(null); // TODO: find correct typings for thi
 const updateTranscriptionPreview = () => {
   const file = transcriptionInput.value?.files[0];
 
-  if (! file) return;
+  if (!file) return;
 
   transcriptionPreview.value = null; // reset value to force reload
 
@@ -85,7 +86,7 @@ const audioInput = ref<any>(null); // TODO: find correct typings for this variab
 const updateAudioPreview = () => {
   const file = audioInput.value?.files[0];
 
-  if (! file) return;
+  if (!file) return;
 
   audioPreview.value = null; // reset value to force reload
 
@@ -132,15 +133,27 @@ onMounted(() => {
               class="hidden"
               accept="audio/aac,audio/mpeg,audio/mp4,audio/ogg,audio/wav,audio/x-ms-wma"
               @change="updateAudioPreview"
-            >
+            />
             <InputLabel for="audio" value="Audio File" />
-            <SecondaryButton class="mt-2 mr-2" type="button" @click.prevent="audioInput.click()">
+            <SecondaryButton
+              class="mt-2 mr-2"
+              type="button"
+              @click.prevent="audioInput.click()"
+            >
               Select an audio file
             </SecondaryButton>
             <div v-if="audioPreview" class="mt-2">
-              <AudioPlayer :src="audioPreview ?? ''" :enable-repeat="false" :autoload="true" />
+              <AudioPlayer
+                :src="audioPreview ?? ''"
+                :enable-repeat="false"
+                :autoload="true"
+              />
             </div>
-            <InputError v-if="form.errors.audio?.length > 0" :message="form.errors.audio" class="mt-2" />
+            <InputError
+              v-if="form.errors.audio?.length > 0"
+              :message="form.errors.audio"
+              class="mt-2"
+            />
           </div>
 
           <div class="mb-4">
@@ -150,16 +163,24 @@ onMounted(() => {
               class="hidden"
               accept="application/vnd.recordare.musicxml+xml,application/vnd.recordare.musicxml-portable+xml,application/vnd.recordare.musicxml,application/xml"
               @change="updateTranscriptionPreview"
-            >
+            />
             <InputLabel for="transcription" value="Transcription File" />
-            <SecondaryButton class="mt-2 mr-2" type="button" @click.prevent="transcriptionInput.click()">
+            <SecondaryButton
+              class="mt-2 mr-2"
+              type="button"
+              @click.prevent="transcriptionInput.click()"
+            >
               Select a score/tab file
             </SecondaryButton>
 
             <div v-if="transcriptionPreview" class="mt-2">
               <TabViewer :transcription="transcriptionPreview ?? ''" />
             </div>
-            <InputError v-if="form.errors.transcription?.length > 0" :message="form.errors.transcription" class="mt-2" />
+            <InputError
+              v-if="form.errors.transcription?.length > 0"
+              :message="form.errors.transcription"
+              class="mt-2"
+            />
           </div>
 
           <div class="mb-4">
@@ -176,12 +197,20 @@ onMounted(() => {
 
           <div class="mb-4">
             <InputLabel for="tags" value="Tags" />
-            <TagSelector class="mt-1 block w-full" id="tags" v-model="form.tags" />
+            <TagSelector
+              id="tags"
+              v-model="form.tags"
+              class="mt-1 block w-full"
+            />
           </div>
 
           <div class="mb-4">
             <InputLabel for="amp_settings" value="Amp Settings" />
-            <AmpSettings class="mt-1" id="amp_settings" v-model="form.amp_settings" />
+            <AmpSettings
+              id="amp_settings"
+              v-model="form.amp_settings"
+              class="mt-1"
+            />
           </div>
 
           <div class="flex items-center justify-end mt-4 text-right">
@@ -189,7 +218,10 @@ onMounted(() => {
               Saved.
             </ActionMessage>
 
-            <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+            <PrimaryButton
+              :class="{ 'opacity-25': form.processing }"
+              :disabled="form.processing"
+            >
               Update
             </PrimaryButton>
           </div>

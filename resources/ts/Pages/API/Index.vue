@@ -5,15 +5,15 @@ import { PropType } from 'vue';
 
 defineProps({
   tokens: {
-    type: Array as PropType<App.ApiToken[]>
+    type: Array as PropType<App.ApiToken[]>,
   },
   availablePermissions: {
     type: Array as PropType<App.Models.CRUDPermissions[]>,
-    default: () => ([]),
+    default: () => [],
   },
   defaultPermissions: {
     type: Array as PropType<App.Models.CRUDPermissions[]>,
-    default: () => (["read"]),
+    default: () => ['read'],
   },
 });
 </script>

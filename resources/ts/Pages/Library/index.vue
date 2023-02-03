@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import { AppLayout } from '~~/Layouts';
-import  {
-  PageTitle,
-  LicksTable,
-  Pagination,
-} from '~~/Components';
+import { PageTitle, LicksTable, Pagination } from '~~/Components';
 import { PropType } from 'vue';
 
 defineProps({

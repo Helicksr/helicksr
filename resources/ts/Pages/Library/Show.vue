@@ -42,7 +42,7 @@ const confirmDeletion = () => {
 };
 
 const deleteLick = () => {
-  form.delete(route('library.destroy', { lick: props.lick }),{
+  form.delete(route('library.destroy', { lick: props.lick }), {
     onSuccess: () => closeDeleteModal(),
   });
 };
@@ -58,37 +58,14 @@ const closeDeleteModal = () => {
       <Link
         v-if="canEdit"
         :href="route('library.edit', { lick })"
-        class="
-          inline-flex
-          items-center
-          px-4
-          py-2
-          bg-gray-800
-          border
-          border-transparent
-          rounded-md
-          font-semibold
-          text-xs
-          text-white
-          uppercase
-          tracking-widest
-          hover:bg-gray-700
-          active:bg-gray-900
-          focus:outline-none
-          focus:border-gray-900
-          focus:ring
-          focus:ring-gray-300
-          disabled:opacity-25
-          transition
-          float-right
-        "
+        class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition float-right"
       >
         Edit
       </Link>
       <PageTitle>{{ lick.title }}</PageTitle>
     </template>
     <div class="max-w-7xl mx-auto sm:my-4">
-      <div class="flex flex-row" v-if="lick.audio_file_url">
+      <div v-if="lick.audio_file_url" class="flex flex-row">
         <div class="basis-full">
           <Card>
             <AudioPlayer :src="lick.audio_file_url ?? ''" />
@@ -100,7 +77,9 @@ const closeDeleteModal = () => {
           <Card v-if="lick.amp_settings.length > 0">
             Amp Settings:
             <ul class="list-disc ml-4">
-              <li v-for="setting in lick.amp_settings">{{ setting.knob }}: {{ setting.value }}</li>
+              <li v-for="setting in lick.amp_settings">
+                {{ setting.knob }}: {{ setting.value }}
+              </li>
             </ul>
           </Card>
           <Card :class="{ 'sm:mt-4': lick.amp_settings.length > 0 }">
@@ -111,21 +90,18 @@ const closeDeleteModal = () => {
             </ul>
           </Card>
           <Card v-if="lick.tags.length > 0" class="sm:mt-4">
-            <p>Tags:
+            <p>
+              Tags:
               <template v-for="tag in lick.tags">
                 <LickTag class="text-xs" :tag="tag" />{{ ' ' }}
               </template>
             </p>
           </Card>
-          <Card class="sm:mt-4" v-if="canDelete">
-            <DangerButton @click="confirmDeletion">
-              Delete Lick
-            </DangerButton>
+          <Card v-if="canDelete" class="sm:mt-4">
+            <DangerButton @click="confirmDeletion"> Delete Lick </DangerButton>
 
             <DialogModal :show="confirmingDeletion" @close="closeDeleteModal">
-              <template #title>
-                Delete Account
-              </template>
+              <template #title> Delete Account </template>
 
               <template #content>
                 Are you sure you want to delete this Lick?

@@ -12,7 +12,7 @@ const props = defineProps({
     type: Number,
     required: true,
   },
-  
+
   currentPage: {
     type: Number,
     required: true,
@@ -21,19 +21,21 @@ const props = defineProps({
   // the number of buttons allowed next to start, end and current page button
   margin: {
     type: Number,
-    default: 2
+    default: 2,
   },
 });
 
 defineEmits<{
-  (e: 'changePage', page: number): void
+  (e: 'changePage', page: number): void;
 }>();
 
 const lastPage = computed(() => Math.ceil(props.total / props.perPage));
 
-const firstItem = computed(() => ((props.currentPage - 1) * props.perPage) + 1);
+const firstItem = computed(() => (props.currentPage - 1) * props.perPage + 1);
 
-const lastItem = computed(() => Math.min(props.currentPage * props.perPage, props.total));
+const lastItem = computed(() =>
+  Math.min(props.currentPage * props.perPage, props.total)
+);
 
 const previousButtonDisabled = computed(() => props.currentPage === 1);
 
@@ -41,7 +43,11 @@ const nextButtonDisabled = computed(() => props.currentPage === lastPage.value);
 
 const shouldPrintButton = (page: number) => {
   // should only print if close current page, start or end
-  return (Math.abs(page - props.currentPage) <= props.margin) || (page <= props.margin || lastPage.value - page < props.margin);
+  return (
+    Math.abs(page - props.currentPage) <= props.margin ||
+    page <= props.margin ||
+    lastPage.value - page < props.margin
+  );
 };
 
 const shouldPrintEllipsis = (page: number) => {
@@ -53,13 +59,15 @@ const shouldPrintEllipsis = (page: number) => {
   if (page > props.currentPage) {
     return lastPage.value - page === props.margin;
   }
-  
+
   return false;
 };
 </script>
 
 <template>
-  <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
+  <div
+    class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
+  >
     <span class="flex items-center col-span-3">
       Showing {{ firstItem }}-{{ lastItem }} of {{ total }}
     </span>
@@ -74,8 +82,16 @@ const shouldPrintEllipsis = (page: number) => {
               class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple"
               aria-label="Previous"
             >
-              <svg aria-hidden="true" class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                <path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" fill-rule="evenodd"></path>
+              <svg
+                aria-hidden="true"
+                class="w-4 h-4 fill-current"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                  clip-rule="evenodd"
+                  fill-rule="evenodd"
+                ></path>
               </svg>
             </Link>
           </li>
@@ -85,16 +101,18 @@ const shouldPrintEllipsis = (page: number) => {
               <Link
                 :href="`?page=${page}`"
                 class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"
-                :class="{ 'text-white transition-colors duration-150 bg-gray-600 border border-r-0 border-gray-600': page === currentPage }"
+                :class="{
+                  'text-white transition-colors duration-150 bg-gray-600 border border-r-0 border-gray-600':
+                    page === currentPage,
+                }"
               >
                 {{ page }}
               </Link>
             </li>
             <li v-else-if="shouldPrintEllipsis(page)">
-              <span  class="px-3 py-1">...</span>
+              <span class="px-3 py-1">...</span>
             </li>
           </template>
-          
 
           <li>
             <Link
@@ -102,8 +120,16 @@ const shouldPrintEllipsis = (page: number) => {
               class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple"
               aria-label="Next"
             >
-              <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
-                <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" fill-rule="evenodd"></path>
+              <svg
+                class="w-4 h-4 fill-current"
+                aria-hidden="true"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                  clip-rule="evenodd"
+                  fill-rule="evenodd"
+                ></path>
               </svg>
             </Link>
           </li>

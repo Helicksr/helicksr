@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { DateTime } from "luxon";
+import { DateTime } from 'luxon';
 
 const props = defineProps({
   date: {
@@ -19,7 +19,6 @@ const parsed = DateTime.fromISO(props.date);
 const formatted = parsed.toFormat(props.format);
 
 const exact = parsed.toFormat('yyyy-MM-dd HH:mm:ss');
-
 </script>
 
 <template>

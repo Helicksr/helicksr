@@ -17,7 +17,7 @@ defineProps({
   },
   sessions: {
     type: Array as PropType<App.BrowserSession[]>,
-    default: () => ([]),
+    default: () => [],
   },
 });
 </script>
@@ -43,15 +43,18 @@ defineProps({
         </div>
 
         <div v-if="$page.props.jetstream.canManageTwoFactorAuthentication">
-          <TwoFactorAuthenticationForm 
+          <TwoFactorAuthenticationForm
             :requires-confirmation="confirmsTwoFactorAuthentication"
-            class="mt-10 sm:mt-0" 
+            class="mt-10 sm:mt-0"
           />
 
           <SectionBorder />
         </div>
 
-        <LogoutOtherBrowserSessionsForm :sessions="sessions" class="mt-10 sm:mt-0" />
+        <LogoutOtherBrowserSessionsForm
+          :sessions="sessions"
+          class="mt-10 sm:mt-0"
+        />
 
         <template v-if="$page.props.jetstream.hasAccountDeletionFeatures">
           <SectionBorder />

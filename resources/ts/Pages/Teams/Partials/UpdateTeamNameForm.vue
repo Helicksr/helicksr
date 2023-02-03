@@ -7,7 +7,7 @@ import {
   InputLabel,
   PrimaryButton,
   TextInput,
- } from '~~/Components';
+} from '~~/Components';
 import { PropType } from 'vue';
 import route from 'ziggy-js';
 
@@ -36,13 +36,9 @@ const updateTeamName = () => {
 
 <template>
   <FormSection @submitted="updateTeamName">
-    <template #title>
-      Team Name
-    </template>
+    <template #title> Team Name </template>
 
-    <template #description>
-      The team's name and owner information.
-    </template>
+    <template #description> The team's name and owner information. </template>
 
     <template #form>
       <!-- Team Owner Information -->
@@ -50,7 +46,11 @@ const updateTeamName = () => {
         <InputLabel value="Team Owner" />
 
         <div class="flex items-center mt-2">
-          <img class="w-12 h-12 rounded-full object-cover" :src="team.owner.profile_photo_url" :alt="team.owner.name">
+          <img
+            class="w-12 h-12 rounded-full object-cover"
+            :src="team.owner.profile_photo_url"
+            :alt="team.owner.name"
+          />
 
           <div class="ml-4 leading-tight dark:text-gray-300">
             <div>{{ team.owner.name }}</div>
@@ -70,7 +70,7 @@ const updateTeamName = () => {
           v-model="form.name"
           type="text"
           class="mt-1 block w-full"
-          :disabled="! permissions.canUpdateTeam"
+          :disabled="!permissions.canUpdateTeam"
         />
 
         <InputError :message="form.errors.name" class="mt-2" />
@@ -82,7 +82,10 @@ const updateTeamName = () => {
         Saved.
       </ActionMessage>
 
-      <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+      <PrimaryButton
+        :class="{ 'opacity-25': form.processing }"
+        :disabled="form.processing"
+      >
         Save
       </PrimaryButton>
     </template>

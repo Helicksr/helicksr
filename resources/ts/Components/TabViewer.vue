@@ -1,6 +1,12 @@
 <script setup lang="ts">
-import { OpenSheetMusicDisplay, Cursor, VoiceEntry, Note, StemDirectionType } from "opensheetmusicdisplay";
-import { onMounted, ref } from "vue";
+import {
+  OpenSheetMusicDisplay,
+  Cursor,
+  VoiceEntry,
+  Note,
+  StemDirectionType,
+} from 'opensheetmusicdisplay';
+import { onMounted, ref } from 'vue';
 
 const props = defineProps({
   transcription: {
@@ -36,7 +42,6 @@ const renderViewer = async () => {
 onMounted(() => {
   renderViewer();
 });
-
 </script>
 
 <template>

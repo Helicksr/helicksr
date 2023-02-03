@@ -1,12 +1,12 @@
 /// <reference types="vite/client" />
 
-import { AxiosInstance } from "axios";
-import { Ziggy } from "~~/ziggy";
+import { type AxiosInstance } from 'axios';
+import { type Ziggy } from '~~/ziggy';
 
 declare global {
   interface Window {
-    _: Lodash,
-    axios: AxiosInstance,
-    Ziggy: typeof Ziggy,
+    _: Lodash;
+    axios: AxiosInstance;
+    Ziggy: typeof Ziggy;
   }
 }

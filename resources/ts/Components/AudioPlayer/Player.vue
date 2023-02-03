@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import WaveSurfer from 'wavesurfer.js';
-import CursorPlugin from "wavesurfer.js/src/plugin/cursor";
+import CursorPlugin from 'wavesurfer.js/src/plugin/cursor';
 import { PlayButton, RepeatButton } from '~~/Components/AudioPlayer';
 import colors from 'tailwindcss/colors';
 
@@ -16,16 +16,15 @@ const props = defineProps({
     default: true,
   },
 
-  autoload: { // if true the don't require user to manually click 'load' button
+  autoload: {
+    // if true the don't require user to manually click 'load' button
     type: Boolean,
     default: false,
   },
 });
 
 const sleep = (seconds: number) =>
-  new Promise(resolve =>
-    setTimeout(resolve, seconds * 1000)
-  );
+  new Promise((resolve) => setTimeout(resolve, seconds * 1000));
 
 const wavesurfer = ref<WaveSurfer | null>(null);
 const wave = ref<HTMLElement | null>(null);
@@ -55,14 +54,14 @@ const load = () => {
           'background-color': colors.black,
           color: colors.white,
           padding: '0.5em',
-          'font-size': '10px'
-        }
+          'font-size': '10px',
+        },
       }),
-    ]
+    ],
   });
 
-  wavesurfer.value.on('error', function(e) {
-      console.error(e);
+  wavesurfer.value.on('error', function (e) {
+    console.error(e);
   });
 
   wavesurfer.value.on('pause', async () => {
@@ -113,8 +112,11 @@ const toggleRepeat = () => {
     </div>
     <div class="flex-1">
       <div ref="wave" />
-      <div v-show="!state.isLoaded" class="w-full h-full flex align-middle justify-center">
-        <button @click="load" class="p-2 bg-blue-400 inline-block">
+      <div
+        v-show="!state.isLoaded"
+        class="w-full h-full flex align-middle justify-center"
+      >
+        <button class="p-2 bg-blue-400 inline-block" @click="load">
           Click here to load player
         </button>
       </div>

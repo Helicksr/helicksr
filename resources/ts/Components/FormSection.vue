@@ -4,7 +4,7 @@ import { Card, SectionTitle } from '~~/Components';
 
 defineEmits(['submitted']);
 
-const hasActions = computed(() => !! useSlots().actions);
+const hasActions = computed(() => !!useSlots().actions);
 </script>
 
 <template>
@@ -25,7 +25,10 @@ const hasActions = computed(() => !! useSlots().actions);
             <slot name="form" />
           </div>
 
-          <div v-if="hasActions" class="flex items-center justify-end pt-3 text-right">
+          <div
+            v-if="hasActions"
+            class="flex items-center justify-end pt-3 text-right"
+          >
             <slot name="actions" />
           </div>
         </Card>
