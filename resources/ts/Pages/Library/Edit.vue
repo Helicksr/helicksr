@@ -163,7 +163,7 @@ onMounted(() => {
               ref="transcriptionInput"
               type="file"
               class="hidden"
-              accept="application/vnd.recordare.musicxml+xml,application/vnd.recordare.musicxml-portable+xml,application/vnd.recordare.musicxml,application/xml"
+              accept=".musicxml,application/vnd.recordare.musicxml+xml,application/vnd.recordare.musicxml-portable+xml,application/vnd.recordare.musicxml,application/xml"
               @change="updateTranscriptionPreview"
             />
             <InputLabel for="transcription" value="Transcription File" />
