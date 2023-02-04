@@ -5,7 +5,7 @@ import { ref } from 'vue';
 import { Link } from '@inertiajs/inertia-vue3';
 import {
   ApplicationMark,
-  Dropdown,
+  DropdownInput,
   DropdownLink,
   NavLink,
   ResponsiveNavLink,
@@ -79,7 +79,7 @@ const logout = () => {
           </div>
           <div class="ml-3 relative">
             <!-- Teams Dropdown -->
-            <Dropdown
+            <DropdownInput
               v-if="$page.props.jetstream.hasTeamFeatures"
               align="right"
               width="60"
@@ -173,12 +173,12 @@ const logout = () => {
                   </template>
                 </div>
               </template>
-            </Dropdown>
+            </DropdownInput>
           </div>
 
           <!-- Settings Dropdown -->
           <div class="ml-3 relative">
-            <Dropdown
+            <DropdownInput
               align="right"
               width="48"
               :content-classes="['py-1', 'bg-white', 'dark:bg-gray-500']"
@@ -244,7 +244,7 @@ const logout = () => {
                   <DropdownLink as="button"> Log Out </DropdownLink>
                 </form>
               </template>
-            </Dropdown>
+            </DropdownInput>
           </div>
         </div>
 

@@ -20,6 +20,21 @@ module.exports = {
         extraFileExtensions: ['.vue'],
     },
     plugins: ['vue'],
-    rules: {},
+    rules: {
+        'vue/multi-word-component-names': [
+            'error',
+            {
+                // ignoring default pages components
+                ignores: [
+                    'Create',
+                    'Edit',
+                    'Index',
+                    'Login',
+                    'Register',
+                    'Show',
+                ],
+            },
+        ],
+    },
     ignorePatterns: ['vite.config.ts'],
 };

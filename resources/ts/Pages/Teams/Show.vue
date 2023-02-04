@@ -7,18 +7,19 @@ import {
   UpdateTeamNameForm,
 } from './Partials';
 import { PropType } from 'vue';
+import { Role, Team, UserPermissions } from '~~/types';
 
 defineProps({
   team: {
-    type: Object as PropType<App.Models.Team>,
+    type: Object as PropType<Team>,
     required: true,
   },
   availableRoles: {
-    type: Array as PropType<App.Models.Role[]>,
+    type: Array as PropType<Role[]>,
     default: () => [],
   },
   permissions: {
-    type: Object as PropType<App.Models.UserPermissions>,
+    type: Object as PropType<UserPermissions>,
     required: true,
   },
 });

@@ -17,18 +17,19 @@ import {
   TextInput,
 } from '~~/Components';
 import route from 'ziggy-js';
+import { Role, Team, TeamInvitation, User, UserPermissions } from '~~/types';
 
 const props = defineProps({
   team: {
-    type: Object as PropType<App.Models.Team>,
+    type: Object as PropType<Team>,
     required: true,
   },
   availableRoles: {
-    type: Array as PropType<App.Models.Role[]>,
+    type: Array as PropType<Role[]>,
     default: () => [],
   },
   userPermissions: {
-    type: Object as PropType<App.Models.UserPermissions>,
+    type: Object as PropType<UserPermissions>,
     required: true,
   },
 });
@@ -49,9 +50,9 @@ const leaveTeamForm = useForm({});
 const removeTeamMemberForm = useForm({});
 
 const currentlyManagingRole = ref(false);
-const managingRoleFor = ref<App.Models.User | null>(null);
+const managingRoleFor = ref<User | null>(null);
 const confirmingLeavingTeam = ref(false);
-const teamMemberBeingRemoved = ref<App.Models.User | null>(null);
+const teamMemberBeingRemoved = ref<User | null>(null);
 
 const addTeamMember = () => {
   addTeamMemberForm.post(route('team-members.store', props.team), {
@@ -61,13 +62,13 @@ const addTeamMember = () => {
   });
 };
 
-const cancelTeamInvitation = (invitation: App.Models.TeamInvitation) => {
+const cancelTeamInvitation = (invitation: TeamInvitation) => {
   Inertia.delete(route('team-invitations.destroy', invitation), {
     preserveScroll: true,
   });
 };
 
-const manageRole = (teamMember: App.Models.User) => {
+const manageRole = (teamMember: User) => {
   managingRoleFor.value = teamMember;
   updateRoleForm.role = teamMember.membership.role;
   currentlyManagingRole.value = true;
@@ -99,7 +100,7 @@ const leaveTeam = () => {
   );
 };
 
-const confirmTeamMemberRemoval = (teamMember: App.Models.User) => {
+const confirmTeamMemberRemoval = (teamMember: User) => {
   teamMemberBeingRemoved.value = teamMember;
 };
 

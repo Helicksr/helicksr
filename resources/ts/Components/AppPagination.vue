@@ -96,7 +96,7 @@ const shouldPrintEllipsis = (page: number) => {
             </Link>
           </li>
 
-          <template v-for="page in lastPage">
+          <template v-for="page in lastPage" :key="page">
             <li v-if="shouldPrintButton(page)">
               <Link
                 :href="`?page=${page}`"

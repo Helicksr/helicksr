@@ -1,11 +1,5 @@
 <script setup lang="ts">
-import {
-  OpenSheetMusicDisplay,
-  Cursor,
-  VoiceEntry,
-  Note,
-  StemDirectionType,
-} from 'opensheetmusicdisplay';
+import { OpenSheetMusicDisplay } from 'opensheetmusicdisplay';
 import { onMounted, ref } from 'vue';
 
 const props = defineProps({

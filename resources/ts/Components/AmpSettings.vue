@@ -1,20 +1,23 @@
 <script setup lang="ts">
 import { PropType } from 'vue';
 import { TextInput, SecondaryButton } from '~~/Components';
+import { AmpSetting } from '~~/types';
 
 const props = defineProps({
   modelValue: {
-    type: Array as PropType<App.Models.AmpSetting[]>,
+    type: Array as PropType<AmpSetting[]>,
     default: () => [],
   },
 });
 
+const inputEmitName = 'update:modelValue';
+
 const emits = defineEmits<{
-  (eventName: string, newValue: typeof props.modelValue): void;
+  (eventName: typeof inputEmitName, newValue: typeof props.modelValue): void;
 }>();
 
 const updateValue = (newValue: typeof props.modelValue) => {
-  emits('update:modelValue', newValue);
+  emits(inputEmitName, newValue);
 };
 
 const addNewSetting = () => {

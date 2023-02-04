@@ -3,7 +3,10 @@ import { Head } from '@inertiajs/inertia-vue3';
 import { AuthenticationCardLogo } from '~~/Components';
 
 defineProps({
-  terms: String,
+  terms: {
+    type: String,
+    default: '',
+  },
 });
 </script>
 
@@ -17,10 +20,12 @@ defineProps({
           <AuthenticationCardLogo />
         </div>
 
+        <!-- eslint-disable vue/no-v-html -->
         <div
           class="w-full sm:max-w-2xl mt-6 p-6 bg-white shadow-md overflow-hidden sm:rounded-lg prose"
           v-html="terms"
         />
+        <!--eslint-enable-->
       </div>
     </div>
   </div>

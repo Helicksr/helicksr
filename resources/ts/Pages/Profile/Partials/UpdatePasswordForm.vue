@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/inertia-vue3';
-import ActionMessage from '@/Components/ActionMessage.vue';
-import FormSection from '@/Components/FormSection.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import {
+  ActionMessage,
+  FormSection,
+  InputError,
+  InputLabel,
+  PrimaryButton,
+  TextInput,
+} from '~~/Components';
 import route from 'ziggy-js';
 
 const passwordInput = ref<{ focus: () => void } | null>(null);

@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/inertia-vue3';
-import { Banner, Navbar } from '~~/Components';
+import { AppBanner, AppNavbar } from '~~/Components';
 
 defineProps({
-  title: String,
+  title: {
+    type: String,
+    default: '',
+  },
 });
 </script>
 
@@ -11,10 +14,10 @@ defineProps({
   <div>
     <Head :title="title" />
 
-    <Banner />
+    <AppBanner />
 
     <div class="min-h-screen">
-      <Navbar />
+      <AppNavbar />
 
       <!-- Page Heading -->
       <header v-if="$slots.header" class="bg-white dark:bg-gray-500 shadow">

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Card } from '~~/Components';
+import { AppCard } from '~~/Components';
 </script>
 
 <template>
@@ -10,8 +10,8 @@ import { Card } from '~~/Components';
       <slot name="logo" />
     </div>
 
-    <Card class="mt-6 sm:max-w-md">
+    <AppCard class="mt-6 sm:max-w-md">
       <slot />
-    </Card>
+    </AppCard>
   </div>
 </template>

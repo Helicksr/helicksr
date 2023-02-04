@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { PropType } from 'vue';
-import { LicksTable, PageTitle, Pagination } from '~~/Components';
+import { LicksTable, PageTitle, AppPagination } from '~~/Components';
 import { AppLayout } from '~~/Layouts';
+import { Lick } from '~~/types';
 
 defineProps({
   licks: {
-    type: Array as PropType<App.Models.Lick[]>,
+    type: Array as PropType<Lick[]>,
     default: () => [],
   },
 
@@ -38,7 +39,7 @@ defineProps({
       </div>
     </div>
 
-    <Pagination
+    <AppPagination
       v-if="licks.length > 0"
       :total="total"
       :per-page="perPage"

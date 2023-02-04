@@ -10,14 +10,15 @@ import {
 } from '~~/Components';
 import { PropType } from 'vue';
 import route from 'ziggy-js';
+import { Team, UserPermissions } from '~~/types';
 
 const props = defineProps({
   team: {
-    type: Object as PropType<App.Models.Team>,
+    type: Object as PropType<Team>,
     required: true,
   },
   permissions: {
-    type: Object as PropType<App.Models.UserPermissions>,
+    type: Object as PropType<UserPermissions>,
     required: true,
   },
 });

@@ -2,14 +2,16 @@
 import { ref, computed, watch } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import { useForm, usePage } from '@inertiajs/inertia-vue3';
-import ActionSection from '@/Components/ActionSection.vue';
-import ConfirmsPassword from '@/Components/ConfirmsPassword.vue';
-import DangerButton from '@/Components/DangerButton.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import {
+  ActionSection,
+  ConfirmsPassword,
+  DangerButton,
+  InputError,
+  InputLabel,
+  PrimaryButton,
+  SecondaryButton,
+  TextInput,
+} from '~~/Components';
 import axios from 'axios';
 
 const props = defineProps({
@@ -162,6 +164,7 @@ const disableTwoFactorAuthentication = () => {
             </p>
           </div>
 
+          <!-- eslint-disable-next-line vue/no-v-html -->
           <div class="mt-4" v-html="qrCode" />
 
           <div
@@ -169,6 +172,7 @@ const disableTwoFactorAuthentication = () => {
             class="mt-4 max-w-xl text-sm text-gray-600 dark:text-gray-400"
           >
             <p class="font-semibold">
+              <!-- eslint-disable-next-line vue/no-v-html -->
               Setup Key: <span v-html="setupKey"></span>
             </p>
           </div>

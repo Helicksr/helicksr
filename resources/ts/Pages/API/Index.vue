@@ -2,17 +2,19 @@
 import { ApiTokenManager } from './Partials';
 import { AppLayout } from '~~/Layouts';
 import { PropType } from 'vue';
+import { ApiToken, CRUDPermissions } from '~~/types';
 
 defineProps({
   tokens: {
-    type: Array as PropType<App.ApiToken[]>,
+    type: Array as PropType<ApiToken[]>,
+    default: () => [],
   },
   availablePermissions: {
-    type: Array as PropType<App.Models.CRUDPermissions[]>,
+    type: Array as PropType<CRUDPermissions[]>,
     default: () => [],
   },
   defaultPermissions: {
-    type: Array as PropType<App.Models.CRUDPermissions[]>,
+    type: Array as PropType<CRUDPermissions[]>,
     default: () => ['read'],
   },
 });

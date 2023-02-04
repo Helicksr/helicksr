@@ -9,6 +9,7 @@ import {
 } from './Partials';
 import { PageTitle, SectionBorder } from '~~/Components';
 import { PropType } from 'vue';
+import { BrowserSession } from '~~/types';
 
 defineProps({
   confirmsTwoFactorAuthentication: {
@@ -16,7 +17,7 @@ defineProps({
     required: true,
   },
   sessions: {
-    type: Array as PropType<App.BrowserSession[]>,
+    type: Array as PropType<BrowserSession[]>,
     default: () => [],
   },
 });

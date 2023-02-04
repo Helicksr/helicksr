@@ -3,15 +3,27 @@ import { Head, Link } from '@inertiajs/inertia-vue3';
 import route from 'ziggy-js';
 
 defineProps({
-  canLogin: Boolean,
-  canRegister: Boolean,
-  laravelVersion: String,
-  phpVersion: String,
+  canLogin: {
+    type: Boolean,
+    default: true,
+  },
+  canRegister: {
+    type: Boolean,
+    default: true,
+  },
+  laravelVersion: {
+    type: String,
+    default: '',
+  },
+  phpVersion: {
+    type: String,
+    default: '',
+  },
 });
 </script>
 
 <template>
-  <Head title="TS Welcome" />
+  <Head title="Welcome" />
 
   <div
     class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0"

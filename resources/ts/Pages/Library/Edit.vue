@@ -4,7 +4,7 @@ import {
   ActionMessage,
   AmpSettings,
   AudioPlayer,
-  Card,
+  AppCard,
   InputError,
   InputLabel,
   PageTitle,
@@ -17,14 +17,16 @@ import {
 import { useForm } from '@inertiajs/inertia-vue3';
 import { onMounted, PropType, ref } from 'vue';
 import route from 'ziggy-js';
+import { AmpSetting, Lick } from '~~/types';
 
 const props = defineProps({
   lick: {
-    type: Object as PropType<App.Models.Lick>,
+    type: Object as PropType<Lick>,
     required: true,
   },
   author: {
     type: String,
+    default: '',
   },
 });
 
@@ -35,7 +37,7 @@ const form = useForm<{
   audio: null;
   tempo: string; // <- detected from audio? let's put a button to autodetect next to the field
   tags: string[];
-  amp_settings: App.Models.AmpSetting[];
+  amp_settings: AmpSetting[];
 }>({
   _method: 'PUT',
   title: props.lick.title,
@@ -113,7 +115,7 @@ onMounted(() => {
 
     <div class="max-w-4xl mx-auto sm:my-4">
       <form @submit.prevent="submit">
-        <Card>
+        <AppCard>
           <div class="mb-4">
             <InputLabel for="title" value="Title" />
             <TextInput
@@ -225,7 +227,7 @@ onMounted(() => {
               Update
             </PrimaryButton>
           </div>
-        </Card>
+        </AppCard>
       </form>
     </div>
   </AppLayout>

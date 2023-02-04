@@ -4,7 +4,7 @@ import { useForm } from '@inertiajs/inertia-vue3';
 import {
   ActionMessage,
   ActionSection,
-  Checkbox,
+  CheckboxInput,
   ConfirmationModal,
   DangerButton,
   DialogModal,
@@ -17,18 +17,19 @@ import {
   TextInput,
 } from '~~/Components';
 import route from 'ziggy-js';
+import { ApiToken, CRUDPermissions } from '~~/types';
 
 const props = defineProps({
   tokens: {
-    type: Array as PropType<App.ApiToken[]>,
+    type: Array as PropType<ApiToken[]>,
     default: () => [],
   },
   availablePermissions: {
-    type: Array as PropType<App.Models.CRUDPermissions[]>,
+    type: Array as PropType<CRUDPermissions[]>,
     default: () => [],
   },
   defaultPermissions: {
-    type: Array as PropType<App.Models.CRUDPermissions[]>,
+    type: Array as PropType<CRUDPermissions[]>,
     default: () => ['read'],
   },
 });
@@ -39,7 +40,7 @@ const createApiTokenForm = useForm({
 });
 
 const updateApiTokenForm = useForm<{
-  permissions: App.Models.CRUDPermissions[];
+  permissions: CRUDPermissions[];
 }>({
   permissions: [],
 });
@@ -47,8 +48,8 @@ const updateApiTokenForm = useForm<{
 const deleteApiTokenForm = useForm({});
 
 const displayingToken = ref(false);
-const managingPermissionsFor = ref<App.ApiToken | null>(null);
-const apiTokenBeingDeleted = ref<App.ApiToken | null>(null);
+const managingPermissionsFor = ref<ApiToken | null>(null);
+const apiTokenBeingDeleted = ref<ApiToken | null>(null);
 
 const createApiToken = () => {
   createApiTokenForm.post(route('api-tokens.store'), {
@@ -60,7 +61,7 @@ const createApiToken = () => {
   });
 };
 
-const manageApiTokenPermissions = (token: App.ApiToken) => {
+const manageApiTokenPermissions = (token: ApiToken) => {
   updateApiTokenForm.permissions = token.abilities;
   managingPermissionsFor.value = token;
 };
@@ -76,7 +77,7 @@ const updateApiToken = () => {
   );
 };
 
-const confirmApiTokenDeletion = (token: App.ApiToken) => {
+const confirmApiTokenDeletion = (token: ApiToken) => {
   apiTokenBeingDeleted.value = token;
 };
 
@@ -127,7 +128,7 @@ const deleteApiToken = () => {
               :key="(permission as unknown as string)"
             >
               <label class="flex items-center">
-                <Checkbox
+                <CheckboxInput
                   v-model:checked="createApiTokenForm.permissions"
                   :value="(permission as unknown as string)"
                 />
@@ -243,7 +244,7 @@ const deleteApiToken = () => {
             :key="(permission as unknown as string)"
           >
             <label class="flex items-center">
-              <Checkbox
+              <CheckboxInput
                 v-model:checked="updateApiTokenForm.permissions"
                 :value="(permission as unknown as string)"
               />

@@ -1,7 +1,6 @@
-/// <reference types="vite/client" />
-
 import { type AxiosInstance } from 'axios';
 import { type Ziggy } from '~~/ziggy';
+import 'vite/client';
 
 declare global {
   interface Window {

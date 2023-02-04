@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Card, SectionTitle } from '~~/Components';
+import { AppCard, SectionTitle } from '~~/Components';
 </script>
 
 <template>
@@ -14,9 +14,9 @@ import { Card, SectionTitle } from '~~/Components';
     </SectionTitle>
 
     <div class="mt-5 md:mt-0 md:col-span-2">
-      <Card>
+      <AppCard>
         <slot name="content" />
-      </Card>
+      </AppCard>
     </div>
   </div>
 </template>

@@ -3,10 +3,11 @@ import { PropType } from 'vue';
 import { LickTag, FormattedDateTime } from '~~/Components';
 import { Link } from '@inertiajs/inertia-vue3';
 import route from 'ziggy-js';
+import { Lick } from '~~/types';
 
-const props = defineProps({
+defineProps({
   licks: {
-    type: Array as PropType<App.Models.Lick[]>,
+    type: Array as PropType<Lick[]>,
     default: () => [],
   },
 });
@@ -43,7 +44,7 @@ const props = defineProps({
             </td>
             <td class="px-4 py-3">
               <span v-if="lick.tags.length <= 0">-</span>
-              <template v-for="tag in lick.tags" v-else>
+              <template v-for="tag in lick.tags" v-else :key="tag">
                 <LickTag class="text-xs" :tag="tag" />{{ ' ' }}
               </template>
             </td>

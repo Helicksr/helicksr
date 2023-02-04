@@ -1,19 +1,21 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/inertia-vue3';
-import { computed } from 'vue';
+import { computed, PropType } from 'vue';
 
 const props = defineProps({
   href: {
     type: String,
+    default: '',
   },
   as: {
-    type: String,
+    type: String as PropType<'a' | 'button'>,
+    default: 'button',
   },
 });
 
-const isAnchor = computed(() => props.as == 'a');
+const isAnchor = computed(() => props.as === 'a');
 
-const isButton = computed(() => props.as == 'button');
+const isButton = computed(() => props.as === 'button');
 
 const defaultClasses = [
   'block',

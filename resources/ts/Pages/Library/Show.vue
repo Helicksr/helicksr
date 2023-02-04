@@ -2,7 +2,7 @@
 import { AppLayout } from '~~/Layouts';
 import {
   AudioPlayer,
-  Card,
+  AppCard,
   DangerButton,
   DialogModal,
   FormattedDateTime,
@@ -14,10 +14,11 @@ import {
 import route from 'ziggy-js';
 import { Link, useForm } from '@inertiajs/inertia-vue3';
 import { PropType, ref } from 'vue';
+import { Lick } from '~~/types';
 
 const props = defineProps({
   lick: {
-    type: Object as PropType<App.Models.Lick>,
+    type: Object as PropType<Lick>,
     required: true,
   },
   canEdit: {
@@ -30,6 +31,7 @@ const props = defineProps({
   },
   author: {
     type: String,
+    default: '',
   },
 });
 
@@ -67,37 +69,37 @@ const closeDeleteModal = () => {
     <div class="max-w-7xl mx-auto sm:my-4">
       <div v-if="lick.audio_file_url" class="flex flex-row">
         <div class="basis-full">
-          <Card>
+          <AppCard>
             <AudioPlayer :src="lick.audio_file_url ?? ''" />
-          </Card>
+          </AppCard>
         </div>
       </div>
       <div class="grid sm:grid-cols-4 gap-0 sm:gap-4 sm:mt-4">
         <div class="col-span-4 sm:col-span-1">
-          <Card v-if="lick.amp_settings.length > 0">
+          <AppCard v-if="lick.amp_settings.length > 0">
             Amp Settings:
             <ul class="list-disc ml-4">
-              <li v-for="setting in lick.amp_settings">
+              <li v-for="setting in lick.amp_settings" :key="setting.knob">
                 {{ setting.knob }}: {{ setting.value }}
               </li>
             </ul>
-          </Card>
-          <Card :class="{ 'sm:mt-4': lick.amp_settings.length > 0 }">
+          </AppCard>
+          <AppCard :class="{ 'sm:mt-4': lick.amp_settings.length > 0 }">
             <ul class="list-disc sm:ml-4">
               <li v-if="author">Author: {{ author }}</li>
               <li>Original tempo: {{ lick.tempo }} BPM</li>
               <li>Submitted: <FormattedDateTime :date="lick.created_at" /></li>
             </ul>
-          </Card>
-          <Card v-if="lick.tags.length > 0" class="sm:mt-4">
+          </AppCard>
+          <AppCard v-if="lick.tags.length > 0" class="sm:mt-4">
             <p>
               Tags:
-              <template v-for="tag in lick.tags">
+              <template v-for="tag in lick.tags" :key="tag">
                 <LickTag class="text-xs" :tag="tag" />{{ ' ' }}
               </template>
             </p>
-          </Card>
-          <Card v-if="canDelete" class="sm:mt-4">
+          </AppCard>
+          <AppCard v-if="canDelete" class="sm:mt-4">
             <DangerButton @click="confirmDeletion"> Delete Lick </DangerButton>
 
             <DialogModal :show="confirmingDeletion" @close="closeDeleteModal">
@@ -122,12 +124,12 @@ const closeDeleteModal = () => {
                 </DangerButton>
               </template>
             </DialogModal>
-          </Card>
+          </AppCard>
         </div>
         <div v-if="lick.transcription" class="col-span-4 sm:col-span-3">
-          <Card>
+          <AppCard>
             <TabViewer :transcription="lick.transcription" />
-          </Card>
+          </AppCard>
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@ import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 import {
   AuthenticationCard,
   AuthenticationCardLogo,
-  Checkbox,
+  CheckboxInput,
   InputError,
   InputLabel,
   PrimaryButton,
@@ -93,7 +93,7 @@ const submit = () => {
       >
         <InputLabel for="terms">
           <div class="flex items-center">
-            <Checkbox
+            <CheckboxInput
               id="terms"
               v-model:checked="form.terms"
               name="terms"

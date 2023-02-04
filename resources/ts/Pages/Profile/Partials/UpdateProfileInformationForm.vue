@@ -2,18 +2,21 @@
 import { PropType, ref } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import { Link, useForm } from '@inertiajs/inertia-vue3';
-import ActionMessage from '@/Components/ActionMessage.vue';
-import FormSection from '@/Components/FormSection.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import {
+  ActionMessage,
+  FormSection,
+  InputError,
+  InputLabel,
+  PrimaryButton,
+  SecondaryButton,
+  TextInput,
+} from '~~/Components';
 import route from 'ziggy-js';
+import { User } from '~~/types';
 
 const props = defineProps({
   user: {
-    type: Object as PropType<App.Models.User>,
+    type: Object as PropType<User>,
     required: true,
   },
 });

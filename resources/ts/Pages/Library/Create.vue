@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { AppLayout } from '~~/Layouts';
 import {
-  Card,
+  AppCard,
   InputError,
   PageTitle,
   InputLabel,
@@ -17,6 +17,7 @@ import {
 import { useForm } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
 import route from 'ziggy-js';
+import { AmpSetting } from '~~/types';
 
 const form = useForm<{
   _method: string;
@@ -25,7 +26,7 @@ const form = useForm<{
   audio: null;
   tempo: string; // <- detected from audio? let's put a button to autodetect next to the field
   tags: string[];
-  amp_settings: App.Models.AmpSetting[];
+  amp_settings: AmpSetting[];
 }>({
   _method: 'POST',
   title: '',
@@ -103,7 +104,7 @@ const updateAudioPreview = () => {
 
     <div class="max-w-4xl mx-auto sm:my-4">
       <form @submit.prevent="submit">
-        <Card>
+        <AppCard>
           <div class="mb-4">
             <InputLabel for="title" value="Title" />
             <TextInput
@@ -215,7 +216,7 @@ const updateAudioPreview = () => {
               Create
             </PrimaryButton>
           </div>
-        </Card>
+        </AppCard>
       </form>
     </div>
   </AppLayout>

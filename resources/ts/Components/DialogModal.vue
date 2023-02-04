@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Modal } from '~~/Components';
+import { AppModal } from '~~/Components';
 
 const emit = defineEmits(['close']);
 
@@ -24,7 +24,7 @@ const close = () => {
 </script>
 
 <template>
-  <Modal
+  <AppModal
     :show="show"
     :max-width="maxWidth"
     :closeable="closeable"
@@ -45,5 +45,5 @@ const close = () => {
     >
       <slot name="footer" />
     </div>
-  </Modal>
+  </AppModal>
 </template>

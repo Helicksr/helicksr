@@ -8,9 +8,13 @@ import {
   SecondaryButton,
 } from '~~/Components';
 import route from 'ziggy-js';
+import { Team } from '~~/types';
 
 const props = defineProps({
-  team: Object as PropType<App.Models.Team>,
+  team: {
+    type: Object as PropType<Team>,
+    required: true,
+  },
 });
 
 const confirmingTeamDeletion = ref(false);

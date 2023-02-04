@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
-import { Card, SectionTitle } from '~~/Components';
+import { AppCard, SectionTitle } from '~~/Components';
 
 defineEmits(['submitted']);
 
@@ -20,7 +20,7 @@ const hasActions = computed(() => !!useSlots().actions);
 
     <div class="mt-5 md:mt-0 md:col-span-2">
       <form @submit.prevent="$emit('submitted')">
-        <Card>
+        <AppCard>
           <div class="grid grid-cols-6 gap-6">
             <slot name="form" />
           </div>
@@ -31,7 +31,7 @@ const hasActions = computed(() => !!useSlots().actions);
           >
             <slot name="actions" />
           </div>
-        </Card>
+        </AppCard>
       </form>
     </div>
   </div>

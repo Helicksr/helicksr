@@ -3,7 +3,7 @@ import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 import {
   AuthenticationCard,
   AuthenticationCardLogo,
-  Checkbox,
+  CheckboxInput,
   InputError,
   InputLabel,
   PrimaryButton,
@@ -18,6 +18,7 @@ defineProps({
   },
   status: {
     type: String,
+    default: '',
   },
 });
 
@@ -80,7 +81,7 @@ const submit = () => {
 
       <div class="block mt-4">
         <label class="flex items-center">
-          <Checkbox v-model:checked="form.remember" name="remember" />
+          <CheckboxInput v-model:checked="form.remember" name="remember" />
           <span class="ml-2 text-sm text-gray-700 dark:text-gray-300"
             >Remember me</span
           >

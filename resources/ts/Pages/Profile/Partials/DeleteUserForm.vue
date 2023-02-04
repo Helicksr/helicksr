@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/inertia-vue3';
-import ActionSection from '@/Components/ActionSection.vue';
-import DangerButton from '@/Components/DangerButton.vue';
-import DialogModal from '@/Components/DialogModal.vue';
-import InputError from '@/Components/InputError.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import {
+  ActionSection,
+  DangerButton,
+  DialogModal,
+  InputError,
+  SecondaryButton,
+  TextInput,
+} from '~~/Components';
 import route from 'ziggy-js';
 
 const confirmingUserDeletion = ref(false);

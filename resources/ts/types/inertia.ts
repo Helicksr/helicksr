@@ -1,3 +1,5 @@
+import type { Team, TeamMembership, User } from './models';
+
 export {};
 
 declare module '@inertiajs/inertia' {
@@ -19,11 +21,11 @@ declare module '@inertiajs/inertia' {
       hasTermsAndPrivacyPolicyFeature: boolean;
       managesProfilePhotos: boolean;
     };
-    user: App.Models.User & {
-      all_teams?: App.Models.Team[] | null;
-      current_team?: App.Models.Team;
+    user: User & {
+      all_teams?: Team[] | null;
+      current_team?: Team;
       two_factor_enabled: boolean;
-      membership?: App.Models.TeamMembership;
+      membership?: TeamMembership;
     };
   }
 }

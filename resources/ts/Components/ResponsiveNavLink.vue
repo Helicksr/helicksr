@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, PropType } from 'vue';
 import { Link } from '@inertiajs/inertia-vue3';
 
 const props = defineProps({
@@ -9,9 +9,11 @@ const props = defineProps({
   },
   href: {
     type: String,
+    default: '',
   },
   as: {
-    type: String,
+    type: String as PropType<'a' | 'button'>,
+    default: 'button',
   },
 });
 
@@ -28,7 +30,7 @@ const classes = computed(() => {
       <slot />
     </button>
 
-    <Link v-else :href="href ?? ''" :class="classes">
+    <Link v-else :href="href" :class="classes">
       <slot />
     </Link>
   </div>
