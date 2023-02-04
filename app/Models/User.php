@@ -65,4 +65,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Lick::class);
     }
+
+    public function licksSharedDirectly()
+    {
+        return $this->belongsToMany(Lick::class, 'shared_lick_user');
+    }
 }

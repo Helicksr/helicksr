@@ -127,6 +127,7 @@ const Ziggy = {
       methods: ['DELETE'],
       bindings: { lick: 'id' },
     },
+    'shared.index': { uri: 'shared', methods: ['GET', 'HEAD'] },
   },
 };
 

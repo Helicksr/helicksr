@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LickController;
+use App\Http\Controllers\SharedLickController;
 use App\Http\Controllers\TagController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -45,5 +46,9 @@ Route::middleware([
         Route::get('/{lick}/edit', [LickController::class, 'edit'])->name('edit');
         Route::put('/{lick}', [LickController::class, 'update'])->name('update');
         Route::delete('/{lick}', [LickController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('shared')->name('shared.')->group(function () {
+        Route::get('/', [SharedLickController::class, 'index'])->name('index');
     });
 });

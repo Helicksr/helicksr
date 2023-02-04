@@ -59,6 +59,12 @@ const logout = () => {
             >
               Library
             </NavLink>
+            <NavLink
+              :href="route('shared.index')"
+              :active="route().current('shared.index')"
+            >
+              Shared
+            </NavLink>
           </div>
         </div>
 
@@ -300,6 +306,12 @@ const logout = () => {
           :active="route().current('library.index')"
         >
           Library
+        </ResponsiveNavLink>
+        <ResponsiveNavLink
+          :href="route('shared.index')"
+          :active="route().current('shared.index')"
+        >
+          Shared
         </ResponsiveNavLink>
       </div>
 

@@ -25,6 +25,16 @@ class Lick extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function usersSharedDirectly()
+    {
+        return $this->belongsToMany(User::class, 'shared_lick_user');
+    }
+
+    public function teamsSharedDirectly()
+    {
+        return $this->belongsToMany(Team::class, 'shared_lick_team');
+    }
+
     public function getAudioFileUrlAttribute()
     {
         return $this->audio_file_path ? Storage::url($this->audio_file_path) : null;

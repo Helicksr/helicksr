@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { AppLayout } from '~~/Layouts';
-import { LicksTable, PageTitle, Pagination } from '~~/Components';
 import { PropType } from 'vue';
+import { LicksTable, PageTitle, Pagination } from '~~/Components';
+import { AppLayout } from '~~/Layouts';
 
 defineProps({
   licks: {
@@ -25,11 +25,10 @@ defineProps({
   },
 });
 </script>
-
 <template>
-  <AppLayout title="Library">
+  <AppLayout title="Shared with me">
     <template #header>
-      <PageTitle>Library</PageTitle>
+      <PageTitle>Shared with me</PageTitle>
     </template>
 
     <div class="sm:my-4">
