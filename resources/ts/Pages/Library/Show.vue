@@ -10,11 +10,14 @@ import {
   PageTitle,
   SecondaryButton,
   TabViewer,
+  PrimaryButton,
+  ShareTargetSelector,
 } from '~~/Components';
 import route from 'ziggy-js';
 import { Link, useForm } from '@inertiajs/inertia-vue3';
 import { PropType, ref } from 'vue';
-import { Lick } from '~~/types';
+import { Lick, User } from '~~/types';
+import { ShareTargetSelectorInputType } from '~~/Components/ShareTargetSelector.vue';
 
 const props = defineProps({
   lick: {
@@ -29,42 +32,86 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  canShare: {
+    type: Boolean,
+    default: false,
+  },
   author: {
     type: String,
     default: '',
   },
+  sharedWith: {
+    type: Array as PropType<User[]>,
+    default: () => [],
+  },
 });
 
-const confirmingDeletion = ref(false);
+// Delete modal
+const deleteModalVisible = ref(false);
 
-const form = useForm({});
+const deleteForm = useForm({});
 
-const confirmDeletion = () => {
-  confirmingDeletion.value = true;
+const showDeleteModal = () => {
+  deleteModalVisible.value = true;
 };
 
 const deleteLick = () => {
-  form.delete(route('library.destroy', { lick: props.lick }), {
-    onSuccess: () => closeDeleteModal(),
+  deleteForm.delete(route('library.destroy', { lick: props.lick }), {
+    onSuccess: closeDeleteModal,
   });
 };
 
 const closeDeleteModal = () => {
-  confirmingDeletion.value = false;
+  deleteModalVisible.value = false;
+};
+
+// Share modal
+const shareModalVisible = ref(false);
+
+const shareForm = useForm<{ shareWith: ShareTargetSelectorInputType }>({
+  shareWith: {
+    users: [],
+    teams: [],
+  },
+});
+
+const showShareModal = () => {
+  shareModalVisible.value = true;
+};
+
+const closeShareModal = () => {
+  shareForm.shareWith.teams = [];
+  shareForm.shareWith.users = [];
+  shareModalVisible.value = false;
+};
+
+const shareLick = () => {
+  shareForm
+    .transform((data) => ({
+      share_target_users: data.shareWith.users.map((user) => user.id),
+      share_target_teams: data.shareWith.teams.map((team) => team.id),
+    }))
+    .post(route('shared.create', { lick: props.lick }), {
+      onSuccess: closeShareModal,
+    });
 };
 </script>
 
 <template>
   <AppLayout :title="lick.title">
     <template #header>
-      <Link
-        v-if="canEdit"
-        :href="route('library.edit', { lick })"
-        class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition float-right"
+      <PrimaryButton v-if="canShare" class="float-right" @click="showShareModal"
+        >Share</PrimaryButton
       >
-        Edit
-      </Link>
-      <PageTitle>{{ lick.title }}</PageTitle>
+      <PageTitle
+        >{{ lick.title }}
+        <Link
+          v-if="canEdit"
+          class="text-sm underline"
+          :href="route('library.edit', { lick })"
+          >(edit)</Link
+        ></PageTitle
+      >
     </template>
     <div class="max-w-7xl mx-auto sm:my-4">
       <div v-if="lick.audio_file_url" class="flex flex-row">
@@ -85,7 +132,7 @@ const closeDeleteModal = () => {
             </ul>
           </AppCard>
           <AppCard :class="{ 'sm:mt-4': lick.amp_settings.length > 0 }">
-            <ul class="list-disc sm:ml-4">
+            <ul class="list-disc ml-4">
               <li v-if="author">Author: {{ author }}</li>
               <li>Original tempo: {{ lick.tempo }} BPM</li>
               <li>Submitted: <FormattedDateTime :date="lick.created_at" /></li>
@@ -100,9 +147,9 @@ const closeDeleteModal = () => {
             </p>
           </AppCard>
           <AppCard v-if="canDelete" class="sm:mt-4">
-            <DangerButton @click="confirmDeletion"> Delete Lick </DangerButton>
+            <DangerButton @click="showDeleteModal"> Delete Lick </DangerButton>
 
-            <DialogModal :show="confirmingDeletion" @close="closeDeleteModal">
+            <DialogModal :show="deleteModalVisible" @close="closeDeleteModal">
               <template #title> Delete Account </template>
 
               <template #content>
@@ -116,8 +163,8 @@ const closeDeleteModal = () => {
 
                 <DangerButton
                   class="ml-3"
-                  :class="{ 'opacity-25': form.processing }"
-                  :disabled="form.processing"
+                  :class="{ 'opacity-25': deleteForm.processing }"
+                  :disabled="deleteForm.processing"
                   @click="deleteLick"
                 >
                   Delete
@@ -133,5 +180,31 @@ const closeDeleteModal = () => {
         </div>
       </div>
     </div>
+
+    <DialogModal :show="shareModalVisible" @close="closeShareModal">
+      <template #title>Share Lick</template>
+
+      <template #content>
+        You can make this Lick available to other users with this form.
+        Currently shared with:
+        <ul v-if="props.sharedWith.length > 0" class="list-disc ml-4">
+          <li v-for="userShared in props.sharedWith" :key="userShared.id">
+            {{ userShared.name }} ({{ userShared.email }})
+          </li>
+        </ul>
+        <ShareTargetSelector v-model="shareForm.shareWith" />
+      </template>
+
+      <template #footer>
+        <SecondaryButton @click="closeShareModal">Cancel</SecondaryButton>
+
+        <PrimaryButton
+          class="ml-3"
+          :class="{ 'opacity-25': shareForm.processing }"
+          :disabled="shareForm.processing"
+          @click="shareLick"
+        >Share</PrimaryButton>
+      </template>
+    </DialogModal>
   </AppLayout>
 </template>

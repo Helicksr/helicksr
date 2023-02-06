@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -38,5 +39,26 @@ class Lick extends Model
     public function getAudioFileUrlAttribute()
     {
         return $this->audio_file_path ? Storage::url($this->audio_file_path) : null;
+    }
+
+    /**
+     * Get all users whom this lick has been shared with.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function usersShared(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value, $attributes) => User::whereHas(
+                'teams',
+                fn ($query) => $query->whereIn(
+                    'teams.id',
+                    $this->teamsSharedDirectly->pluck('id'),
+                ),
+            )->orWhereHas(
+                'licksSharedDirectly',
+                fn ($query) => $query->where('licks.id', $this->id),
+            )->get(),
+        )->shouldCache();
     }
 }

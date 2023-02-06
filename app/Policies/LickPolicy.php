@@ -91,4 +91,16 @@ class LickPolicy
     {
         //
     }
+
+    /**
+     * Determine whether the user can share the Lick.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Lick  $lick
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function share(User $user, Lick $lick)
+    {
+        return $lick->user_id == $user->id;
+    }
 }

@@ -85,7 +85,9 @@ class LickController extends Controller
             'lick' => $lick,
             'canEdit' => $request->user()->can('update', $lick),
             'canDelete' => $request->user()->can('delete', $lick),
+            'canShare' => $request->user()->can('share', $lick),
             'author' => $lick->user->name,
+            'sharedWith' => $lick->usersShared,
         ]);
     }
 

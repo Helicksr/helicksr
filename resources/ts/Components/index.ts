@@ -32,6 +32,7 @@ export { default as ResponsiveNavLink } from './ResponsiveNavLink.vue';
 export { default as SecondaryButton } from './SecondaryButton.vue';
 export { default as SectionBorder } from './SectionBorder.vue';
 export { default as SectionTitle } from './SectionTitle.vue';
+export { default as ShareTargetSelector } from './ShareTargetSelector.vue';
 export { default as TabViewer } from './TabViewer.vue';
 export { default as TagSelector } from './TagSelector.vue';
 export { default as TextInput } from './TextInput.vue';

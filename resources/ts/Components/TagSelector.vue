@@ -28,7 +28,9 @@ const onInput = (newValues: { label: string; value: string }[]) => {
 };
 
 // fetch tags for autocomplete
-const fetchTags = async (search: string) => {
+const fetchTags: (search: string) => Promise<string[]> = async (
+  search: string
+) => {
   const response = await fetch('/tags?' + new URLSearchParams({ search }));
   return response.ok ? response.json() : [];
 };

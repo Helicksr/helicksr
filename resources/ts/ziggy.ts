@@ -128,6 +128,12 @@ const Ziggy = {
       bindings: { lick: 'id' },
     },
     'shared.index': { uri: 'shared', methods: ['GET', 'HEAD'] },
+    'shared.create': {
+      uri: 'shared/{lick}',
+      methods: ['POST'],
+      bindings: { lick: 'id' },
+    },
+    'share-targets': { uri: 'share-targets', methods: ['GET', 'HEAD'] },
   },
 };
 

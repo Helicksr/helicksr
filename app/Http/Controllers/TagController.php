@@ -13,8 +13,8 @@ class TagController extends Controller
         $searchTerm = $request->input('search');
 
         $query = DB::table('tags')
-        ->limit($inputLimit > 10 ? 10 : $inputLimit)
-        ->orderBy('uses', 'desc');
+            ->limit($inputLimit > 10 ? 10 : $inputLimit)
+            ->orderBy('uses', 'desc');
 
         if ($searchTerm) {
             $query->where('tag', 'like', "%$searchTerm%");

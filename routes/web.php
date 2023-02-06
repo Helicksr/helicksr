@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\LickController;
 use App\Http\Controllers\SharedLickController;
+use App\Http\Controllers\ShareTargetController;
 use App\Http\Controllers\TagController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -50,5 +51,8 @@ Route::middleware([
 
     Route::prefix('shared')->name('shared.')->group(function () {
         Route::get('/', [SharedLickController::class, 'index'])->name('index');
+        Route::post('/{lick}', [SharedLickController::class, 'create'])->name('create');
     });
+
+    Route::get('/share-targets', ShareTargetController::class)->name('share-targets');
 });
