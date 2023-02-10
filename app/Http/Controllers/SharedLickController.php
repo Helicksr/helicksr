@@ -41,7 +41,7 @@ class SharedLickController extends Controller
             $target = User::whereIn('id', $request->input('share_target_users'))->get();
             $lick->usersSharedDirectly()->attach($target->pluck('id'));
 
-            // TODO: emit event SharedWithUsers to handle notifications and other effects 
+            // TODO: emit event SharedWithUsers to handle notifications and other effects
         }
 
         // share with teams
@@ -49,7 +49,7 @@ class SharedLickController extends Controller
             $target = Team::whereIn('id', $request->input('share_target_teams'))->get();
             $lick->teamsSharedDirectly()->attach($target->pluck('id'));
 
-            // TODO: emit event SharedWithTeams to handle notifications and other effects 
+            // TODO: emit event SharedWithTeams to handle notifications and other effects
         }
 
         session()->flash('flash.banner', 'Lick shared successfully!');

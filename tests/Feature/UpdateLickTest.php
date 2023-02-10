@@ -14,13 +14,13 @@ class UpdateLickTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_licks_can_be_updated()
+    public function testLicksCanBeUpdated()
     {
         // 1 .arrange
         // create required objects: user, lick
         $user = User::factory()->create();
         $lick = Lick::factory()->for($user)->create();
-        
+
         // prepare edit data
         $this->actingAs($user);
         Storage::fake();

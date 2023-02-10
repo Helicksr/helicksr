@@ -13,7 +13,7 @@ class ShareLickTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_lick_can_be_shared_directly_to_user()
+    public function testLickCanBeSharedDirectlyToUser()
     {
         // arrange
         // create source user, target user, lick to be shared
@@ -32,7 +32,7 @@ class ShareLickTest extends TestCase
 
         // assert
         $response->assertStatus(302);
-        
+
         $sharedLicks = $targetUser->fresh(['licksSharedDirectly'])->licksSharedDirectly;
 
         $this->assertCount(1, $sharedLicks);
@@ -40,7 +40,7 @@ class ShareLickTest extends TestCase
         $this->assertEquals($lickToBeShared->title, $sharedLicks->first()->title);
     }
 
-    public function test_lick_can_be_shared_directly_to_team()
+    public function testLickCanBeSharedDirectlyToTeam()
     {
         // act
         // set source user, target team and target user

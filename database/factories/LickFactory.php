@@ -18,7 +18,8 @@ class LickFactory extends Factory
     {
         $transcription = <<<EOF
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE score-partwise PUBLIC "-//Recordare//DTD MusicXML 4.0 Partwise//EN" "http://www.musicxml.org/dtds/partwise.dtd">
+<!DOCTYPE score-partwise PUBLIC
+"-//Recordare//DTD MusicXML 4.0 Partwise//EN" "http://www.musicxml.org/dtds/partwise.dtd">
 <score-partwise version="4.0">
   <part-list>
     <score-part id="P1">
@@ -57,8 +58,8 @@ EOF;
         $availableKnobs = ['model', 'bass', 'treble', 'presence'];
 
         $settings = collect($this->faker->randomElements(
-          $availableKnobs,
-          $this->faker->numberBetween(0, sizeof($availableKnobs) - 1),
+            $availableKnobs,
+            $this->faker->numberBetween(0, sizeof($availableKnobs) - 1),
         ))->map(fn ($knob) => [
           'knob' => $knob,
           'value' => $this->faker->numberBetween(0, 10) . '',

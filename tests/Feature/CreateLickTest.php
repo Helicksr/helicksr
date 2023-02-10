@@ -14,13 +14,13 @@ class CreateLickTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_licks_can_be_created()
+    public function testLicksCanBeCreated()
     {
         $user = User::factory()->create();
         $this->actingAs($user);
 
         Storage::fake();
- 
+
         $audioFile = UploadedFile::fake()->create('recording.mp3', 500);
 
         $response = $this->post(route('library.store'), [

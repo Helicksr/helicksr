@@ -21,7 +21,7 @@ class ShareTargetController extends Controller
 
         $usersQuery = User::limit($inputLimit > 10 ? 10 : $inputLimit)
             ->orderBy('updated_at', 'desc');
-        
+
         $teamsQuery = Team::where('personal_team', false)
             ->limit($inputLimit > 10 ? 10 : $inputLimit)
             ->orderBy('updated_at', 'desc');
@@ -29,7 +29,7 @@ class ShareTargetController extends Controller
         if ($searchTerm) {
             $usersQuery->where('name', 'like', "%$searchTerm%")
                 ->orWhere('email', 'like', "%$searchTerm%");
-            
+
             $teamsQuery->where('name', 'like', "%$searchTerm%");
         }
 
