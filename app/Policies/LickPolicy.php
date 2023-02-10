@@ -53,7 +53,7 @@ class LickPolicy
      */
     public function update(User $user, Lick $lick)
     {
-        return $lick->user_id == $user->id;
+        return $lick->user_id === $user->id;
     }
 
     /**
@@ -65,7 +65,7 @@ class LickPolicy
      */
     public function delete(User $user, Lick $lick)
     {
-        return $lick->user_id == $user->id;
+        return $lick->user_id === $user->id;
     }
 
     /**
@@ -101,6 +101,6 @@ class LickPolicy
      */
     public function share(User $user, Lick $lick)
     {
-        return $lick->user_id == $user->id;
+        return $lick->user_id === $user->id;
     }
 }

@@ -25,7 +25,7 @@ class UpdateLickRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'audio' => ['nullable', 'mimes:mp3,m4a,aac,oga,wav,wma', 'max:10240'],
         ];
     }
 }

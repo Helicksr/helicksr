@@ -17,7 +17,7 @@ class TagController extends Controller
             ->orderBy('uses', 'desc');
 
         if ($searchTerm) {
-            $query->where('tag', 'like', "%$searchTerm%");
+            $query->where('tag', 'like', "%{$searchTerm}%");
         }
 
         return $query->get()->pluck('tag');

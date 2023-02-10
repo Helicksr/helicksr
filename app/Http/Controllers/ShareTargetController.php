@@ -27,10 +27,10 @@ class ShareTargetController extends Controller
             ->orderBy('updated_at', 'desc');
 
         if ($searchTerm) {
-            $usersQuery->where('name', 'like', "%$searchTerm%")
-                ->orWhere('email', 'like', "%$searchTerm%");
+            $usersQuery->where('name', 'like', "%{$searchTerm}%")
+                ->orWhere('email', 'like', "%{$searchTerm}%");
 
-            $teamsQuery->where('name', 'like', "%$searchTerm%");
+            $teamsQuery->where('name', 'like', "%{$searchTerm}%");
         }
 
         return [
