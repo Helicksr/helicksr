@@ -32,4 +32,18 @@ Which will set hot reloading based on Vite.
 
 ### Testing
 
-TBD
+PHPUnit under Laravel's recommendations. Mostly Features type tests and you are encouraged to use TDD. A pre-commit hook that runs the full test suite (together with lint tools) has been configured and required to pass in order to push.
+
+Manually run tests with:
+
+```
+php artisan test
+```
+
+or
+
+```
+sa test
+```
+
+if using Laravel Sail
