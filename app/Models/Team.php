@@ -44,6 +44,6 @@ class Team extends JetstreamTeam
 
     public function licksSharedDirectly()
     {
-        return $this->belongsToMany(Lick::class, 'shared_lick_user');
+        return $this->belongsToMany(Lick::class, 'shared_lick_team');
     }
 }

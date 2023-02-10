@@ -58,7 +58,7 @@ class LickController extends Controller
             );
         }
 
-        // upload score/tab
+        // upload score/tab. TODO: validate string is valid xml
         $newLick->transcription = $request->input('transcription');
         $newLick->tags = $request->input('tags', []);
         $newLick->amp_settings = $request->input('amp_settings', []);
