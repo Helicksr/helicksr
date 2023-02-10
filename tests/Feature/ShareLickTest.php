@@ -46,7 +46,7 @@ class ShareLickTest extends TestCase
         // set source user, target team and target user
         $sourceUser = User::factory()->create();
         $lickToBeShared = Lick::factory()->for($sourceUser)->create();
-        
+
         $targetUser = User::factory()->create();
         $targetTeam = Team::factory()
             ->hasAttached($targetUser, [], 'users')

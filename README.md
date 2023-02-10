@@ -3,6 +3,7 @@
 Helicksr is a website with a simple purpose: to ease sharing short musical ideas between guitar players with a searchable library planned and additional features to aid in its purpose on the way.
 
 ## Feaures
+
 -   Simple interface with inline viewer and player for audio and MusicXML scores/tabs.
 -   Easy sharing directly to other users or groups through the Teams feature.
 -   Planned library of licks to never lose track of those moments of inspiration.

@@ -203,7 +203,8 @@ const shareLick = () => {
           :class="{ 'opacity-25': shareForm.processing }"
           :disabled="shareForm.processing"
           @click="shareLick"
-        >Share</PrimaryButton>
+          >Share</PrimaryButton
+        >
       </template>
     </DialogModal>
   </AppLayout>
