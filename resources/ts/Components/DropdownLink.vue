@@ -9,7 +9,7 @@ const props = defineProps({
   },
   as: {
     type: String as PropType<'a' | 'button'>,
-    default: 'button',
+    default: 'a',
   },
 });
 

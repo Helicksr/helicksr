@@ -45,7 +45,7 @@ const deleteTeam = () => {
       </div>
 
       <div class="mt-5">
-        <DangerButton @click="confirmTeamDeletion"> Delete Team </DangerButton>
+        <DangerButton @click="confirmTeamDeletion">Delete Team</DangerButton>
       </div>
 
       <!-- Delete Team Confirmation Modal -->
@@ -70,9 +70,8 @@ const deleteTeam = () => {
             :class="{ 'opacity-25': form.processing }"
             :disabled="form.processing"
             @click="deleteTeam"
+            >Delete Team</DangerButton
           >
-            Delete Team
-          </DangerButton>
         </template>
       </ConfirmationModal>
     </template>

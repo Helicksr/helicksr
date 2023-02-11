@@ -54,9 +54,7 @@ const closeModal = () => {
       </div>
 
       <div class="mt-5">
-        <DangerButton @click="confirmUserDeletion">
-          Delete Account
-        </DangerButton>
+        <DangerButton @click="confirmUserDeletion">Delete Account</DangerButton>
       </div>
 
       <!-- Delete Account Confirmation Modal -->
@@ -91,9 +89,8 @@ const closeModal = () => {
             :class="{ 'opacity-25': form.processing }"
             :disabled="form.processing"
             @click="deleteUser"
+            >Delete Account</DangerButton
           >
-            Delete Account
-          </DangerButton>
         </template>
       </DialogModal>
     </template>

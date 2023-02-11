@@ -22,6 +22,7 @@ export { default as FormattedDateTime } from './FormattedDateTime.vue';
 export { default as FormSection } from './FormSection.vue';
 export { default as InputError } from './InputError.vue';
 export { default as InputLabel } from './InputLabel.vue';
+export { default as LandingNavbar } from './LandingNavbar.vue';
 export { default as LicksTable } from './LicksTable.vue';
 export { default as LickTag } from './LickTag.vue';
 export { default as NavLink } from './NavLink.vue';

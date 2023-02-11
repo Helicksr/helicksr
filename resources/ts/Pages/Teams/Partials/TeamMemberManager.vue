@@ -471,9 +471,8 @@ const displayableRole = (role: string) => {
           :class="{ 'opacity-25': leaveTeamForm.processing }"
           :disabled="leaveTeamForm.processing"
           @click="leaveTeam"
+          >Leave</DangerButton
         >
-          Leave
-        </DangerButton>
       </template>
     </ConfirmationModal>
 
@@ -498,9 +497,8 @@ const displayableRole = (role: string) => {
           :class="{ 'opacity-25': removeTeamMemberForm.processing }"
           :disabled="removeTeamMemberForm.processing"
           @click="removeTeamMember"
+          >Remove</DangerButton
         >
-          Remove
-        </DangerButton>
       </template>
     </ConfirmationModal>
   </div>

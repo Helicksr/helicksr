@@ -291,9 +291,8 @@ const deleteApiToken = () => {
           :class="{ 'opacity-25': deleteApiTokenForm.processing }"
           :disabled="deleteApiTokenForm.processing"
           @click="deleteApiToken"
+          >Delete</DangerButton
         >
-          Delete
-        </DangerButton>
       </template>
     </ConfirmationModal>
   </div>

@@ -147,7 +147,7 @@ const shareLick = () => {
             </p>
           </AppCard>
           <AppCard v-if="canDelete" class="sm:mt-4">
-            <DangerButton @click="showDeleteModal"> Delete Lick </DangerButton>
+            <DangerButton @click="showDeleteModal">Delete Lick</DangerButton>
 
             <DialogModal :show="deleteModalVisible" @close="closeDeleteModal">
               <template #title> Delete Account </template>
@@ -166,9 +166,8 @@ const shareLick = () => {
                   :class="{ 'opacity-25': deleteForm.processing }"
                   :disabled="deleteForm.processing"
                   @click="deleteLick"
+                  >Delete</DangerButton
                 >
-                  Delete
-                </DangerButton>
               </template>
             </DialogModal>
           </AppCard>
