@@ -10,7 +10,7 @@ import { Ziggy } from './ziggy';
 
 const appName = 'Helicksr';
 
-await createInertiaApp({
+createInertiaApp({
   title: (title) => `${title} - ${appName}`,
   resolve: async (name) =>
     await resolvePageComponent(
@@ -22,6 +22,10 @@ await createInertiaApp({
     vueApp.use(plugin).use(ZiggyVue, Ziggy).mount(el);
     return vueApp;
   },
-});
+})
+  .then(() => {})
+  .catch((error) => {
+    console.error(error);
+  });
 
 InertiaProgress.init({ color: '#4B5563' });
