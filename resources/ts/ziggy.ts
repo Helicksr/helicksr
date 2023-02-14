@@ -102,6 +102,10 @@ const Ziggy = {
       uri: '_ignition/update-config',
       methods: ['POST'],
     },
+    'notification-settings.update': {
+      uri: 'user/notification-settings',
+      methods: ['PUT'],
+    },
     dashboard: { uri: 'dashboard', methods: ['GET', 'HEAD'] },
     tags: { uri: 'tags', methods: ['GET', 'HEAD'] },
     'library.index': { uri: 'library', methods: ['GET', 'HEAD'] },

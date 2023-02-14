@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('licks', function (Blueprint $table) {
             $table->id();
-            $table->text('transcription'); // musicxml format
+            $table->text('transcription')->nullable(); // musicxml format
             $table->text('title');
             $table->integer('tempo'); // BPM
             $table->json('amp_settings');

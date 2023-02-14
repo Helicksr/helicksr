@@ -67,6 +67,10 @@ export interface User {
   name: string;
   email: string;
   email_verified_at: string | null;
+  notification_settings: {
+    on_lick_shared: boolean;
+    on_added_to_group: boolean;
+  };
   current_team_id: number | null;
   membership: TeamMembership;
   profile_photo_path: string | null;

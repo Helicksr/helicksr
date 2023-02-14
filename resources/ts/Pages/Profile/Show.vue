@@ -4,6 +4,7 @@ import {
   DeleteUserForm,
   LogoutOtherBrowserSessionsForm,
   TwoFactorAuthenticationForm,
+  UpdateNotificationSettings,
   UpdatePasswordForm,
   UpdateProfileInformationForm,
 } from './Partials';
@@ -34,6 +35,18 @@ defineProps({
         <div v-if="$page.props.jetstream.canUpdateProfileInformation">
           <UpdateProfileInformationForm :user="$page.props.user" />
 
+          <SectionBorder />
+        </div>
+
+        <div>
+          <UpdateNotificationSettings
+            :on-lick-shared="
+              $page.props.user.notification_settings.on_lick_shared
+            "
+            :on-added-to-group="
+              $page.props.user.notification_settings.on_added_to_group
+            "
+          />
           <SectionBorder />
         </div>
 

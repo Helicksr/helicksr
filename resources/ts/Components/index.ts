@@ -37,3 +37,4 @@ export { default as ShareTargetSelector } from './ShareTargetSelector.vue';
 export { default as TabViewer } from './TabViewer.vue';
 export { default as TagSelector } from './TagSelector.vue';
 export { default as TextInput } from './TextInput.vue';
+export { default as ToggleSwitch } from './ToggleSwitch.vue';

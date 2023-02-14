@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LickController;
+use App\Http\Controllers\NotificationSettingsController;
 use App\Http\Controllers\SharedLickController;
 use App\Http\Controllers\ShareTargetController;
 use App\Http\Controllers\TagController;
@@ -33,6 +34,8 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+    Route::put('/user/notification-settings', [NotificationSettingsController::class, 'update'])->name('notification-settings.update');
+
     Route::get('/dashboard', function () {
         return Inertia::render('DashboardPage');
     })->name('dashboard');

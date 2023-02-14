@@ -27,8 +27,8 @@ class StoreLickRequest extends FormRequest
         return [
             'title' => ['required'],
             'tempo' => ['required'],
-            'audio' => ['required', 'nullable', 'mimes:mp3,m4a,aac,oga,wav,wma', 'max:10240'],
-            'transcription' => ['required'],
+            'audio' => ['required', 'nullable', 'mimes:mp3,m4a,aac,oga,wav,wma', 'max:512000'],
+            // 'transcription' => ['required'], // TODO: add valid MusicXML validation
         ];
     }
 }
