@@ -16,7 +16,7 @@ class LickPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -24,7 +24,7 @@ class LickPolicy
      */
     public function view(User $user, Lick $lick): bool
     {
-        //
+        return true; // all licks currently accesible
     }
 
     /**
@@ -56,7 +56,7 @@ class LickPolicy
      */
     public function restore(User $user, Lick $lick): bool
     {
-        //
+        return $lick->user_id === $user->id;
     }
 
     /**
@@ -64,7 +64,7 @@ class LickPolicy
      */
     public function forceDelete(User $user, Lick $lick): bool
     {
-        //
+        return $lick->user_id === $user->id;
     }
 
     /**
