@@ -5,14 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class ShareTargetController extends Controller
 {
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request): array
     {
         $inputLimit = $request->input('limit', 10);
         $searchTerm = $request->input('search');

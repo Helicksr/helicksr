@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\LickShared as LickSharedEvent;
 use App\Models\Lick;
 use App\Models\Team;
 use App\Models\User;
@@ -36,21 +37,13 @@ class SharedLickController extends Controller
 
     public function create(Lick $lick, Request $request): RedirectResponse
     {
-        // share with users
-        if ($request->input('share_target_users')) {
-            $target = User::whereIn('id', $request->input('share_target_users'))->get();
-            $lick->usersSharedDirectly()->attach($target->pluck('id'));
+        $targetUsers = User::whereIn('id', $request->input('share_target_users', []))->get();
+        $targetTeams = Team::whereIn('id', $request->input('share_target_teams', []))->get();
 
-            // TODO: emit event SharedWithUsers to handle notifications and other effects
-        }
+        $lick->usersSharedDirectly()->syncWithoutDetaching($targetUsers->pluck('id'));
+        $lick->teamsSharedDirectly()->syncWithoutDetaching($targetTeams->pluck('id'));
 
-        // share with teams
-        if ($request->input('share_target_teams')) {
-            $target = Team::whereIn('id', $request->input('share_target_teams'))->get();
-            $lick->teamsSharedDirectly()->attach($target->pluck('id'));
-
-            // TODO: emit event SharedWithTeams to handle notifications and other effects
-        }
+        LickSharedEvent::dispatch($lick, $request->user(), $targetUsers, $targetTeams);
 
         session()->flash('flash.banner', 'Lick shared successfully!');
         session()->flash('flash.bannerStyle', 'success');

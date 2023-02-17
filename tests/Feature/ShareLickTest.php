@@ -70,4 +70,6 @@ class ShareLickTest extends TestCase
         $this->assertEquals($lickToBeShared->id, $sharedLicks->first()->id);
         $this->assertEquals($lickToBeShared->title, $sharedLicks->first()->title);
     }
+
+    // TODO: add tests for cases: share with user and team already shared previously
 }
