@@ -47,7 +47,7 @@ const submit = () => {
     .transform((data) => ({
       ...data,
       transcription: transcriptionPreview.value,
-      audio: audioInput.value.files[0],
+      audio: audioInput.value.files[0] ?? null,
     }))
     .post(route('library.store'), {
       errorBag: 'submit',
