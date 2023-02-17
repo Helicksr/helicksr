@@ -14,7 +14,7 @@ class LickFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition()
+    public function definition(): array
     {
         $transcription = <<<EOF
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>

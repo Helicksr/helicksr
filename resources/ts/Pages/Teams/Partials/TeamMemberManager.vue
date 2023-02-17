@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { PropType, ref } from 'vue';
-import { Inertia } from '@inertiajs/inertia';
-import { useForm, usePage } from '@inertiajs/inertia-vue3';
+import { router, useForm, usePage } from '@inertiajs/vue3';
 import {
   ActionMessage,
   ActionSection,
@@ -63,7 +62,7 @@ const addTeamMember = () => {
 };
 
 const cancelTeamInvitation = (invitation: TeamInvitation) => {
-  Inertia.delete(route('team-invitations.destroy', invitation), {
+  router.delete(route('team-invitations.destroy', invitation), {
     preserveScroll: true,
   });
 };
@@ -93,10 +92,7 @@ const confirmLeavingTeam = () => {
 
 const leaveTeam = () => {
   leaveTeamForm.delete(
-    route('team-members.destroy', [
-      props.team.id,
-      usePage().props.value.user.id,
-    ])
+    route('team-members.destroy', [props.team.id, usePage().props.auth.user.id])
   );
 };
 
@@ -345,7 +341,7 @@ const displayableRole = (role: string) => {
 
                 <!-- Leave Team -->
                 <button
-                  v-if="$page.props.user.id === user.id"
+                  v-if="$page.props.auth.user.id === user.id"
                   class="cursor-pointer ml-6 text-sm text-red-500 dark:text-red-800"
                   @click="confirmLeavingTeam"
                 >

@@ -1,8 +1,8 @@
-import type { Team, TeamMembership, User } from './models';
+import type { User } from './models';
 
 export {};
 
-declare module '@inertiajs/inertia' {
+declare module '@inertiajs/core' {
   export interface PageProps {
     jetstream: {
       canCreateTeams: boolean;
@@ -21,11 +21,8 @@ declare module '@inertiajs/inertia' {
       hasTermsAndPrivacyPolicyFeature: boolean;
       managesProfilePhotos: boolean;
     };
-    user: User & {
-      all_teams?: Team[] | null;
-      current_team?: Team;
-      two_factor_enabled: boolean;
-      membership?: TeamMembership;
+    auth: {
+      user: User;
     };
   }
 }

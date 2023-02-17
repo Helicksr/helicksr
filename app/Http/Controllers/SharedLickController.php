@@ -6,17 +6,17 @@ use App\Models\Lick;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class SharedLickController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $paginatedResults = Lick::whereHas(
             'usersSharedDirectly',
@@ -34,7 +34,7 @@ class SharedLickController extends Controller
         ]);
     }
 
-    public function create(Lick $lick, Request $request)
+    public function create(Lick $lick, Request $request): RedirectResponse
     {
         // share with users
         if ($request->input('share_target_users')) {

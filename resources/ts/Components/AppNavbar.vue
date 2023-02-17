@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import route from 'ziggy-js';
-import { Inertia } from '@inertiajs/inertia';
+import { Link, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
-import { Link } from '@inertiajs/inertia-vue3';
 import {
   ApplicationMark,
   DropdownInput,
@@ -14,7 +13,7 @@ import {
 const showingNavigationDropdown = ref(false);
 
 const switchToTeam = (team: any) => {
-  Inertia.put(
+  router.put(
     route('current-team.update'),
     {
       team_id: team.id,
@@ -26,7 +25,7 @@ const switchToTeam = (team: any) => {
 };
 
 const logout = () => {
-  Inertia.post(route('logout'));
+  router.post(route('logout'));
 };
 </script>
 
@@ -91,7 +90,7 @@ const logout = () => {
                     type="button"
                     class="inline-flex items-center px-3 py-2 border border-transparent leading-4 font-medium rounded-md text-gray-500 bg-white hover:bg-gray-50 hover:text-gray-700 dark:text-gray-300 dark:bg-gray-500 dark:hover:bg-gray-600 dark:hover:text-gray-200 focus:outline-none focus:bg-gray-50 active:bg-gray-50 dark:focus:bg-gray-800 dark:active:bg-gray-800 transition"
                   >
-                    {{ $page.props.user.current_team?.name }}
+                    {{ $page.props.auth.user.current_team?.name }}
 
                     <svg
                       class="ml-2 -mr-0.5 h-4 w-4"
@@ -121,7 +120,9 @@ const logout = () => {
 
                     <!-- Team Settings -->
                     <DropdownLink
-                      :href="route('teams.show', $page.props.user.current_team)"
+                      :href="
+                        route('teams.show', $page.props.auth.user.current_team)
+                      "
                     >
                       Team Settings
                     </DropdownLink>
@@ -143,14 +144,16 @@ const logout = () => {
                     </div>
 
                     <template
-                      v-for="team in $page.props.user.all_teams"
+                      v-for="team in $page.props.auth.user.all_teams"
                       :key="team.id"
                     >
                       <form @submit.prevent="switchToTeam(team)">
                         <DropdownLink as="button">
                           <div class="flex items-center">
                             <svg
-                              v-if="team.id == $page.props.user.current_team_id"
+                              v-if="
+                                team.id == $page.props.auth.user.current_team_id
+                              "
                               class="mr-2 h-5 w-5 text-green-400"
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"
@@ -190,8 +193,8 @@ const logout = () => {
                 >
                   <img
                     class="h-8 w-8 rounded-full object-cover"
-                    :src="$page.props.user.profile_photo_url"
-                    :alt="$page.props.user.name"
+                    :src="$page.props.auth.user.profile_photo_url"
+                    :alt="$page.props.auth.user.name"
                   />
                 </button>
 
@@ -200,7 +203,7 @@ const logout = () => {
                     type="button"
                     class="inline-flex items-center px-3 py-2 border border-transparent leading-4 font-medium rounded-md text-gray-500 bg-white hover:bg-gray-50 hover:text-gray-700 dark:text-gray-300 dark:bg-gray-500 dark:hover:bg-gray-600 dark:hover:text-gray-200 focus:outline-none focus:bg-gray-50 active:bg-gray-50 dark:focus:bg-gray-800 dark:active:bg-gray-800 transition"
                   >
-                    {{ $page.props.user.name }}
+                    {{ $page.props.auth.user.name }}
 
                     <svg
                       class="ml-2 -mr-0.5 h-4 w-4"
@@ -324,17 +327,17 @@ const logout = () => {
           >
             <img
               class="h-10 w-10 rounded-full object-cover"
-              :src="$page.props.user.profile_photo_url"
-              :alt="$page.props.user.name"
+              :src="$page.props.auth.user.profile_photo_url"
+              :alt="$page.props.auth.user.name"
             />
           </div>
 
           <div>
             <div class="font-medium text-base text-gray-800">
-              {{ $page.props.user.name }}
+              {{ $page.props.auth.user.name }}
             </div>
             <div class="font-medium text-gray-500">
-              {{ $page.props.user.email }}
+              {{ $page.props.auth.user.email }}
             </div>
           </div>
         </div>
@@ -368,7 +371,7 @@ const logout = () => {
 
             <!-- Team Settings -->
             <ResponsiveNavLink
-              :href="route('teams.show', $page.props.user.current_team)"
+              :href="route('teams.show', $page.props.auth.user.current_team)"
               :active="route().current('teams.show')"
             >
               Team Settings
@@ -389,12 +392,15 @@ const logout = () => {
               Switch Teams
             </div>
 
-            <template v-for="team in $page.props.user.all_teams" :key="team.id">
+            <template
+              v-for="team in $page.props.auth.user.all_teams"
+              :key="team.id"
+            >
               <form @submit.prevent="switchToTeam(team)">
                 <ResponsiveNavLink as="button">
                   <div class="flex items-center">
                     <svg
-                      v-if="team.id == $page.props.user.current_team_id"
+                      v-if="team.id == $page.props.auth.user.current_team_id"
                       class="mr-2 h-5 w-5 text-green-400"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"

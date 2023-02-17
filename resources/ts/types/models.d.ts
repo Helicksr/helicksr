@@ -71,11 +71,14 @@ export interface User {
     on_lick_shared: boolean;
     on_added_to_group: boolean;
   };
+  all_teams?: Team[] | null;
   current_team_id: number | null;
+  current_team?: Team;
   membership: TeamMembership;
   profile_photo_path: string | null;
   created_at: string | null;
   updated_at: string | null;
+  two_factor_enabled: boolean;
   two_factor_confirmed_at: string | null;
   profile_photo_url: string;
 }

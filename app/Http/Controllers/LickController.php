@@ -5,18 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreLickRequest;
 use App\Http\Requests\UpdateLickRequest;
 use App\Models\Lick;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class LickController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $paginatedResults = Lick::where('user_id', $request->user()->id)->paginate(10);
 
@@ -30,21 +30,16 @@ class LickController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): Response
     {
         return Inertia::render('Library/Create');
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreLickRequest  $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(StoreLickRequest $request)
+    public function store(StoreLickRequest $request): RedirectResponse
     {
         $newLick = new Lick();
         $newLick->title = $request->input('title');
@@ -74,12 +69,8 @@ class LickController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  \App\Models\Lick  $lick
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
      */
-    public function show(Lick $lick, Request $request)
+    public function show(Lick $lick, Request $request): Response
     {
         return Inertia::render('Library/Show', [
             'lick' => $lick,
@@ -93,11 +84,8 @@ class LickController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Lick  $lick
-     * @return \Illuminate\Http\Response
      */
-    public function edit(Lick $lick)
+    public function edit(Lick $lick): Response
     {
         return Inertia::render('Library/Edit', [
             'lick' => $lick,
@@ -106,12 +94,8 @@ class LickController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateLickRequest  $request
-     * @param  \App\Models\Lick  $lick
-     * @return \Illuminate\Http\Response
      */
-    public function update(UpdateLickRequest $request, Lick $lick)
+    public function update(UpdateLickRequest $request, Lick $lick): RedirectResponse
     {
         if ($request->has('title')) {
             $lick->title = $request->input('title');
@@ -153,11 +137,8 @@ class LickController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Lick  $lick
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(Lick $lick)
+    public function destroy(Lick $lick): RedirectResponse
     {
         $lick->delete();
 

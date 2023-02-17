@@ -7,7 +7,7 @@ import {
   PrimaryButton,
   TextInput,
 } from '~~/Components';
-import { Head, useForm } from '@inertiajs/inertia-vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 import { nextTick, ref } from 'vue';
 import route from 'ziggy-js';
 

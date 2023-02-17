@@ -14,7 +14,7 @@ import {
   TagSelector,
   AmpSettings,
 } from '~~/Components';
-import { useForm } from '@inertiajs/inertia-vue3';
+import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import route from 'ziggy-js';
 import { AmpSetting } from '~~/types';
@@ -141,7 +141,7 @@ const updateAudioPreview = () => {
               />
             </div>
             <InputError
-              v-if="form.errors.audio?.length > 0"
+              v-if="form.errors.audio?.length"
               :message="form.errors.audio"
               class="mt-2"
             />
@@ -168,7 +168,7 @@ const updateAudioPreview = () => {
               <TabViewer :transcription="transcriptionPreview ?? ''" />
             </div>
             <InputError
-              v-if="form.errors.transcription?.length > 0"
+              v-if="form.errors.transcription?.length"
               :message="form.errors.transcription"
               class="mt-2"
             />

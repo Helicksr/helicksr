@@ -33,7 +33,7 @@ defineProps({
     <div>
       <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
         <div v-if="$page.props.jetstream.canUpdateProfileInformation">
-          <UpdateProfileInformationForm :user="$page.props.user" />
+          <UpdateProfileInformationForm :user="$page.props.auth.user" />
 
           <SectionBorder />
         </div>
@@ -41,10 +41,10 @@ defineProps({
         <div>
           <UpdateNotificationSettings
             :on-lick-shared="
-              $page.props.user.notification_settings.on_lick_shared
+              $page.props.auth.user.notification_settings.on_lick_shared
             "
             :on-added-to-group="
-              $page.props.user.notification_settings.on_added_to_group
+              $page.props.auth.user.notification_settings.on_added_to_group
             "
           />
           <SectionBorder />

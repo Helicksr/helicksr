@@ -14,7 +14,7 @@ import {
   TagSelector,
   TextInput,
 } from '~~/Components';
-import { useForm } from '@inertiajs/inertia-vue3';
+import { useForm } from '@inertiajs/vue3';
 import { onMounted, PropType, ref } from 'vue';
 import route from 'ziggy-js';
 import { AmpSetting, Lick } from '~~/types';
@@ -147,12 +147,12 @@ onMounted(() => {
             <div v-if="audioPreview" class="mt-2">
               <AudioPlayer
                 :src="audioPreview ?? ''"
-                :enable-repeat="false"
+                :enable-repeat="true"
                 :autoload="true"
               />
             </div>
             <InputError
-              v-if="form.errors.audio?.length > 0"
+              v-if="form.errors.audio?.length"
               :message="form.errors.audio"
               class="mt-2"
             />
@@ -179,7 +179,7 @@ onMounted(() => {
               <TabViewer :transcription="transcriptionPreview ?? ''" />
             </div>
             <InputError
-              v-if="form.errors.transcription?.length > 0"
+              v-if="form.errors.transcription?.length"
               :message="form.errors.transcription"
               class="mt-2"
             />

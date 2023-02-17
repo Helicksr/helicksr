@@ -4,7 +4,7 @@ import {
   AuthenticationCardLogo,
   PrimaryButton,
 } from '~~/Components';
-import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import route from 'ziggy-js';
 

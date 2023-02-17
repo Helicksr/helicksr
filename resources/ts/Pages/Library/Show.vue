@@ -14,7 +14,7 @@ import {
   ShareTargetSelector,
 } from '~~/Components';
 import route from 'ziggy-js';
-import { Link, useForm } from '@inertiajs/inertia-vue3';
+import { Link, useForm } from '@inertiajs/vue3';
 import { PropType, ref } from 'vue';
 import { Lick, User } from '~~/types';
 import { ShareTargetSelectorInputType } from '~~/Components/ShareTargetSelector.vue';

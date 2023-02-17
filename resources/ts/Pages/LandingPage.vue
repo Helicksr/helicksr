@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // import { AppLayout } from '~~/Layouts';
-import { Head, Link } from '@inertiajs/inertia-vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import route from 'ziggy-js';
 import { LandingNavbar } from '~~/Components';
 </script>

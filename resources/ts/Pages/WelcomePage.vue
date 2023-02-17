@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/inertia-vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import route from 'ziggy-js';
 
 defineProps({
@@ -30,7 +30,7 @@ defineProps({
   >
     <div v-if="canLogin" class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
       <Link
-        v-if="$page.props.user"
+        v-if="$page.props.auth.user"
         :href="route('dashboard')"
         class="text-sm text-gray-700 dark:text-gray-500 underline"
         >Dashboard</Link

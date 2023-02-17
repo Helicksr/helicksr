@@ -3,7 +3,6 @@
   <description>PHPCS configuration file.</description>
   <file>app</file>
   <file>database</file>
-  <file>lang</file>
   <file>routes</file>
   <file>tests</file>
 
