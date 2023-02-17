@@ -42,7 +42,7 @@ class ShareLickTest extends TestCase
 
     public function testLickCanBeSharedDirectlyToTeam()
     {
-        // act
+        // arrange
         // set source user, target team and target user
         $sourceUser = User::factory()->create();
         $lickToBeShared = Lick::factory()->for($sourceUser)->create();
@@ -71,5 +71,84 @@ class ShareLickTest extends TestCase
         $this->assertEquals($lickToBeShared->title, $sharedLicks->first()->title);
     }
 
-    // TODO: add tests for cases: share with user and team already shared previously
+    public function testLickCanBeSharedToAlreadySharedUser()
+    {
+        $userAlreadyShared = User::factory()->create();
+        $sourceUser = User::factory()->create();
+
+        $lickToBeShared = Lick::factory()->for($sourceUser)->create();
+
+        $this->actingAs($sourceUser);
+
+        //act
+        // call endpoint with target user id
+        $this->post(route('shared.create', $lickToBeShared), [
+            'share_target_users' => [$userAlreadyShared->id],
+            'share_target_teams' => [],
+        ]);
+
+        // call again
+        $response = $this->post(route('shared.create', $lickToBeShared), [
+            'share_target_users' => [$userAlreadyShared->id],
+            'share_target_teams' => [],
+        ]);
+
+        // assert
+        $response->assertStatus(302);
+
+        $sharedLicks = $userAlreadyShared->fresh(['licksSharedDirectly'])->licksSharedDirectly;
+
+        $usersShared = $lickToBeShared->fresh(['usersSharedDirectly'])->usersSharedDirectly;
+
+        $this->assertCount(1, $usersShared); // check only 1 user
+        $this->assertEquals($lickToBeShared->id, $sharedLicks->first()->id);
+        $this->assertEquals($lickToBeShared->title, $sharedLicks->first()->title);
+    }
+
+    public function testLickCanBeSharedToAlreadySharedTeam()
+    {
+        // arrange
+        // set source user, target team and target user
+        $sourceUser = User::factory()->create();
+        $lickToBeShared = Lick::factory()->for($sourceUser)->create();
+
+        $targetUser = User::factory()->create();
+        $targetTeam = Team::factory()
+            ->hasAttached($targetUser, [], 'users')
+            ->create(['personal_team' => false]);
+
+        $this->actingAs($sourceUser);
+
+        //act
+        // call endpoint with target user id
+        $this->post(route('shared.create', $lickToBeShared), [
+            'share_target_users' => [],
+            'share_target_teams' => [$targetTeam->id],
+        ]);
+
+        // call again
+        $responseShareTeam = $this->post(route('shared.create', $lickToBeShared), [
+            'share_target_users' => [],
+            'share_target_teams' => [$targetTeam->id],
+        ]);
+
+        // share with user already on team
+        $responseShareUser = $this->post(route('shared.create', $lickToBeShared), [
+            'share_target_users' => [$targetUser->id],
+            'share_target_teams' => [],
+        ]);
+
+        // assert
+        $responseShareTeam->assertStatus(302);
+        $responseShareUser->assertStatus(302);
+
+        $sharedLicks = $targetTeam->fresh(['licksSharedDirectly'])->licksSharedDirectly;
+        $usersShared = $lickToBeShared->fresh(['usersSharedDirectly'])->usersSharedDirectly;
+        $teamsShared = $lickToBeShared->fresh(['teamsSharedDirectly'])->teamsSharedDirectly;
+
+        $this->assertCount(1, $usersShared); // check only 1 user
+        $this->assertCount(1, $teamsShared); // check only 1 team
+        $this->assertEquals($lickToBeShared->id, $sharedLicks->first()->id);
+        $this->assertEquals($lickToBeShared->title, $sharedLicks->first()->title);
+    }
 }
