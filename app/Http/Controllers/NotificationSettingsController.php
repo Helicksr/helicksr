@@ -16,8 +16,14 @@ class NotificationSettingsController extends Controller
         $user = $request->user();
 
         $user->notification_settings = [
-            'on_lick_shared' => $request->input('on_lick_shared', $user->notification_settings['on_lick_shared'] ?? true),
-            'on_added_to_group' => $request->input('on_added_to_group', $user->notification_settings['on_added_to_group'] ?? true),
+            'on_lick_shared' => $request->input(
+                'on_lick_shared',
+                $user->notification_settings['on_lick_shared'] ?? true,
+            ),
+            'on_added_to_group' => $request->input(
+                'on_added_to_group',
+                $user->notification_settings['on_added_to_group'] ?? true,
+            ),
         ];
 
         $user->save();

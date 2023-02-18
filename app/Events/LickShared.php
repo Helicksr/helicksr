@@ -15,7 +15,9 @@ use Illuminate\Support\Collection;
 
 class LickShared
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
     /**
      * Create a new event instance.
@@ -25,8 +27,8 @@ class LickShared
         public User $sourceUser,
         public Collection $targetUsers,
         public Collection $targetTeams,
-    )
-    { }
+    ) {
+    }
 
     /**
      * Get the channels the event should broadcast on.

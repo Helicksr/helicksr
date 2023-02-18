@@ -34,7 +34,8 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::put('/user/notification-settings', [NotificationSettingsController::class, 'update'])->name('notification-settings.update');
+    Route::put('/user/notification-settings', [NotificationSettingsController::class, 'update'])
+        ->name('notification-settings.update');
 
     Route::get('/dashboard', function () {
         return Inertia::render('DashboardPage');

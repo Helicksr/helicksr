@@ -17,7 +17,7 @@ class MusicXMLValidationRuleTest extends TestCase
             $counter = $counter + 1;
         };
 
-        $rule = new MusicXML;
+        $rule = new MusicXML();
         $validXml = <<<EOF
         <?xml version="1.0" encoding="UTF-8" standalone="no"?>
         <!DOCTYPE score-partwise PUBLIC
@@ -72,7 +72,7 @@ class MusicXMLValidationRuleTest extends TestCase
             $counter = $counter + 1;
         };
 
-        $rule = new MusicXML;
+        $rule = new MusicXML();
         $rule->validate('testattr', 'invalid xml here', $fail);
 
         $this->assertEquals(1, $counter);

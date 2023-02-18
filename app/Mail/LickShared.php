@@ -13,7 +13,8 @@ use Illuminate\Queue\SerializesModels;
 
 class LickShared extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * Create a new message instance.
@@ -22,8 +23,8 @@ class LickShared extends Mailable
         protected Lick $lick,
         protected User $sourceUser,
         protected User $targetUser,
-    )
-    { }
+    ) {
+    }
 
     /**
      * Get the message envelope.

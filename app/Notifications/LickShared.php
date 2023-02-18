@@ -22,8 +22,8 @@ class LickShared extends Notification implements ShouldQueue
         public Lick $lick,
         public User $sourceUser,
         public User $targetUser,
-    )
-    { }
+    ) {
+    }
 
     /**
      * Get the notification's delivery channels.

@@ -31,6 +31,7 @@ class UpdateLickTest extends TestCase
         $response = $this->put(route('library.update', $lick), [
             'title' => 'new test lick title',
             'audio' => $audioFile,
+            'tempo' => 120,
         ]);
 
         // 3. assert
@@ -41,10 +42,9 @@ class UpdateLickTest extends TestCase
         $storedLicks = $user->fresh(['licks'])->licks;
         $this->assertCount(1, $storedLicks);
         $this->assertEquals('new test lick title', $storedLicks->first()->title);
+        $this->assertEquals(120, $storedLicks->first()->tempo);
 
         // check uploaded file
         Storage::assertExists('audio-licks/' . $audioFile->hashName());
     }
-
-    // TODO: test validation of transcription string and audio file format
 }

@@ -21,7 +21,10 @@ class MusicXML implements ValidationRule
             $fail('The :attribute must be a valid MusicXML file');
         } else {
             $errors = libxml_get_errors();
-            if (sizeof($errors) > 0) $fail('The :attribute must be a valid MusicXML file');
+             // TODO: add valid MusicXML validation
+            if (sizeof($errors) > 0) {
+                $fail('The :attribute must be a valid MusicXML file');
+            }
             libxml_clear_errors();
         }
     }
