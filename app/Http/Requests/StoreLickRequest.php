@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\MusicXML;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreLickRequest extends FormRequest
@@ -25,7 +26,7 @@ class StoreLickRequest extends FormRequest
             'title' => ['required'],
             'tempo' => ['required', 'numeric', 'gt:0'],
             'audio' => ['required_if:transcription,null', 'nullable', 'mimes:mp3,m4a,aac,oga,wav,wma', 'max:512000'],
-            'transcription' => ['required_if:audio,null', 'nullable'], // TODO: add valid MusicXML validation
+            'transcription' => ['required_if:audio,null', 'nullable', new MusicXML], // TODO: add valid MusicXML validation
         ];
     }
 }

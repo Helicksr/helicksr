@@ -47,13 +47,13 @@ class LickController extends Controller
         $newLick->length = 10; // TODO: calculate length from audio file
 
         // upload audio file
-        if ($request->has('audio')) {
+        if ($request->has('audio') && $request->file('audio') !== null) {
             $newLick->audio_file_path = $request->file('audio')->storePublicly(
                 'audio-licks',
             );
         }
 
-        // upload score/tab. TODO: validate string is valid xml
+        // upload score/tab.
         $newLick->transcription = $request->input('transcription');
         $newLick->tags = $request->input('tags', []);
         $newLick->amp_settings = $request->input('amp_settings', []);
@@ -106,7 +106,7 @@ class LickController extends Controller
         }
 
         // upload audio file
-        if ($request->has('audio')) {
+        if ($request->has('audio') && $request->file('audio') !== null) {
             if ($lick->audio_file_path) {
                 Storage::delete($lick->audio_file_path);
             }

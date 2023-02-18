@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\MusicXML;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateLickRequest extends FormRequest
@@ -22,7 +23,10 @@ class UpdateLickRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'audio' => ['nullable', 'mimes:mp3,m4a,aac,oga,wav,wma', 'max:10240'],
+            'title' => ['required'],
+            'tempo' => ['required', 'numeric', 'gt:0'],
+            'audio' => ['required_if:transcription,null', 'nullable', 'mimes:mp3,m4a,aac,oga,wav,wma', 'max:512000'],
+            'transcription' => ['required_if:audio,null', 'nullable', new MusicXML], // TODO: add valid MusicXML validation
         ];
     }
 }
