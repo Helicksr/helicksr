@@ -52,33 +52,32 @@ const initializeRecorder = async () => {
     recorder.value.onstop = (e) => {
       updateValue(
         new Blob(chunks, {
-          'type' : 'audio/webm; codecs=opus',
-        }),
+          type: 'audio/webm; codecs=opus',
+        })
       );
       chunks = [];
-    }
+    };
     isInitialized.value = true;
   } catch (err: any) {
     console.error(err);
   }
 };
-
 </script>
 
 <template>
   <div>
     <SecondaryButton
+      v-if="!isRecording"
       class="mt-2 mr-2"
       type="button"
-      v-if="!isRecording"
       @click="onClickRecord"
     >
       Record
     </SecondaryButton>
     <SecondaryButton
+      v-if="isRecording"
       class="mt-2 mr-2"
       type="button"
-      v-if="isRecording"
       @click="onClickStop"
     >
       Stop

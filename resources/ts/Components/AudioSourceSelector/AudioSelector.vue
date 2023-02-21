@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue';
-import { computed, PropType, ref } from 'vue';
-import { InputError } from '~~/Components';
+import { computed, PropType } from 'vue';
 import { AudioFileSelector, AudioRecorder } from '.';
 
 const props = defineProps({
@@ -10,7 +9,7 @@ const props = defineProps({
     default: null,
   },
 
-  errors : {
+  errors: {
     type: String,
     default: '',
   },
@@ -22,9 +21,13 @@ const emits = defineEmits<{
   (eventName: typeof changeEmitName, newValue: File | Blob | null): void;
 }>();
 
-const fileModelValue = computed(() => props.modelValue instanceof Blob ? null : props.modelValue);
+const fileModelValue = computed(() =>
+  props.modelValue instanceof Blob ? null : props.modelValue
+);
 
-const blobModelValue = computed(() => props.modelValue instanceof File ? null : props.modelValue);
+const blobModelValue = computed(() =>
+  props.modelValue instanceof File ? null : props.modelValue
+);
 
 const updateValue = (newValue: File | Blob | null) => {
   emits(changeEmitName, newValue);
@@ -35,25 +38,7 @@ const updateValue = (newValue: File | Blob | null) => {
   <TabGroup>
     <TabList>
       <Tab
-        class="
-          inline-flex
-          items-center
-          px-8
-          py-1
-          border-b-2
-          font-medium
-          focus:outline-none
-
-          ui-not-selected:border-transparent
-          ui-not-selected:text-gray-400
-          ui-not-selected:hover:text-gray-700
-          ui-not-selected:hover:border-gray-300
-          ui-not-selected:dark:text-gray-300
-
-          ui-selected:border-gray-700
-          ui-selected:text-gray-700
-          ui-selected:dark:text-gray-100
-        "
+        class="inline-flex items-center px-8 py-1 border-b-2 font-medium focus:outline-none ui-not-selected:border-transparent ui-not-selected:text-gray-400 ui-not-selected:hover:text-gray-700 ui-not-selected:hover:border-gray-300 ui-not-selected:dark:text-gray-300 ui-selected:border-gray-700 ui-selected:text-gray-700 ui-selected:dark:text-gray-100"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -70,25 +55,7 @@ const updateValue = (newValue: File | Blob | null) => {
         Select a file
       </Tab>
       <Tab
-        class="
-          inline-flex
-          items-center
-          px-8
-          py-1
-          border-b-2
-          font-medium
-          focus:outline-none
-
-          ui-not-selected:border-transparent
-          ui-not-selected:text-gray-400
-          ui-not-selected:hover:text-gray-700
-          ui-not-selected:hover:border-gray-300
-          ui-not-selected:dark:text-gray-300
-
-          ui-selected:border-gray-700
-          ui-selected:text-gray-700
-          ui-selected:dark:text-gray-100
-        "
+        class="inline-flex items-center px-8 py-1 border-b-2 font-medium focus:outline-none ui-not-selected:border-transparent ui-not-selected:text-gray-400 ui-not-selected:hover:text-gray-700 ui-not-selected:hover:border-gray-300 ui-not-selected:dark:text-gray-300 ui-selected:border-gray-700 ui-selected:text-gray-700 ui-selected:dark:text-gray-100"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -97,7 +64,9 @@ const updateValue = (newValue: File | Blob | null) => {
           class="w-5 h-5 mr-1"
         >
           <path d="M7 4a3 3 0 016 0v6a3 3 0 11-6 0V4z" />
-          <path d="M5.5 9.643a.75.75 0 00-1.5 0V10c0 3.06 2.29 5.585 5.25 5.954V17.5h-1.5a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-1.5v-1.546A6.001 6.001 0 0016 10v-.357a.75.75 0 00-1.5 0V10a4.5 4.5 0 01-9 0v-.357z" />
+          <path
+            d="M5.5 9.643a.75.75 0 00-1.5 0V10c0 3.06 2.29 5.585 5.25 5.954V17.5h-1.5a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-1.5v-1.546A6.001 6.001 0 0016 10v-.357a.75.75 0 00-1.5 0V10a4.5 4.5 0 01-9 0v-.357z"
+          />
         </svg>
         Record
       </Tab>
@@ -106,13 +75,13 @@ const updateValue = (newValue: File | Blob | null) => {
       <TabPanel>
         <AudioFileSelector
           :model-value="fileModelValue"
-          @update:modelValue="updateValue"
+          @update:model-value="updateValue"
         />
       </TabPanel>
       <TabPanel>
         <AudioRecorder
           :model-value="blobModelValue"
-          @update:modelValue="updateValue"
+          @update:model-value="updateValue"
         />
       </TabPanel>
     </TabPanels>

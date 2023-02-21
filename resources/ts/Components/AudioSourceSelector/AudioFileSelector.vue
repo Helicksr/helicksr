@@ -18,14 +18,13 @@ const emits = defineEmits<{
 const audioInput = ref<HTMLInputElement | null>(null);
 
 const updateValue = () => {
-  const file = audioInput.value?.files? audioInput.value.files[0] : null;
+  const file = audioInput.value?.files ? audioInput.value.files[0] : null;
 
   emits(changeEmitName, file);
 };
 
 const clearValue = () => {
-  if (audioInput.value)
-    audioInput.value.value = '';
+  if (audioInput.value) audioInput.value.value = '';
   emits(changeEmitName, null);
 };
 </script>
@@ -46,9 +45,9 @@ const clearValue = () => {
     Select
   </SecondaryButton>
   <SecondaryButton
+    v-if="modelValue"
     type="button"
     class="mt-2 mr-2"
-    v-if="modelValue"
     @click.prevent="clearValue"
   >
     Remove
