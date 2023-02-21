@@ -43,6 +43,7 @@
         "ziggy-js": "^1.5.0"
     },
     "dependencies": {
+        "@headlessui/tailwindcss": "^0.1.2",
         "@headlessui/vue": "^1.7.10",
         "@vueform/multiselect": "^2.5.8",
         "luxon": "^3.2.1",

@@ -9,6 +9,7 @@ export { default as ApplicationMark } from './ApplicationMark.vue';
 export { default as AppNavbar } from './AppNavbar.vue';
 export { default as AppPagination } from './AppPagination.vue';
 export { AudioPlayer } from './AudioPlayer';
+export { AudioSourceSelector } from './AudioSourceSelector';
 export { default as AuthenticationCard } from './AuthenticationCard.vue';
 export { default as AuthenticationCardLogo } from './AuthenticationCardLogo.vue';
 export { default as CheckboxInput } from './CheckboxInput.vue';
