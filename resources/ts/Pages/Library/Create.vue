@@ -78,10 +78,10 @@ const updateTranscriptionPreview = () => {
 // audio preview handling
 const audioPreview = ref<string | null>(null);
 
-const updateAudioPreview = (inputValue: File | null) => {
+const updateAudioPreview = (inputValue: File | Blob |null) => {
   audioPreview.value = null; // reset value to force reload
 
-  if (!inputValue) return;
+  if (inputValue === null) return;
 
   const reader = new FileReader();
 

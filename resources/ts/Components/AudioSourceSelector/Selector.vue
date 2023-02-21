@@ -6,7 +6,7 @@ import { AudioFileSelector, AudioRecorder } from '.';
 
 const props = defineProps({
   modelValue: {
-    type: [File, String] as PropType<File | String | null>, // should accept url, file or blob
+    type: [File, Blob] as PropType<File | Blob | null>, // should accept url, file or blob
     default: null,
   },
 
@@ -19,12 +19,14 @@ const props = defineProps({
 const changeEmitName = 'update:modelValue';
 
 const emits = defineEmits<{
-  (eventName: typeof changeEmitName, newValue: File | null): void;
+  (eventName: typeof changeEmitName, newValue: File | Blob | null): void;
 }>();
 
-const fileModelValue = computed(() => props.modelValue instanceof String ? null : props.modelValue);
+const fileModelValue = computed(() => props.modelValue instanceof Blob ? null : props.modelValue);
 
-const updateValue = (newValue: File | null) => {
+const blobModelValue = computed(() => props.modelValue instanceof File ? null : props.modelValue);
+
+const updateValue = (newValue: File | Blob | null) => {
   emits(changeEmitName, newValue);
 };
 </script>
@@ -108,7 +110,10 @@ const updateValue = (newValue: File | null) => {
         />
       </TabPanel>
       <TabPanel>
-        <AudioRecorder />
+        <AudioRecorder
+          :model-value="blobModelValue"
+          @update:modelValue="updateValue"
+        />
       </TabPanel>
     </TabPanels>
   </TabGroup>

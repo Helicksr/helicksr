@@ -28,7 +28,7 @@ class StoreLickRequest extends FormRequest
             'audio' => [
                 'required_if:transcription,null',
                 'nullable',
-                'mimes:mp3,m4a,aac,oga,wav,wma',
+                'mimes:mp3,mp4,m4a,aac,oga,wav,wma,webm',
                 'max:512000',
             ],
             'transcription' => [
