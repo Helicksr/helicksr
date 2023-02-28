@@ -4,18 +4,28 @@ import { SecondaryButton } from '~~/Components';
 
 defineProps({
   modelValue: {
-    type: [Blob, null] as PropType<Blob | null>,
-    default: null,
+    type: [Blob, null] as PropType<Blob | null | undefined>,
+    default: undefined,
+  },
+
+  enableRemove: {
+    type: Boolean,
+    default: false,
+  },
+
+  enableRestore: {
+    type: Boolean,
+    default: false,
   },
 });
 
 const changeEmitName = 'update:modelValue';
 
 const emits = defineEmits<{
-  (eventName: typeof changeEmitName, newValue: Blob | null): void;
+  (eventName: typeof changeEmitName, newValue: Blob | null | undefined): void;
 }>();
 
-const updateValue = (newValue: Blob | null) => {
+const updateValue = (newValue: Blob | null | undefined) => {
   emits(changeEmitName, newValue);
 };
 
@@ -81,6 +91,22 @@ const initializeRecorder = async () => {
       @click="onClickStop"
     >
       Stop
+    </SecondaryButton>
+    <SecondaryButton
+      v-if="enableRemove"
+      class="mt-2 mr-2"
+      type="button"
+      @click="updateValue(null)"
+    >
+      Remove
+    </SecondaryButton>
+    <SecondaryButton
+      v-if="enableRestore"
+      class="mt-2 mr-2"
+      type="button"
+      @click="updateValue(undefined)"
+    >
+      Restore
     </SecondaryButton>
   </div>
 </template>

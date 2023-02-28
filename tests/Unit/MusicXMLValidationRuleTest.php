@@ -9,12 +9,11 @@ class MusicXMLValidationRuleTest extends TestCase
 {
     public function testValidXmlPasses(): void
     {
-        // Using a simple counter here because PHPUnit can't properly mock Closures
-        $counter = 0;
+        // Using a simple flag here because PHPUnit can't properly mock Closures
+        $validationPassed = true;
 
-        // counter by reference to allow updates to be seen outside closure's scope
-        $fail = function () use (&$counter) {
-            $counter = $counter + 1;
+        $runsIfFailed = function () use (&$validationPassed) {
+            $validationPassed = false;
         };
 
         $rule = new MusicXML();
@@ -57,24 +56,23 @@ class MusicXMLValidationRuleTest extends TestCase
         </score-partwise>
         EOF;
 
-        $rule->validate('testattr', $validXml, $fail);
+        $rule->validate('testattr', $validXml, $runsIfFailed);
 
-        $this->assertEquals(0, $counter);
+        $this->assertTrue($validationPassed);
     }
 
     public function testInvalidXmlFails(): void
     {
-        // Using a simple counter here because PHPUnit can't properly mock Closures
-        $counter = 0;
+        // Using a simple flag here because PHPUnit can't properly mock Closures
+        $validationPassed = true;
 
-        // counter by reference to allow updates to be seen outside closure's scope
-        $fail = function () use (&$counter) {
-            $counter = $counter + 1;
+        $runsIfFailed = function () use (&$validationPassed) {
+            $validationPassed = false;
         };
 
         $rule = new MusicXML();
-        $rule->validate('testattr', 'invalid xml here', $fail);
+        $rule->validate('testattr', 'invalid xml here', $runsIfFailed);
 
-        $this->assertEquals(1, $counter);
+        $this->assertFalse($validationPassed);
     }
 }

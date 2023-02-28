@@ -105,17 +105,17 @@ class LickController extends Controller
             $lick->tempo = $request->input('tempo');
         }
 
-        // upload audio file
-        if ($request->has('audio') && $request->file('audio') !== null) {
+        if ($request->has('audio')) {
             if ($lick->audio_file_path) {
                 Storage::delete($lick->audio_file_path);
             }
-            $lick->audio_file_path = $request->file('audio')->storePublicly(
-                'audio-licks',
-            );
+
+            $lick->audio_file_path = $request->file('audio') === null ? null :
+                $request->file('audio')->storePublicly(
+                    'audio-licks',
+                );
         }
 
-        // upload score/tab
         if ($request->has('transcription')) {
             $lick->transcription = $request->input('transcription');
         }
@@ -124,7 +124,7 @@ class LickController extends Controller
             $lick->tags = $request->input('tags');
         }
 
-        if ($request->input('amp_settings')) {
+        if ($request->has('amp_settings')) {
             $lick->amp_settings = $request->input('amp_settings');
         }
 

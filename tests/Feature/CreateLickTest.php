@@ -154,8 +154,6 @@ class CreateLickTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $audioFile = UploadedFile::fake()->create('recording.mp3', 500);
-
         $response = $this->post(route('library.store'), [
             'title' => 'test lick',
             'transcription' => $this->sampleXml,

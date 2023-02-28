@@ -9,14 +9,14 @@ import {
   ActionMessage,
   PrimaryButton,
   SecondaryButton,
-  AudioPlayer,
   TabViewer,
   TagSelector,
   AmpSettings,
   AudioSourceSelector,
+  AudioPreview,
 } from '~~/Components';
 import { useForm } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import route from 'ziggy-js';
 import { AmpSetting } from '~~/types';
 
@@ -24,7 +24,7 @@ const form = useForm<{
   _method: string;
   title: string;
   transcription: string | null; // <- export musicxml from tab or score in other program for now
-  audio: File | null;
+  audio: File | Blob | null;
   tempo: string; // <- detected from audio? let's put a button to autodetect next to the field
   tags: string[];
   amp_settings: AmpSetting[];
@@ -78,21 +78,7 @@ const updateTranscriptionPreview = () => {
 };
 
 // audio preview handling
-const audioPreview = ref<string | null>(null);
-
-const updateAudioPreview = (inputValue: File | Blob | null) => {
-  audioPreview.value = null; // reset value to force reload
-
-  if (inputValue === null) return;
-
-  const reader = new FileReader();
-
-  reader.onload = (e: ProgressEvent<FileReader>) => {
-    audioPreview.value = e.target?.result as string; // encoded as Base64
-  };
-
-  reader.readAsDataURL(inputValue);
-};
+const enableRemove = computed(() => form.audio instanceof File || form.audio instanceof Blob);
 </script>
 
 <template>
@@ -120,18 +106,15 @@ const updateAudioPreview = (inputValue: File | Blob | null) => {
             <InputLabel for="audio" value="Audio" />
             <AudioSourceSelector
               v-model="form.audio"
-              @update:model-value="updateAudioPreview"
+              :enable-remove="enableRemove"
             />
           </div>
 
           <div class="mb-4">
-            <div v-if="audioPreview" class="mt-2">
-              <AudioPlayer
-                :src="audioPreview ?? ''"
-                :enable-repeat="false"
-                :autoload="true"
-              />
-            </div>
+            <AudioPreview
+              class="mt-2"
+              :updated="form.audio"
+            />
             <InputError
               v-if="form.errors.audio?.length"
               :message="form.errors.audio"

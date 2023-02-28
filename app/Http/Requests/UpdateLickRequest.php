@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Rules\MusicXML;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateLickRequest extends FormRequest
 {
@@ -22,17 +23,47 @@ class UpdateLickRequest extends FormRequest
      */
     public function rules(): array
     {
+        $lick = $this->route('lick');
+
+        // validating that lick stays with either audio, transcription or both
+        $wouldRemoveAudio = !$this->hasFile('audio') &&
+            $this->has('audio') &&
+            $this->input('audio') === null;
+        $wouldRemoveTranscription = $this->has('transcription') &&
+            $this->input('transcription') === null;
+
+        $wouldAddAudio = $this->hasFile('audio') &&
+            $this->file('audio') !== null;
+        $wouldAddTranscription = $this->has('transcription') &&
+            $this->input('transcription') !== null;
+
+        $wouldEndUpWithAudio = $wouldAddAudio ||
+            (!!$lick->audio_file_path && !$wouldRemoveAudio);
+        $wouldEndUpWithTranscription = $wouldAddTranscription ||
+            (!!$lick->transcription && !$wouldRemoveTranscription);
+
+        $wouldEndUpWithoutAudio =  $wouldRemoveAudio ||
+            (!$lick->audio_file_path && !$wouldAddAudio);
+        $wouldEndUpWithoutTranscription = $wouldRemoveTranscription ||
+            (!$lick->transcription && !$wouldAddTranscription);
+
         return [
-            'title' => ['required'],
-            'tempo' => ['required', 'numeric', 'gt:0'],
+            // 'title' => ['required'],
+            'tempo' => ['numeric', 'gt:0'],
             'audio' => [
-                'required_if:transcription,null',
+                Rule::requiredIf(
+                    $wouldEndUpWithoutTranscription &&
+                    !$wouldEndUpWithAudio
+                ),
                 'nullable',
-                'mimes:mp3,m4a,aac,oga,wav,wma',
+                'mimes:mp3,mp4,m4a,aac,oga,wav,wma,webm',
                 'max:512000',
             ],
             'transcription' => [
-                'required_if:audio,null',
+                Rule::requiredIf(
+                    $wouldEndUpWithoutAudio &&
+                    !$wouldEndUpWithTranscription
+                ),
                 'nullable',
                 new MusicXML(),
             ],

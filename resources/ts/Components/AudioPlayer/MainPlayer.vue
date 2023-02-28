@@ -17,7 +17,7 @@ const props = defineProps({
   },
 
   autoload: {
-    // if true the don't require user to manually click 'load' button
+    // if true then don't require user to manually click 'load' button
     type: Boolean,
     default: false,
   },

@@ -3,7 +3,6 @@ import { AppLayout } from '~~/Layouts';
 import {
   ActionMessage,
   AmpSettings,
-  AudioPlayer,
   AppCard,
   InputError,
   InputLabel,
@@ -13,9 +12,11 @@ import {
   TabViewer,
   TagSelector,
   TextInput,
+  AudioSourceSelector,
+  AudioPreview,
 } from '~~/Components';
 import { useForm } from '@inertiajs/vue3';
-import { onMounted, PropType, ref } from 'vue';
+import { computed, PropType, ref } from 'vue';
 import route from 'ziggy-js';
 import { AmpSetting, Lick } from '~~/types';
 
@@ -34,7 +35,7 @@ const form = useForm<{
   _method: string;
   title: string;
   transcription: string | null; // <- export musicxml from tab or score in other program for now
-  audio: null;
+  audio: File | Blob | null | undefined;
   tempo: string; // <- detected from audio? let's put a button to autodetect next to the field
   tags: string[];
   amp_settings: AmpSetting[];
@@ -42,7 +43,7 @@ const form = useForm<{
   _method: 'PUT',
   title: props.lick.title,
   transcription: null, // <- export musicxml from tab or score in other program for now
-  audio: null,
+  audio: undefined,
   tempo: props.lick.tempo.toString(),
   tags: props.lick.tags,
   amp_settings: props.lick.amp_settings,
@@ -50,11 +51,12 @@ const form = useForm<{
 
 const submit = () => {
   form
-    .transform((data) => ({
-      ...data,
-      transcription: transcriptionPreview.value,
-      audio: audioInput.value.files[0] ?? null,
-    }))
+    .transform((data) => {
+      return {
+        ...data,
+        transcription: transcriptionPreview.value,
+      };
+    })
     .post(route('library.update', { lick: props.lick }), {
       errorBag: 'submit',
       preserveScroll: true,
@@ -62,7 +64,7 @@ const submit = () => {
 };
 
 // score/tab field handling
-const transcriptionPreview = ref<string | null>(null);
+const transcriptionPreview = ref<string | null>(props.lick.transcription);
 const transcriptionInput = ref<any>(null); // TODO: find correct typings for this variable
 
 const updateTranscriptionPreview = () => {
@@ -81,30 +83,14 @@ const updateTranscriptionPreview = () => {
   reader.readAsText(file);
 };
 
-// audio field handling
-const audioPreview = ref<string | null>(null);
-const audioInput = ref<any>(null); // TODO: find correct typings for this variable
+const hasOriginalSet = computed(() => !!props.lick.audio_file_path && form.audio === undefined);
 
-const updateAudioPreview = () => {
-  const file = audioInput.value?.files[0];
+const hasNewDataSet = computed(() => form.audio instanceof File || form.audio instanceof Blob);
 
-  if (!file) return;
+const enableRestore = computed(() => hasOriginalSet && form.audio !== undefined);
 
-  audioPreview.value = null; // reset value to force reload
+const enableRemove = computed(() => hasOriginalSet.value || hasNewDataSet.value);
 
-  const reader = new FileReader();
-
-  reader.onload = (e: ProgressEvent<FileReader>) => {
-    audioPreview.value = e.target?.result as string; // encoded as Base64
-  };
-
-  reader.readAsDataURL(file);
-};
-
-onMounted(() => {
-  transcriptionPreview.value = props.lick.transcription;
-  audioPreview.value = props.lick.audio_file_url;
-});
 </script>
 
 <template>
@@ -129,28 +115,20 @@ onMounted(() => {
           </div>
 
           <div class="mb-4">
-            <input
-              ref="audioInput"
-              type="file"
-              class="hidden"
-              accept="audio/aac,audio/mpeg,audio/mp4,audio/ogg,audio/wav,audio/x-ms-wma"
-              @change="updateAudioPreview"
+            <InputLabel for="audio" value="Audio" />
+            <AudioSourceSelector
+              v-model="form.audio"
+              :enable-restore="enableRestore"
+              :enable-remove="enableRemove"
             />
-            <InputLabel for="audio" value="Audio File" />
-            <SecondaryButton
-              class="mt-2 mr-2"
-              type="button"
-              @click.prevent="audioInput.click()"
-            >
-              Select an audio file
-            </SecondaryButton>
-            <div v-if="audioPreview" class="mt-2">
-              <AudioPlayer
-                :src="audioPreview ?? ''"
-                :enable-repeat="true"
-                :autoload="true"
-              />
-            </div>
+          </div>
+
+          <div class="mb-4">
+            <AudioPreview
+              class="mt-2"
+              :original="lick.audio_file_url"
+              :updated="form.audio"
+            />
             <InputError
               v-if="form.errors.audio?.length"
               :message="form.errors.audio"
