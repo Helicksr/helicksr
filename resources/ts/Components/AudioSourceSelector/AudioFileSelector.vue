@@ -2,9 +2,10 @@
 import { PropType, ref } from 'vue';
 import { SecondaryButton } from '~~/Components';
 
-const props = defineProps({
+defineProps({
   modelValue: {
     type: [File, null] as PropType<File | null | undefined>,
+    default: undefined,
   },
 
   enableRemove: {

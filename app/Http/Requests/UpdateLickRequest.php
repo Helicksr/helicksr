@@ -65,7 +65,7 @@ class UpdateLickRequest extends FormRequest
                     !$wouldEndUpWithTranscription
                 ),
                 'nullable',
-                new MusicXML(),
+                // new MusicXML(),
             ],
         ];
     }

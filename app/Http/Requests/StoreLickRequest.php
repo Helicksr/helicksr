@@ -30,11 +30,12 @@ class StoreLickRequest extends FormRequest
                 'nullable',
                 'mimes:mp3,mp4,m4a,aac,oga,wav,wma,webm',
                 'max:512000',
+                // TODO: add max size validation to prevent running into mysql errors
             ],
             'transcription' => [
                 'required_if:audio,null',
                 'nullable',
-                new MusicXML(),
+                // new MusicXML(),
             ],
         ];
     }

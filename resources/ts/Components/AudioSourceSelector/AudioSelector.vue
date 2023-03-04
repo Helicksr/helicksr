@@ -6,36 +6,55 @@ import { AudioFileSelector, AudioRecorder } from '.';
 const props = defineProps({
   modelValue: {
     type: [File, Blob] as PropType<File | Blob | null | undefined>,
+    default: undefined,
   },
 
-  errors: {
-    type: String,
-    default: '',
-  },
-
-  enableRemove: {
-    type: Boolean,
-    default: false,
-  },
-
-  enableRestore: {
-    type: Boolean,
-    default: false,
+  originalAudioUrl: {
+    type: [String, null, undefined] as PropType<string | null | undefined>,
+    default: undefined,
   },
 });
+
+const hadOriginalValue =
+  props.originalAudioUrl !== undefined &&
+  props.originalAudioUrl !== null &&
+  props.originalAudioUrl.length > 0;
+
+const hasOriginalValueSet = computed(
+  () => hadOriginalValue && props.modelValue === undefined
+);
+
+const hasNewValueSet = computed(
+  () => props.modelValue instanceof File || props.modelValue instanceof Blob
+);
+
+const enableRestore = computed(
+  () => hadOriginalValue && (hasNewValueSet.value || props.modelValue === null)
+);
+
+const enableRemove = computed(
+  () => hasOriginalValueSet.value || hasNewValueSet.value
+);
 
 const changeEmitName = 'update:modelValue';
 
 const emits = defineEmits<{
-  (eventName: typeof changeEmitName, newValue: File | Blob | null | undefined): void;
+  (
+    eventName: typeof changeEmitName,
+    newValue: File | Blob | null | undefined
+  ): void;
 }>();
 
 const fileModelValue = computed(() =>
-  (props.modelValue === undefined || props.modelValue instanceof File) ? props.modelValue : null
+  props.modelValue === undefined || props.modelValue instanceof File
+    ? props.modelValue
+    : null
 );
 
 const blobModelValue = computed(() =>
-  (props.modelValue === undefined || props.modelValue instanceof Blob) ? props.modelValue : null
+  props.modelValue === undefined || props.modelValue instanceof Blob
+    ? props.modelValue
+    : null
 );
 
 const updateValue = (newValue: File | Blob | null | undefined) => {
@@ -61,7 +80,7 @@ const updateValue = (newValue: File | Blob | null | undefined) => {
             clip-rule="evenodd"
           />
         </svg>
-        Select a file
+        Upload a file
       </Tab>
       <Tab
         class="inline-flex items-center px-8 py-1 border-b-2 font-medium focus:outline-none ui-not-selected:border-transparent ui-not-selected:text-gray-400 ui-not-selected:hover:text-gray-700 ui-not-selected:hover:border-gray-300 ui-not-selected:dark:text-gray-300 ui-selected:border-gray-700 ui-selected:text-gray-700 ui-selected:dark:text-gray-100"
@@ -84,17 +103,17 @@ const updateValue = (newValue: File | Blob | null | undefined) => {
       <TabPanel>
         <AudioFileSelector
           :model-value="fileModelValue"
-          @update:model-value="updateValue"
           :enable-remove="enableRemove"
           :enable-restore="enableRestore"
+          @update:model-value="updateValue"
         />
       </TabPanel>
       <TabPanel>
         <AudioRecorder
           :model-value="blobModelValue"
-          @update:model-value="updateValue"
           :enable-remove="enableRemove"
           :enable-restore="enableRestore"
+          @update:model-value="updateValue"
         />
       </TabPanel>
     </TabPanels>

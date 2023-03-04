@@ -8,15 +8,14 @@ import {
   InputLabel,
   PageTitle,
   PrimaryButton,
-  SecondaryButton,
-  TabViewer,
   TagSelector,
   TextInput,
   AudioSourceSelector,
   AudioPreview,
+  ScoreSourceSelector,
 } from '~~/Components';
 import { useForm } from '@inertiajs/vue3';
-import { computed, PropType, ref } from 'vue';
+import { PropType } from 'vue';
 import route from 'ziggy-js';
 import { AmpSetting, Lick } from '~~/types';
 
@@ -42,7 +41,7 @@ const form = useForm<{
 }>({
   _method: 'PUT',
   title: props.lick.title,
-  transcription: null, // <- export musicxml from tab or score in other program for now
+  transcription: props.lick.transcription, // <- export musicxml from tab or score in other program for now
   audio: undefined,
   tempo: props.lick.tempo.toString(),
   tags: props.lick.tags,
@@ -50,47 +49,11 @@ const form = useForm<{
 });
 
 const submit = () => {
-  form
-    .transform((data) => {
-      return {
-        ...data,
-        transcription: transcriptionPreview.value,
-      };
-    })
-    .post(route('library.update', { lick: props.lick }), {
-      errorBag: 'submit',
-      preserveScroll: true,
-    });
+  form.post(route('library.update', { lick: props.lick }), {
+    errorBag: 'submit',
+    preserveScroll: true,
+  });
 };
-
-// score/tab field handling
-const transcriptionPreview = ref<string | null>(props.lick.transcription);
-const transcriptionInput = ref<any>(null); // TODO: find correct typings for this variable
-
-const updateTranscriptionPreview = () => {
-  const file = transcriptionInput.value?.files[0];
-
-  if (!file) return;
-
-  transcriptionPreview.value = null; // reset value to force reload
-
-  const reader = new FileReader();
-
-  reader.onload = (e: ProgressEvent<FileReader>) => {
-    transcriptionPreview.value = e.target?.result as string;
-  };
-
-  reader.readAsText(file);
-};
-
-const hasOriginalSet = computed(() => !!props.lick.audio_file_path && form.audio === undefined);
-
-const hasNewDataSet = computed(() => form.audio instanceof File || form.audio instanceof Blob);
-
-const enableRestore = computed(() => hasOriginalSet && form.audio !== undefined);
-
-const enableRemove = computed(() => hasOriginalSet.value || hasNewDataSet.value);
-
 </script>
 
 <template>
@@ -118,16 +81,15 @@ const enableRemove = computed(() => hasOriginalSet.value || hasNewDataSet.value)
             <InputLabel for="audio" value="Audio" />
             <AudioSourceSelector
               v-model="form.audio"
-              :enable-restore="enableRestore"
-              :enable-remove="enableRemove"
+              :original-audio-url="lick.audio_file_path"
             />
           </div>
 
           <div class="mb-4">
             <AudioPreview
+              v-model="form.audio"
               class="mt-2"
-              :original="lick.audio_file_url"
-              :updated="form.audio"
+              :original-url="lick.audio_file_url"
             />
             <InputError
               v-if="form.errors.audio?.length"
@@ -137,25 +99,8 @@ const enableRemove = computed(() => hasOriginalSet.value || hasNewDataSet.value)
           </div>
 
           <div class="mb-4">
-            <input
-              ref="transcriptionInput"
-              type="file"
-              class="hidden"
-              accept=".musicxml,application/vnd.recordare.musicxml+xml,application/vnd.recordare.musicxml-portable+xml,application/vnd.recordare.musicxml,application/xml"
-              @change="updateTranscriptionPreview"
-            />
-            <InputLabel for="transcription" value="Transcription File" />
-            <SecondaryButton
-              class="mt-2 mr-2"
-              type="button"
-              @click.prevent="transcriptionInput.click()"
-            >
-              Select a score/tab file
-            </SecondaryButton>
-
-            <div v-if="transcriptionPreview" class="mt-2">
-              <TabViewer :transcription="transcriptionPreview ?? ''" />
-            </div>
+            <InputLabel for="transcription" value="Transcription" />
+            <ScoreSourceSelector v-model="form.transcription" />
             <InputError
               v-if="form.errors.transcription?.length"
               :message="form.errors.transcription"

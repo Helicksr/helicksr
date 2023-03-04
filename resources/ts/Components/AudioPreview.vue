@@ -3,12 +3,15 @@ import { computed, nextTick, PropType, ref, watch } from 'vue';
 import { AudioPlayer } from '~~/Components';
 
 const props = defineProps({
-  original: {
+  modelValue: {
+    type: [String, File, Blob, null] as PropType<
+      string | File | Blob | null | undefined
+    >,
+    default: undefined,
+  },
+  originalUrl: {
     type: String as PropType<string | null>,
     default: null,
-  },
-  updated: {
-    type: [File, Blob, null] as PropType<File | Blob | null | undefined>,
   },
 });
 
@@ -23,7 +26,7 @@ const encodeBlob = async (blob: Blob | File) =>
     };
 
     reader.onerror = (e: ProgressEvent<FileReader>) => {
-      reject('error reading blob');
+      reject(new Error('error reading blob'));
     };
 
     reader.readAsDataURL(blob);
@@ -40,30 +43,34 @@ const fetchData = async (url: string) => {
 };
 
 // using computed to allow attaching a watcher
-const updatedValue = computed(() => props.updated);
-watch(updatedValue, async (newValue) => {
-  preview.value = null; // first set null to force reload
+const updatedValue = computed(() => props.modelValue);
+watch(
+  updatedValue,
+  async (newValue) => {
+    preview.value = null; // first set null to force reload
 
-  if (newValue === null) {
-    return;
-  }
-  
-  if (newValue === undefined) {
-    await nextTick(() => {
-      preview.value = props.original;
-    });
-    return;
-  }
+    if (newValue === null) {
+      return;
+    }
 
-  if (typeof newValue === 'string') { // if url
-    const audioData = await fetchData(newValue);
-    preview.value = await encodeBlob(audioData);
-    return;
-  }
+    if (newValue === undefined) {
+      await nextTick(() => {
+        preview.value = props.originalUrl;
+      });
+      return;
+    }
 
-  preview.value = await encodeBlob(newValue);
-}, { immediate: true });
+    if (typeof newValue === 'string') {
+      // if url
+      const audioData = await fetchData(newValue);
+      preview.value = await encodeBlob(audioData);
+      return;
+    }
 
+    preview.value = await encodeBlob(newValue);
+  },
+  { immediate: true }
+);
 </script>
 <template>
   <AudioPlayer

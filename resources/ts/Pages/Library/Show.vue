@@ -9,9 +9,9 @@ import {
   LickTag,
   PageTitle,
   SecondaryButton,
-  TabViewer,
   PrimaryButton,
   ShareTargetSelector,
+  ScorePreview,
 } from '~~/Components';
 import route from 'ziggy-js';
 import { Link, useForm } from '@inertiajs/vue3';
@@ -174,7 +174,7 @@ const shareLick = () => {
         </div>
         <div v-if="lick.transcription" class="col-span-4 sm:col-span-3">
           <AppCard>
-            <TabViewer :transcription="lick.transcription" />
+            <ScorePreview :model-value="lick.transcription" />
           </AppCard>
         </div>
       </div>
