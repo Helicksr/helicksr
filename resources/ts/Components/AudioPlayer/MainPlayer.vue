@@ -2,7 +2,11 @@
 import { computed, onMounted, ref } from 'vue';
 import WaveSurfer from 'wavesurfer.js';
 import CursorPlugin from 'wavesurfer.js/src/plugin/cursor';
-import { PlayButton, RepeatButton } from '~~/Components/AudioPlayer';
+import {
+  DelayInput,
+  PlayButton,
+  RepeatButton,
+} from '~~/Components/AudioPlayer';
 import colors from 'tailwindcss/colors';
 
 const props = defineProps({
@@ -69,8 +73,7 @@ const load = () => {
     const duration = wavesurfer.value?.getDuration();
 
     if (current === duration && state.value.isRepeating) {
-      // TODO: sleep for delay duration
-      await sleep(state.value.repeatDelay);
+      if (state.value.repeatDelay > 0) await sleep(state.value.repeatDelay);
 
       wavesurfer.value?.seekTo(0);
       wavesurfer.value?.play();
@@ -96,19 +99,23 @@ const toggleRepeat = () => {
     <div class="flex-none mr-2 flex flex-col">
       <div class="flex grow justify-center">
         <PlayButton
-          class="mb-4"
+          class="mb-2"
           :is-playing="wavesurfer?.isPlaying()"
           @toggle="togglePlayPause"
         />
       </div>
-      <div class="flex justify-center">
-        <RepeatButton
-          v-if="enableRepeat"
-          class="w-8 h-8"
-          :is-repeating="state.isRepeating"
-          @toggle="toggleRepeat"
-        />
-      </div>
+      <template v-if="enableRepeat">
+        <div class="flex justify-center">
+          <RepeatButton
+            class="w-8 h-8 mb-2"
+            :is-repeating="state.isRepeating"
+            @toggle="toggleRepeat"
+          />
+        </div>
+        <div class="flex justify-center">
+          <DelayInput v-model="state.repeatDelay" />
+        </div>
+      </template>
     </div>
     <div class="flex-1">
       <div ref="wave" />
