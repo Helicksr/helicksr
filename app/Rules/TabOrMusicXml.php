@@ -20,13 +20,13 @@ class TabOrMusicXml implements ValidationRule
         if (substr(trim($value), 0, 5) === '<?xml') {
             libxml_use_internal_errors(true);
             $xml = simplexml_load_string($value);
-    
+
             if ($xml === false) {
                 $fail('The :attribute must be a valid XML file.');
             } else {
                 $musicXmlValidator = new MusicXmlValidator();
                 $validMusicXml = $musicXmlValidator->isValidMusicXmlString($value);
-    
+
                 if (! $validMusicXml) {
                     $fail('The :attribute XML file must follow the correct MusicXML spec.');
                 }
