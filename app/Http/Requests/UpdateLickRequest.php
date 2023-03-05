@@ -48,7 +48,7 @@ class UpdateLickRequest extends FormRequest
             (!$lick->transcription && !$wouldAddTranscription);
 
         return [
-            // 'title' => ['required'],
+            'title' => ['max:200'],
             'tempo' => ['numeric', 'gt:0'],
             'audio' => [
                 Rule::requiredIf(
@@ -65,6 +65,7 @@ class UpdateLickRequest extends FormRequest
                     !$wouldEndUpWithTranscription
                 ),
                 'nullable',
+                'max:16777215',
                 // new MusicXML(),
             ],
         ];

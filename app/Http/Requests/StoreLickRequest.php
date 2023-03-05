@@ -23,7 +23,7 @@ class StoreLickRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required'],
+            'title' => ['required', 'max:200'],
             'tempo' => ['required', 'numeric', 'gt:0'],
             'audio' => [
                 'required_if:transcription,null',
@@ -35,6 +35,7 @@ class StoreLickRequest extends FormRequest
             'transcription' => [
                 'required_if:audio,null',
                 'nullable',
+                'max:16777215'
                 // new MusicXML(),
             ],
         ];
