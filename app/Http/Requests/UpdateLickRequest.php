@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\MusicXML;
+use App\Rules\TabOrMusicXml;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -66,7 +66,7 @@ class UpdateLickRequest extends FormRequest
                 ),
                 'nullable',
                 'max:16777215',
-                // new MusicXML(),
+                new TabOrMusicXml(),
             ],
         ];
     }

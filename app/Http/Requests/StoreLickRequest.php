@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\MusicXML;
+use App\Rules\TabOrMusicXml;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreLickRequest extends FormRequest
@@ -30,13 +30,12 @@ class StoreLickRequest extends FormRequest
                 'nullable',
                 'mimes:mp3,mp4,m4a,aac,oga,wav,wma,webm',
                 'max:512000',
-                // TODO: add max size validation to prevent running into mysql errors
             ],
             'transcription' => [
                 'required_if:audio,null',
                 'nullable',
-                'max:16777215'
-                // new MusicXML(),
+                'max:16777215',
+                new TabOrMusicXml(),
             ],
         ];
     }
